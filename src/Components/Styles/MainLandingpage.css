@@ -1,0 +1,19 @@
+/* src/Styles/MainLandingpage.css */
+.typewriter-container {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 0.15em solid #378BA6; /* Color of the cursor */
+  animation: typewriter 4s steps(40, end) 1s 1 normal both, blink 0.75s step-end infinite;
+  color: '#378BA6'
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  from, to { border-color: transparent; }
+  50% { border-color: #378BA6; }
+}
