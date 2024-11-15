@@ -5,12 +5,15 @@ import Chat from '../../../Images/ChatIcon.png';
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
 import Sidebar from '../../global/Sidebar';
 import CandidateProgress from './CandidateProgress';
+import Pagination from '../../global/Pagination';
 
 const AddCandidates = () => {
   const [currentIcon, setCurrentIcon] = useState('ArrowUp');
   const [isAccordionOpen, setIsAccordionOpen] = useState(null); // Track which accordion is open
   const [lockedJobDetails, setLockedJobDetails] = useState([]); // State to store locked job details
   const [errorMessage, setErrorMessage] = useState(''); // State for error message
+  const [currentPage, setCurrentPage] = useState(1); // State for current page
+  const itemsPerPage = 5; // Number of items per page
 
   // Function to get locked job details
   const getJobDetails = async () => {
@@ -40,39 +43,38 @@ const AddCandidates = () => {
     return isAccordionOpen === index ? <IoIosArrowUp size={24} /> : <IoIosArrowDown size={24} />;
   };
 
+  // Pagination calculation
+  const totalPages = Math.ceil(lockedJobDetails.length / itemsPerPage);
+  const currentItems = lockedJobDetails.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
   return (
     <div className='max-h-screen flex flex-row gap-0'>
       <div className='max-[30%]'><Sidebar /></div>
-      {/*  */}
       <div className='w-[100%] bg-[#EAF1F4] flex flex-col py-5 gap-33 flex-1 px-4'>
         {/* Header Section */}
         <div className='flex flex-col justify-center items-start gap-1 p-2.5 self-stretch bg-[#FBEFD0] mb-[20px] w-full'>
-  <div className='flex justify-between items-center self-stretch w-full'>
-    <div className='flex flex-col w-[100%]'>
-      <h1 className='overflow-hidden text-gray-600 truncate whitespace-nowrap text-2xl font-medium leading-7'>Samule</h1>
-      <h1 className='overflow-hidden text-[#378BA6] truncate whitespace-nowrap text-base font-medium leading-5'>ID : 67890987</h1>
-    </div>
-    <div className='flex p-2 px-3 gap-3 justify-center items-center rounded bg-white'>
-      <h1 className='text-teal-600 text-center text-4xl font-medium leading-7'>10</h1>
-      <div className='w-px h-7 bg-gray-500'></div>
-      <h1 className='text-dark-grey font-jost text-base font-normal leading-custom tracking-custom text-[#4F4F4F]'>Locked JD’s</h1>
-    </div>
-    <div className='flex p-2 px-3 gap-3 justify-center items-center rounded bg-white'>
-      <h1 className='text-teal-600 text-center text-4xl font-medium leading-7'>10</h1>
-      <div className='w-px h-7 bg-gray-500'></div>
-      <h1 className='text-dark-grey font-jost text-base font-normal leading-custom tracking-custom text-[#4F4F4F]'>Successful JD’s</h1>
-    </div>
-    <div className='flex p-2 px-3 gap-3 justify-center items-center rounded bg-white'>
-      <h1 className='text-teal-600 text-center text-4xl font-medium leading-7'>10</h1>
-      <div className='w-px h-7 bg-gray-500'></div>
-      <h1 className='text-dark-grey font-jost text-base font-normal leading-custom tracking-custom text-[#4F4F4F]'>Total Incentives</h1>
-    </div>
-  </div>
-
-  {/* Buttons Section */}
-  
-</div>
-
+          <div className='flex justify-between items-center self-stretch w-full'>
+            <div className='flex flex-col w-[100%]'>
+              <h1 className='overflow-hidden text-gray-600 truncate whitespace-nowrap text-2xl font-medium leading-7'>Samule</h1>
+              <h1 className='overflow-hidden text-[#378BA6] truncate whitespace-nowrap text-base font-medium leading-5'>ID : 67890987</h1>
+            </div>
+            <div className='flex p-2 px-3 gap-3 justify-center items-center rounded bg-white'>
+              <h1 className='text-teal-600 text-center text-4xl font-medium leading-7'>10</h1>
+              <div className='w-px h-7 bg-gray-500'></div>
+              <h1 className='text-dark-grey font-jost text-base font-normal leading-custom tracking-custom text-[#4F4F4F]'>Locked JD’s</h1>
+            </div>
+            <div className='flex p-2 px-3 gap-3 justify-center items-center rounded bg-white'>
+              <h1 className='text-teal-600 text-center text-4xl font-medium leading-7'>10</h1>
+              <div className='w-px h-7 bg-gray-500'></div>
+              <h1 className='text-dark-grey font-jost text-base font-normal leading-custom tracking-custom text-[#4F4F4F]'>Successful JD’s</h1>
+            </div>
+            <div className='flex p-2 px-3 gap-3 justify-center items-center rounded bg-white'>
+              <h1 className='text-teal-600 text-center text-4xl font-medium leading-7'>10</h1>
+              <div className='w-px h-7 bg-gray-500'></div>
+              <h1 className='text-dark-grey font-jost text-base font-normal leading-custom tracking-custom text-[#4F4F4F]'>Total Incentives</h1>
+            </div>
+          </div>
+        </div>
 
         {/* Table Header */}
         <div className='h-[52px] self-stretch rounded-[8px] bg-[rgba(55,139,166,0.30)] flex justify-between items-center p-8 mt-[20px]'>
@@ -88,8 +90,8 @@ const AddCandidates = () => {
         {/* Map through locked JDs */}
         <div className='flex flex-col justify-between items-end gap-5 self-stretch'>
           {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
-          {lockedJobDetails.length > 0 ? (
-            lockedJobDetails.map((jd, index) => (
+          {currentItems.length > 0 ? (
+            currentItems.map((jd, index) => (
               <div key={index} className='flex flex-col justify-between items-end gap-5 self-stretch'>
                 <div className='flex justify-between items-center self-stretch rounded-md border border-[#9B9B9B] bg-white shadow-[6px_6px_20px_0px_rgba(0,0,0,0.12)] p-4 mt-6'>
                   <h1 className='text-gray-800 text-center font-sans text-base font-normal leading-6 tracking-tight w-1/9'>#{jd._id.slice(-4)}</h1>
@@ -119,26 +121,34 @@ const AddCandidates = () => {
                   </a>
 
                   <h1 className='text-[#4F4F4F] text-center font-sans text-base font-normal leading-6 tracking-tight w-1/9'>{jd.delivery_deadline}</h1>
-                  <h1 className='text-[#FFA043] text-center font-sans text-base font-normal leading-6 tracking-tight w-1/9'>{jd.jd_status}</h1>
 
-                  <button onClick={() => { }} className='flex justify-center items-center rounded-full border border-black bg-white px-3 py-2 w-1/9'>
-                    <h1 className='text-black text-base font-normal leading-5'>Details</h1>
-                  </button>
+                  <h1 className='text-[#3AB13A] text-center font-sans text-base font-semibold leading-6 tracking-tight w-1/9'>{jd.jd_status}</h1>
 
-                  <div onClick={() => toggleAccordion(index)} className='flex justify-center items-center w-1/7 cursor-pointer'>
+                  <button onClick={() => toggleAccordion(index)} className='flex w-[108px] p-[4px_12px] justify-between items-center gap-[10px] rounded-[12px] border border-[#1C3941] bg-[#378BA6]'>
+                    <h1 className='text-white font-jost text-base font-semibold leading-5 tracking-tight'>More</h1>
                     {renderIcon(index)}
-                  </div>
+                  </button>
                 </div>
+                {/* Accordion Content */}
                 {isAccordionOpen === index && (
-                  <div className='flex flex-col items-start'>
-                    <CandidateProgress jobId={jd._id} />
+                  <div className='self-stretch bg-[#D9E1E3] shadow-[4px_4px_20px_0px_rgba(0,0,0,0.12)] p-4'>
+                    <CandidateProgress jdId={jd._id} />
                   </div>
                 )}
               </div>
             ))
           ) : (
-            <p>No locked job details available.</p>
+            <p className='text-center'>No locked job details available.</p>
           )}
+        </div>
+
+        {/* Pagination */}
+        <div className='flex justify-end items-center mt-6'>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
         </div>
       </div>
     </div>

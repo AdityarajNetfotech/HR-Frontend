@@ -4,12 +4,21 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate from react
 import Sidebar from '../../global/Sidebar';
 import ExportIcon from '../../../Images/ExportIcon.png';
 import Chat from '../../../Images/ChatIcon.png';
+import Pagination from '../../global/Pagination';
+import Filter, { initialFilters } from '../../global/Filter';
+
 
 function FinanceList() {
+  const [candidates, setCandidates] = useState([]);
+  const [filters, setFilters] = useState(initialFilters);
+  const [filteredCandidates, setFilteredCandidates] = useState([]);
   const [lockedJobDetails, setLockedJobDetails] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate(); // Initialize useNavigate
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
+  
   // Function to get job details
   const getJobDetails = async () => {
     try {
@@ -20,7 +29,7 @@ function FinanceList() {
       throw error;
     }
   };
-
+  
   useEffect(() => {
     const fetchJobDetails = async () => {
       try {
@@ -34,11 +43,17 @@ function FinanceList() {
     };
     fetchJobDetails();
   }, []);
-
+  
   // Function to handle navigation to FinanceSummery page
   const goToFinanceSummary = (jd) => {
-    navigate('/FinanceSummery', { state: { job: jd } }); // Navigate with state
+    navigate('/FinanceSummery', { state: { job: jd } });
   };
+  
+  // Calculate the job details to show on the current page
+  const totalPages = Math.ceil(lockedJobDetails.length / itemsPerPage);
+  const indexOfLastJob = currentPage * itemsPerPage;
+  const indexOfFirstJob = indexOfLastJob - itemsPerPage;
+  const currentJobs = lockedJobDetails.slice(indexOfFirstJob, indexOfLastJob);
 
   return (
     <div className='max-h-screen flex flex-row gap-0 h-[100%]'>
@@ -72,6 +87,8 @@ function FinanceList() {
           </div>
         </div>
 
+        <Filter candidates={candidates} setFilteredCandidates={setFilteredCandidates} filters={filters} setFilters={setFilters} />
+
         {/* Table Header */}
         <div className='h-[52px] self-stretch bg-[rgba(55,139,166,0.30)] flex justify-between items-center p-8 mt-[20px]'>
           <h1 className='text-black font-jost text-xl'>JD ID</h1>
@@ -87,15 +104,14 @@ function FinanceList() {
         <div className='flex flex-col gap-5 mt-6'>
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
-          {lockedJobDetails.length > 0 ? (
-            lockedJobDetails.map((jd, index) => (
+          {currentJobs.length > 0 ? (
+            currentJobs.map((jd, index) => (
               <div key={index} className='flex justify-between items-center rounded-md border bg-white p-4 shadow-md'>
                 <h1 className='text-gray-800'>{jd._id}</h1>
                 <div className='flex items-center'>
                   <div className='flex w-[40px] h-[40px] justify-center items-center bg-[#EAF1F3] rounded-full'>
                     <img src={ExportIcon} alt='Export' className='w-16 h-auto' />
                   </div>
-                  {/* When clicking company name, navigate to FinanceSummery with the selected JD */}
                   <h1 className='text-gray-800 ml-2 cursor-pointer' onClick={() => goToFinanceSummary(jd)}>
                     {jd.company_Name}
                   </h1>
@@ -129,6 +145,9 @@ function FinanceList() {
             <h2>No locked job descriptions available.</h2>
           )}
         </div>
+
+        {/* Pagination Component */}
+        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
       </div>
     </div>
   );

@@ -1,0 +1,73 @@
+#candidateOne-filter {
+    background-color: white !important;
+    font-size: 13px;
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+#candidateOne-filter>.filter_option {
+    text-align: center;
+    padding: 8px 0px;
+    border-left: 1px solid rgba(128, 128, 128, 0.578);
+    border-right: 1px solid rgba(128, 128, 128, 0.578);
+    width: 8rem;
+}
+
+#candidateOne-filter>.filter_option:nth-child(4) {
+    text-align: center;
+    padding: 8px 0px;
+    border-left: 1px solid rgba(128, 128, 128, 0.578);
+    border-right: 1px solid rgba(128, 128, 128, 0.578);
+    width: 7rem !important;
+}
+#candidateOne-filter>.filter_option:nth-child(5) {
+    text-align: center;
+    padding: 8px 0px;
+    border-left: 1px solid rgba(128, 128, 128, 0.578);
+    border-right: 1px solid rgba(128, 128, 128, 0.578);
+    width: 7rem !important;
+}
+
+#candidateOne-filter>.filter_option:nth-child(6) {
+    text-align: center;
+    padding: 8px 0px;
+    border-left: 1px solid rgba(128, 128, 128, 0.578);
+    border-right: 1px solid rgba(128, 128, 128, 0.578);
+    width: 7rem !important;
+}
+
+#candidateOne-filter>.filter_option>select {
+    outline: none;
+}
+
+#candidateOne-filter>.filter_option>select>option:checked {
+    color: blue;
+}
+
+.candidateOne-filter_search {
+    padding: 0px 15px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+.candidateOne-filter_search>i {
+   margin-right: 8px;
+}
+
+.candidateOne-filter_search-bar {
+    margin: 0px !important;
+    /* font-size: 16px; */
+    border: none;
+    outline: none;
+}
+
+
+
+
+
+

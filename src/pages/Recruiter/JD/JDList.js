@@ -4,13 +4,14 @@ import JobList from './JobList';
 import JobDetails from './JobDetails';
 import LockForMeModal from './LockForMeModal';
 import Sidebar from '../../global/Sidebar';
+import Pagination from '../../global/Pagination';
 import JobFilters from './JobFilters';
 
 const JDList = () => {
   const [selectedJob, setSelectedJob] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(''); // Ensure this is defined
+  const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 4;
   const [filters, setFilters] = useState({
@@ -124,17 +125,10 @@ const JDList = () => {
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
   const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
 
-  // Next and Previous page handlers
-  const nextPage = () => {
-    if (currentPage < Math.ceil(filteredJobs.length / jobsPerPage)) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
 
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+  const onPageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -143,11 +137,12 @@ const JDList = () => {
       <div className='w-[100%]'>
         <div className="min-h-screen max-w-8xl bg-[#EAF1F3] p-4 gap-4 flex flex-col items-start">
           <div className="w-full">
+            {/* JobFilters Component */}
             <JobFilters 
               filters={filters} 
               setFilters={setFilters} 
-              searchQuery={searchQuery} // Passing searchQuery prop
-              setSearchQuery={setSearchQuery} // Passing setSearchQuery prop
+              searchQuery={searchQuery} 
+              setSearchQuery={setSearchQuery} 
             />
 
             {/* Cancel All Filters Button */}
@@ -163,25 +158,15 @@ const JDList = () => {
           <div>
             {/* Job List with Pagination */}
             <JobList jobs={currentJobs} onJobClick={handleJobClick} />
+          </div>
 
-            {/* Pagination Controls */}
-            <div className="flex justify-between mt-4">
-              <button
-                onClick={prevPage}
-                disabled={currentPage === 1}
-                className="px-4 py-2 bg-gray-300 rounded-md"
-              >
-                Previous
-              </button>
-              <span>Page {currentPage}</span>
-              <button
-                onClick={nextPage}
-                disabled={currentPage === Math.ceil(filteredJobs.length / jobsPerPage)}
-                className="px-4 py-2 bg-gray-300 rounded-md"
-              >
-                Next
-              </button>
-            </div>
+          {/* Pagination Controls */}
+          <div className="w-full flex justify-end">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+            />
           </div>
 
           {/* Job Details Section */}
