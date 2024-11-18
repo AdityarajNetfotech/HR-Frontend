@@ -74,7 +74,7 @@ function LockForMeModal({ id, onClose }) {
         {error && <p className="text-red-500">{error}</p>}
         <div className="flex justify-end space-x-4">
           <button
-            onClick={onClose}
+            onClick={() => navigate(-1)} // Go back to the previous page
             className="flex p-2 px-3 justify-center items-center gap-2 flex-1 rounded-lg border border-[#A4A4A4] bg-white text-[#4F4F4F] text-center font-jost text-base font-bold leading-[36px]"
           >
             Cancel

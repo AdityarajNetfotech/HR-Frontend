@@ -9,13 +9,13 @@ import JobList from '../../Recruiter/JD/JobList';
 import JobDetails from '../../Recruiter/JD/JobDetails';
 import LockForMeModal from '../../Recruiter/JD/LockForMeModal';
 import EmpJobList from './EmpJobList';
-// import JobFilters from './JobFilters';
+import Pagination from '../../global/Pagination';
 
 const EmpJDList = ({ limit = Infinity }) => {
-  const [selectedJob, setSelectedJob] = useState(null); 
-  const [jobs, setJobs] = useState([]); 
-  const [showModal, setShowModal] = useState(false); 
-  const [searchQuery, setSearchQuery] = useState('');  // New search state
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [jobs, setJobs] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState({
     location: '',
     industry: '',
@@ -26,6 +26,8 @@ const EmpJDList = ({ limit = Infinity }) => {
     uniqueTitles: [],
     uniqueStatuses: []
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [jobsPerPage] = useState(4); // Number of jobs per page
 
   useEffect(() => {
     getBackendData();
@@ -37,7 +39,7 @@ const EmpJDList = ({ limit = Infinity }) => {
       console.log('Backend data:', response.data);
 
       const formattedJobs = response.data.jds.map((job) => ({
-        id: job._id, // Ensure this is the correct field name
+        id: job._id,
         job_title: job.job_title,
         company: job.company_Name,
         experience: job.experience,
@@ -68,7 +70,6 @@ const EmpJDList = ({ limit = Infinity }) => {
 
       setJobs(formattedJobs.slice(0, limit));
 
-      // Extract unique values for filters
       const uniqueLocations = [...new Set(formattedJobs.map(job => job.location))];
       const uniqueIndustries = [...new Set(formattedJobs.map(job => job.industry))];
       const uniqueTitles = [...new Set(formattedJobs.map(job => job.job_title))];
@@ -81,26 +82,24 @@ const EmpJDList = ({ limit = Infinity }) => {
         uniqueTitles,
         uniqueStatuses
       }));
-
     } catch (error) {
       console.error('Error fetching data from backend:', error);
     }
   };
 
   const handleJobClick = (job) => {
-    console.log('Job clicked:', job); 
+    console.log('Job clicked:', job);
     setSelectedJob(job);
-    setShowModal(true); // Show the modal when a job is clicked
+    setShowModal(true);
   };
 
   const handleModalClose = () => {
     setShowModal(false);
-    setSelectedJob(null); // Reset selected job when modal is closed
+    setSelectedJob(null);
   };
 
-  // Reset all filters and search query
   const resetFilters = () => {
-    setSearchQuery(''); // Reset search query
+    setSearchQuery('');
     setFilters({
       location: '',
       industry: '',
@@ -113,26 +112,29 @@ const EmpJDList = ({ limit = Infinity }) => {
     });
   };
 
-  // Combine search query filtering with the existing filters
   const filteredJobs = jobs.filter((job) => {
     const matchesSearch = job.job_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          job.location.toLowerCase().includes(searchQuery.toLowerCase());
-    
+      job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.location.toLowerCase().includes(searchQuery.toLowerCase());
+
     const matchesFilters = (filters.location === '' || job.location === filters.location) &&
-                           (filters.industry === '' || job.industry === filters.industry) &&
-                           (filters.title === '' || job.job_title === filters.title) &&
-                           (filters.status === '' || job.status === filters.status);
-    
+      (filters.industry === '' || job.industry === filters.industry) &&
+      (filters.title === '' || job.job_title === filters.title) &&
+      (filters.status === '' || job.status === filters.status);
+
     return matchesSearch && matchesFilters;
   });
 
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+
   return (
     <div className='min-h-screen flex flex-row gap-4'>
-      <Sidebar className='max-[30%]'/>
+      <Sidebar className='max-[30%]' />
       <div className="min-h-screen max-w-8xl bg-white p-4 gap-4 flex items-start">
         <div className="w-full">
-          {/* Search Input */}
           <div className="mb-4">
             <input
               type="text"
@@ -145,7 +147,6 @@ const EmpJDList = ({ limit = Infinity }) => {
 
           <JobFilters filters={filters} setFilters={setFilters} />
 
-          {/* Cancel All Filters Button */}
           <div className="mb-4">
             <button
               onClick={resetFilters}
@@ -155,7 +156,12 @@ const EmpJDList = ({ limit = Infinity }) => {
             </button>
           </div>
 
-          <EmpJobList jobs={filteredJobs} onJobClick={handleJobClick} />
+          <EmpJobList jobs={currentJobs} onJobClick={handleJobClick} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
         </div>
         <div className="w-2/5">
           <JobDetails job={selectedJob} />

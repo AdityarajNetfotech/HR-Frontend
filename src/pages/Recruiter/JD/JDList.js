@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import JobList from './JobList';
+import JobCard from './JobCard';
 import JobDetails from './JobDetails';
 import LockForMeModal from './LockForMeModal';
 import Sidebar from '../../global/Sidebar';
@@ -81,14 +81,15 @@ const JDList = () => {
     }
   };
 
+  // Handle job click - toggle JobDetails visibility
   const handleJobClick = (job) => {
-    setSelectedJob(job);
-    setShowModal(true);
-  };
-
-  const handleModalClose = () => {
-    setShowModal(false);
-    setSelectedJob(null);
+    // If the same job is clicked again, hide the details (toggle visibility)
+    if (selectedJob && selectedJob.id === job.id) {
+      setSelectedJob(null);
+    } else {
+      setSelectedJob(job);
+    }
+    setShowModal(false);  // Ensuring the modal doesn't open
   };
 
   // Reset filters and search
@@ -134,6 +135,7 @@ const JDList = () => {
   return (
     <div className='min-h-screen flex flex-row gap-4'>
       <Sidebar className='max-[30%]' />
+      
       <div className='w-[100%]'>
         <div className="min-h-screen max-w-8xl bg-[#EAF1F3] p-4 gap-4 flex flex-col items-start">
           <div className="w-full">
@@ -155,9 +157,20 @@ const JDList = () => {
               </button>
             </div>
           </div>
-          <div>
+          <div className="flex gap-4">
             {/* Job List with Pagination */}
-            <JobList jobs={currentJobs} onJobClick={handleJobClick} />
+            <div className="w-[70%]">
+              {currentJobs.map((job) => (
+                <JobCard key={job.id} job={job} onJobClick={handleJobClick} />
+              ))}
+            </div>
+
+            {/* Job Details Section on the Right */}
+            {selectedJob && (
+              <div className="w-[30%]">
+                <JobDetails job={selectedJob} />
+              </div>
+            )}
           </div>
 
           {/* Pagination Controls */}
@@ -169,15 +182,10 @@ const JDList = () => {
             />
           </div>
 
-          {/* Job Details Section */}
-          <div className="w-2/5">
-            <JobDetails job={selectedJob} />
-          </div>
-
           {showModal && selectedJob && (
             <LockForMeModal
               id={selectedJob.id}
-              onClose={handleModalClose}
+              onClose={() => setShowModal(false)}
             />
           )}
         </div>

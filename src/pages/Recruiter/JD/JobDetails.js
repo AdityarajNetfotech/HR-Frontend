@@ -10,6 +10,7 @@ import SubmissionIcon from '../../../Images/SubmissionIcon.png';
 import NoticePeriodIcon from '../../../Images/NoticePeriodIcon.png';
 import InterviewIcon from '../../../Images/InterviewIcon.png';
 import PriorityIcon from '../../../Images/PriorityIcon.png'
+import { Link } from 'react-router-dom';
 
 const JobDetails = ({ job }) => {
   const [activeTab, setActiveTab] = useState('description');
@@ -17,7 +18,7 @@ const JobDetails = ({ job }) => {
   if (!job) return <div>Select a job to view details</div>;
 
   return (
-    <div className="p-4 border border-[var(--Teal,#378BA6)] rounded-md w-full max-w-md mx-auto mt-10 h-[1022px] items-center justify-center mt-[210px]">
+    <div className="p-4 border border-[var(--Teal,#378BA6)] rounded-md w-[370px] mx-auto h-[1022px] items-center justify-center">
       <p className="flex max-w-max items-center justify-center px-2 py-1 mb-1 bg-gray-200 text-gray-700 rounded text-center text-sm font-normal leading-[18.2px] tracking-[0.07px] ">JD ID: {job.id}</p>
 
       <div className="flex justify-between items-start mb-4">
@@ -28,7 +29,10 @@ const JobDetails = ({ job }) => {
 
       </div>
       <div className="flex flex-row justify-between">
-        <a href='/LockModal' ><button className="flex justify-center items-center gap-[8px] h-[35.347px] p-[8px_12px] rounded-[8px] bg-[#378BA6] text-white text-center font-jost text-[24px] font-semibold leading-[28px] focus:bg-[#A4A4A4]">  Lock for me <img src={lockIcon} alt='lockIcon' /> </button></a>
+        <Link to='/LockModal' >
+          <button className="flex justify-center items-center gap-[8px] h-[35.347px] p-[8px_12px] rounded-[8px] bg-[#378BA6] text-white text-center font-jost text-[24px] font-semibold leading-[28px] focus:bg-[#A4A4A4]">  Lock for me <img src={lockIcon} alt='lockIcon' />
+          </button>
+        </Link>
         <p className="text-black font-jost text-sm font-semibold leading-9" >
           Status: <span className={` w-[75px] h-[14px] px-3 py-2 flex-col justify-center rounded-md text-center font-jost text-base font-normal leading-[28px] 
           ${job.status === 'Open' ? 'bg-[#DBF0CA] text-[#477C1D]'

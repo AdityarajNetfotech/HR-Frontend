@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import CandidateCard from "./CandidateCard";
-import Chaticon from '../../../Images/ChatIcon.png';
+import Chaticon from "../../../Images/ChatIcon.png";
 import axios from "axios";
-import { json } from "react-router-dom";
+import Pagination from "../../global/Pagination";
 
-const JobCard = ({ limit = Infinity }) => {
+const JobCard = ({ limit = 1 }) => {
   const [jobs, setJobs] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [visibleCards, setVisibleCards] = useState({}); // State to track visibility of candidate cards
+  const itemsPerPage = limit;
 
   useEffect(() => {
     getBackendData();
@@ -13,45 +16,56 @@ const JobCard = ({ limit = Infinity }) => {
 
   const getBackendData = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/locked-jds');
+      const response = await axios.get("http://localhost:4000/api/locked-jds");
       const jobsData = response.data.lockedJDs;
 
-      // Fetch detailed candidate data for each job
       const jobsWithCandidates = await Promise.all(
         jobsData.map(async (job) => {
           const candidateResponses = await Promise.all(
             job.candidates.map(async (candidateId) => {
               const candidateResponse = await axios.get(`http://localhost:4000/api/candidate/${candidateId}`);
-              return candidateResponse.data; // Assuming the API returns candidate details
+              return candidateResponse.data;
             })
           );
-          return { ...job, candidates: candidateResponses }; // Attach candidate details to the job
+          return { ...job, candidates: candidateResponses };
         })
       );
-          
 
-      // Set jobs with candidate details
-      setJobs(jobsWithCandidates.slice(0, limit));
-
+      setJobs(jobsWithCandidates);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
-  // console.log("Jobs -> " + JSON.stringify(jobs));
-  
-  // console.log(jobs.job_id);
-  
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedJobs = jobs.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(jobs.length / itemsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  // Toggle visibility of candidate cards for the clicked job
+  const toggleCardVisibility = (jobId) => {
+    setVisibleCards((prevState) => ({
+      ...prevState,
+      [jobId]: !prevState[jobId], // Toggle the visibility
+    }));
+  };
+
   return (
     <div className="max-w-full mx-auto p-6 bg-white rounded-lg shadow-lg">
-      {jobs.map((job) => (
+      {paginatedJobs.map((job) => (
         <div key={job._id} className="mb-6">
           <div className="flex justify-between items-center mb-6">
             <div>
               <p className="flex max-w-max items-center justify-center px-2 py-1 mb-1 bg-gray-200 text-gray-700 rounded text-center text-sm font-normal leading-[18.2px] tracking-[0.07px]">
                 JD ID: {job._id}
               </p>
-              <h1 className="text-2xl font-normal text-[#4F4F4F]">
+              <h1 className="text-2xl font-normal text-[#4F4F4F] cursor-pointer"
+                onClick={() => toggleCardVisibility(job._id)}>
                 Job Title: <span className="font-bold text-[#303030]">{job.job_title}</span>
               </h1>
               <p className="overflow-hidden text-[#378BA6] text-ellipsis font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">
@@ -79,17 +93,19 @@ const JobCard = ({ limit = Infinity }) => {
             </div>
           </div>
 
-          
-          
-
-          {/* Candidate Cards */}
-          {job.candidates.map((candidate) => (
-            
+          {/* Candidate Cards - Only show if the job is toggled to visible */}
+          {visibleCards[job._id] && job.candidates.map((candidate) => (
             <CandidateCard key={candidate._id} candidates={candidate} />
-          )
-          )}
+          ))}
         </div>
       ))}
+
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

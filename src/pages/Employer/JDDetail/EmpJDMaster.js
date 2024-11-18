@@ -4,27 +4,24 @@ import ExportIcon from '../../../Images/ExportIcon.png';
 import axios from 'axios';
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import Pagination from '../../global/Pagination';
 
 const EmpJDMaster = () => {
     const [jds, setJDs] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(5); // Number of items per page
     const navigate = useNavigate();
 
     const handleClick = (id) => {
         navigate(`/JD_Master_Details/${id}`);
-      };
+    };
 
     useEffect(() => {
         const fetchJDs = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/api/showJDs', {
-                    // headers: {
-                    //     Authorization: `Bearer ${localStorage.getItem('token')}`
-                    // }
-                });
-                console.log(response.data.jds);
-
-                setJDs(response.data.jds); // Assuming response.data.jds is an array
+                const response = await axios.get('http://localhost:4000/api/showJDs');
+                setJDs(response.data.jds || []); // Assuming response.data.jds is an array
             } catch (error) {
                 setErrorMessage('Error fetching JDs. Please try again later.');
                 console.error('Error fetching JDs:', error);
@@ -33,6 +30,10 @@ const EmpJDMaster = () => {
 
         fetchJDs();
     }, []);
+
+    // Pagination logic
+    const totalPages = Math.ceil(jds.length / itemsPerPage);
+    const paginatedJDs = jds.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
         <div>
@@ -49,9 +50,9 @@ const EmpJDMaster = () => {
             <div className='flex flex-col justify-center items-end gap-5 self-stretch rounded-md border border-[#9B9B9B] bg-white shadow-[6px_6px_20px_0px_rgba(0,0,0,0.12)] p-4 mt-6'>
                 {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                 {jds.length > 0 ? (
-                    jds.map((jd, index) => (
+                    paginatedJDs.map((jd, index) => (
                         <div key={jd._id} className='flex justify-between items-center self-stretch flex-wrap'>
-                            <h1 className='text-gray-800 text-center font-sans text-base font-normal leading-6 tracking-tight'>{`#${index + 1} ${jd._id}`}</h1>
+                            <h1 className='text-gray-800 text-center font-sans text-base font-normal leading-6 tracking-tight'>{`#${(currentPage - 1) * itemsPerPage + index + 1} ${jd._id}`}</h1>
                             <div className='flex flex-row items-center'>
                                 <div className='flex flex-row'>
                                     <img src={ExportIcon} alt="Export" className='flex w-[40px] h-[40px] p-[7.655px_7.832px_8.345px_8.168px] justify-center items-center rounded-[45px] bg-[#EAF1F3]' />
@@ -60,17 +61,7 @@ const EmpJDMaster = () => {
                                         <div className='w-30px'>{jd.company_Name}</div>
                                     </div>
                                 </div>
-                                {/* <h1 className='text-gray-800 text-center font-sans text-base font-normal leading-6 tracking-tight'>{jd.createdAt}</h1> */}
                             </div>
-                            {/* <div className='flex flex-row items-center'>
-                                <div className='flex w-[40px] h-[40px] p-[7.655px_7.832px_8.345px_8.168px] justify-center items-center rounded-[45px] bg-[#EAF1F3]'>
-                                    <img src={Chat} alt="Chat" className='w-16 h-auto' />
-                                </div>
-                                <h1 className='text-gray-800 text-center font-sans text-base font-normal leading-6 tracking-tight'>
-                                    <span className='overflow-hidden text-[#4F4F4F] truncate whitespace-nowrap font-jost text-base font-semibold leading-6 tracking-tight'>{jd.jobTitle}</span><br />
-                                    {jd.companyName}
-                                </h1>
-                            </div> */}
                             <a href='/FinanceCandidate'>
                                 <div className='flex w-[86px] p-[4px_12px] justify-center items-center gap-[10px] rounded-[12px] border border-[#000] bg-white'>
                                     <h1>02/02</h1>
@@ -97,6 +88,12 @@ const EmpJDMaster = () => {
                     <h2 className="text-gray-500">No job descriptions available.</h2>
                 )}
             </div>
+
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+            />
         </div>
     );
 };
