@@ -61,7 +61,7 @@ const EmpCandidates = ({ limit = Infinity }) => {
             </div>
 
             <div>
-              <p className="flex flex-row text-[#000] gap-1 font-jost text-[14px] font-semibold leading-[36px]">
+              <p className="flex flex-row text-[#000] gap-1 font-jost text-[14px] font-semibold leading-[36px]"> 
                 Exp:
                 <span className="text-[#4F4F4F] text-center font-jost text-[16px] font-normal leading-[36px] border border-[#4F4F4F] rounded-lg p-[1px_12px]">
                   {job.experience}
