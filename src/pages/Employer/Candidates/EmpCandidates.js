@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Chaticon from '../../../Images/ChatIcon.png';
 import axios from "axios";
-import { json } from "react-router-dom";
 import CandidateCard from "../DashBoard/CandidateCard";
+import Pagination from "../../global/Pagination";
 
 const EmpCandidates = ({ limit = Infinity }) => {
   const [jobs, setJobs] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // Track the current page
+  const [totalPages, setTotalPages] = useState(1); // Total number of pages
+  const jobsPerPage = 1; // Number of jobs per page
 
   useEffect(() => {
     getBackendData();
@@ -28,23 +31,21 @@ const EmpCandidates = ({ limit = Infinity }) => {
           return { ...job, candidates: candidateResponses }; // Attach candidate details to the job
         })
       );
-          
 
-      // Set jobs with candidate details
-      setJobs(jobsWithCandidates.slice(0, limit));
-
+      // Set jobs and calculate total pages
+      setJobs(jobsWithCandidates);
+      setTotalPages(Math.ceil(jobsWithCandidates.length / jobsPerPage));
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
-  // console.log("Jobs -> " + JSON.stringify(jobs));
-  
-  // console.log(jobs.job_id);
-  
+  // Get the jobs to display on the current page
+  const currentJobs = jobs.slice((currentPage - 1) * jobsPerPage, currentPage * jobsPerPage);
+
   return (
     <div className="max-w-full mx-auto p-6 bg-white rounded-lg shadow-lg">
-      {jobs.map((job) => (
+      {currentJobs.map((job) => (
         <div key={job._id} className="mb-6">
           <div className="flex justify-between items-center mb-6">
             <div>
@@ -79,19 +80,21 @@ const EmpCandidates = ({ limit = Infinity }) => {
             </div>
           </div>
 
-          
-          
-
-          {/* Candidate Cards */}
+          {/* Display all candidate cards */}
           <div className="grid grid-cols-2 gap-4">
-          {job.candidates.map((candidate) => (
-            
-            <CandidateCard key={candidate._id} candidates={candidate} />
-          )
-          )}
+            {job.candidates.map((candidate) => (
+              <CandidateCard key={candidate._id} candidates={candidate} />
+            ))}
           </div>
         </div>
       ))}
+
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 };
