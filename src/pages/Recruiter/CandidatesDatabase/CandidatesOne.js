@@ -59,8 +59,7 @@ const CandidatesOne = ({ limit = Infinity }) => {
       <div className='w-[100%] bg-[#EAF1F4] flex flex-col py-5 gap-33 flex-1 p-6'>
         <h1>Candidates List</h1>
 
-        <Filter candidates={candidates} setFilteredCandidates={setFilteredCandidates} filters={filters} setFilters={setFilters}
-        />
+        <Filter candidates={candidates} setFilteredCandidates={setFilteredCandidates} filters={filters} setFilters={setFilters} />
 
         <div className='w-full flex flex-col gap-4 mt-4'>
           {paginatedCandidates.length > 0 ? (

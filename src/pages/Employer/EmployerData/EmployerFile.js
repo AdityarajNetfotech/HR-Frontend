@@ -1,6 +1,7 @@
 import React from 'react'
 import Sidebar from '../../global/Sidebar'
 import CandidateIncompleteModal from '../../Recruiter/Candidates/Modals/CandidateIncompleteModal'
+
 function EmployerFile() {
   return (
     <div className='max-h-screen flex flex-row gap-4'>

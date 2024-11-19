@@ -28,7 +28,7 @@
     padding: 8px 0px;
     border-left: 1px solid rgba(128, 128, 128, 0.578);
     border-right: 1px solid rgba(128, 128, 128, 0.578);
-    width: 7rem !important;
+    width: 9.5rem !important;
 }
 
 #candidateOne-filter>.filter_option:nth-child(6) {

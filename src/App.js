@@ -54,6 +54,7 @@ import AdminSummery from './pages/Admin/AllJds/AdminSummery';
 import AdminDashboard from './pages/Admin/Dashboard/AdminDashboard';
 import AdminEmployerfile from './pages/Admin/EmployerMaster/AdminEmployerfile';
 import EmployerMaster from './pages/Admin/EmployerMaster/EmployerMaster';
+import Admin_Finance from './pages/Admin/Finance/Admin_Finance';
 function App() {
   return (
     <>
@@ -111,6 +112,7 @@ function App() {
           <Route path='/Admin/PersonalInfo' element={<Admin_PersonalInfo />} />
           <Route path='/Admin/Profile' element={<Admin_Profile />} />
           <Route path='/Admin/Reset-Password' element={<Admin_Reset_Password />} />
+          <Route path='/Admin/Finance' element={<Admin_Finance/>} />
           <Route path='/Admin/Finance/invoice' element={<Admin_Finance_Invoice />} />
           <Route path='/Admin/Finance/JD-Details' element={<Admin_Finance_JD_Details />} />
           {/* <Route path='/Adminjds' element={<Adminjds/>} /> */}
