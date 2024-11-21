@@ -55,6 +55,8 @@ import AdminDashboard from './pages/Admin/Dashboard/AdminDashboard';
 import AdminEmployerfile from './pages/Admin/EmployerMaster/AdminEmployerfile';
 import EmployerMaster from './pages/Admin/EmployerMaster/EmployerMaster';
 import Admin_Finance from './pages/Admin/Finance/Admin_Finance';
+import AdminEmployerMaster from './pages/Admin/EmployerMaster/EmployerMaster'
+import AdminRecruterMaster from './pages/Admin/RecruterMaster/AdminRecruterMaster'
 function App() {
   return (
     <>
@@ -119,7 +121,10 @@ function App() {
           <Route path='/AdminSummery' element={<AdminSummery/>} />
           <Route path='/AdminDashboard' element={<AdminDashboard/>} />
           <Route path='/AEmployerMaster' element={<EmployerMaster/>} />
-
+          <Route path='/Adminjds' element={<Adminjds/>} />
+          <Route path='/AdminEmployerfile' element={<AdminEmployerfile/>} />
+          <Route path='/AdminEmployerMaster' element={<AdminEmployerMaster/>} />
+          <Route path='/AdminRecruterMaster' element={<AdminRecruterMaster/>} />
 
 
 

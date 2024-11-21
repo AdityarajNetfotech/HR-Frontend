@@ -43,7 +43,7 @@ function Adminjds() {
     };
 
     return (
-        <div className='max-h-screen flex flex-row gap-0 h-[100%]'>
+        <div className=' flex flex-row gap-0 h-full'>
             <div className='max-[30%]'>
                 <Sidebar />
             </div>

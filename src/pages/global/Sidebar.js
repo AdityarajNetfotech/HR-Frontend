@@ -3,6 +3,7 @@ import { FaHome, FaUser, FaDatabase, FaComments, FaMoneyBill, FaCog, FaInfoCircl
 import { NavLink } from 'react-router-dom';
 import R from '../../Images/R.png';
 import { MdOutlineArrowForwardIos } from "react-icons/md";
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -20,12 +21,18 @@ const Sidebar = () => {
     <div className={`flex flex-col h-[1101px] rounded-r-xl bg-[var(--Teal,#378BA6)] text-white ${isOpen ? 'w-64' : 'w-20'} transition-all duration-300`}>
       {/* Sidebar Header */}
       <div className="flex items-center justify-between p-4">
-        <div className="flex items-center">
-          <div className={`w-12 h-full ${isOpen ? '' : 'hidden'}`}>
-            <img src={R} alt="Recrutify Logo" />
-          </div>
-          {isOpen && <h1 className="text-white font-jost text-4xl font-medium leading-normal w-[182.582px] h-[46.315px] flex-shrink-0">Recrutify</h1>}
-        </div>
+      <div className="flex items-center">
+  <Link to="/Dashboard" className="flex items-center">
+    <div className={`w-12 h-full ${isOpen ? '' : 'hidden'}`}>
+      <img src={R} alt="Recrutify Logo" />
+    </div>
+    {isOpen && (
+      <h1 className="text-white font-jost text-4xl font-medium leading-normal w-[182.582px] h-[46.315px] flex-shrink-0">
+        Recrutify
+      </h1>
+    )}
+  </Link>
+</div>
       </div>
       <button onClick={toggleSidebar} className="flex justify-center p-2 rounded focus:outline-none bg-none">
         <MdOutlineArrowForwardIos size={30} />
