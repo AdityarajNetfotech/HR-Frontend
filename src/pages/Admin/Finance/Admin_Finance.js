@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../../global/Sidebar';
 import ExportIcon from '../../../Images/ExportIcon.png';
 import Chat from '../../../Images/ChatIcon.png';
+import Pagination from '../../global/Pagination';
 
 function Admin_Finance() {
+    const [currentPage, setCurrentPage] = useState(1);
+    const totalPages = 5; // Assume there are 5 pages for now. Adjust based on actual data.
+
     return (
         <>
             <div className="max-h-screen flex flex-row gap-0 h-full">
@@ -237,7 +241,11 @@ function Admin_Finance() {
                             <h1 className="text-[#4F4F4F] font-jost text-base font-normal tracking-wide">15,000/-</h1>
                         </div>
                     </div>
-
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={setCurrentPage}
+                    />
                 </div>
             </div>
         </>
