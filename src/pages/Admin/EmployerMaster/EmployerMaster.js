@@ -31,11 +31,17 @@ const EmployerMaster = () => {
   }, []);
 
   // Filter users based on applied filters
-  const filteredUsers = users
-    .filter(user => user._id.toLowerCase().includes(searchTerm.toLowerCase())) // Search by ID
-    .filter(user => (jobTitle ? user.jobTitle === jobTitle : true))
-    .filter(user => (status ? user.status === status : true))
-    .filter(user => (location ? user.location === location : true));
+const filteredUsers = users
+  .filter(user => 
+    user._id.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by ID
+    user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by First Name
+    user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by Last Name
+    (user.company && user.company.toLowerCase().includes(searchTerm.toLowerCase())) // Search by Company
+  )
+  .filter(user => (jobTitle ? user.jobTitle === jobTitle : true))
+  .filter(user => (status ? user.status === status : true))
+  .filter(user => (location ? user.location === location : true));
+
 
   // Sorting logic
   const sortedUsers = filteredUsers.sort((a, b) => {
@@ -70,13 +76,17 @@ const EmployerMaster = () => {
     setCurrentPage(1); // Reset to first page
   };
 
+  useEffect(() => {
+    console.log(users); // Log all user data
+  }, [users]);
+
   return (
     <div className='flex flex-row gap-0 h-full'>
       <div className='max-[30%]'>
         <Sidebar />
       </div>
       <div className='w-[100%] bg-[#EAF1F4] flex flex-col p-5 flex-1'>
-        
+
         <section id='candidateOne-filter'>
           <div className="candidateOne-filter_search">
             <i className="fa-solid fa-magnifying-glass"></i>

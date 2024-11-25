@@ -33,9 +33,13 @@ const AdminRecruterMaster = () => {
   }, []);
 
   // Filter users based on the search term (employee ID)
-  const filteredUsers = users.filter(user =>
-    user._id.toLowerCase().includes(searchTerm.toLowerCase()) // Filter by employee ID
-  );
+  const filteredUsers = users
+  .filter(user => 
+    user._id.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by ID
+    user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by First Name
+    user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by Last Name
+    (user.company && user.company.toLowerCase().includes(searchTerm.toLowerCase())) // Search by Company
+  )
 
   // Sort users based on the selected sort order (Latest or Oldest)
   const sortedUsers = [...filteredUsers].sort((a, b) => {
