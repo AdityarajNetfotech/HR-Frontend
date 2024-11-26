@@ -57,11 +57,16 @@ import EmployerMaster from './pages/Admin/EmployerMaster/EmployerMaster';
 import Admin_Finance from './pages/Admin/Finance/Admin_Finance';
 import AdminEmployerMaster from './pages/Admin/EmployerMaster/EmployerMaster'
 import AdminRecruterMaster from './pages/Admin/RecruterMaster/AdminRecruterMaster'
+import ChatSupport from './pages/Recruiter/ChatSupport/ChatSupport';
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+
+
+          <Route path='/chat-support' element={<ChatSupport />} />
+
           <Route path='/' element={<MainLandingPage />} />
           <Route path='/about' element={<AboutUs />} />
           <Route path='/login' element={<LoginForm />} />
