@@ -3,7 +3,7 @@ import Chaticon from "../../../Images/ChatIcon.png";
 import axios from "axios";
 import CandidateCard from "../DashBoard/CandidateCard";
 import Pagination from "../../global/Pagination";
-import Sidebar from "../../global/Sidebar";
+import EmpSidebar from "../../global/EmpSidebar";
 
 const EmpCandidates = ({ limit = Infinity }) => {
   const [jobs, setJobs] = useState([]);
@@ -119,7 +119,7 @@ const EmpCandidates = ({ limit = Infinity }) => {
   return (
     <div className="h-full flex flex-row">
       <div className="max-[30%]">
-        <Sidebar />
+        <EmpSidebar />
       </div>
 
       <div className="max-w-full mx-auto p-6 bg-white rounded-lg shadow-lg">

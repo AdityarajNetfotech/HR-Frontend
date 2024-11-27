@@ -5,7 +5,7 @@ import R from '../../Images/R.png';
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { Link } from 'react-router-dom';
 
-const Sidebar = () => {
+const EmpSidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [openDropdown, setOpenDropdown] = useState(null);
 
@@ -22,7 +22,7 @@ const Sidebar = () => {
       {/* Sidebar Header */}
       <div className="flex items-center justify-between p-4">
       <div className="flex items-center">
-  <Link to="/Dashboard" className="flex items-center">
+  <Link to="/EmployerDashboard" className="flex items-center">
     <div className={`w-12 h-full ${isOpen ? '' : 'hidden'}`}>
       <img src={R} alt="Recrutify Logo" />
     </div>
@@ -40,9 +40,9 @@ const Sidebar = () => {
 
       {/* Navigation */}
       <nav className="flex flex-col flex-grow mt-10">
-        <NavItem to="/Dashboard" icon={<FaHome />} label="Dashboard" isOpen={isOpen} />
+        <NavItem to="/EmployerDashboard" icon={<FaHome />} label="Dashboard" isOpen={isOpen} />
         <DropdownNavItem
-          to="/JDList"
+          to="/EmpJDdetail"
           icon={<FaDatabase />}
           label="JD Lists"
           isOpen={isOpen}
@@ -52,22 +52,23 @@ const Sidebar = () => {
           <DropdownItem to="/JDList" label="Recent JD" />
           <DropdownItem to="/JDList" label="Archive JD" />
         </DropdownNavItem>
-        <DropdownNavItem
-          to="/workplace"
+        {/* <DropdownNavItem
+          to="/EmployerJd"
           icon={<FaUser />}
-          label="My Workplace"
+          label="New JD"
           isOpen={isOpen}
           openDropdown={openDropdown}
           onDropdownToggle={() => handleDropdownToggle('My Workplace')}
         >
-          <DropdownItem to="/MyWorkspace" label="Team" />
+          <DropdownItem to="/EmployerJd" label="Team" />
           <DropdownItem to="/workplace/tasks" label="Tasks" />
-        </DropdownNavItem>
-        <NavItem to="/CandidatesOne" icon={<FaComments />} label="Candidate Database" isOpen={isOpen} />
+        </DropdownNavItem> */}
+        <NavItem to="/EmployerJd" icon={<FaComments />} label="New JD" isOpen={isOpen} />
+        <NavItem to="/EmpCandidates" icon={<FaComments />} label="Candidates" isOpen={isOpen} />
         <NavItem to="/chat-support" icon={<FaMoneyBill />} label="Chat Support" isOpen={isOpen} />
         <NavItem to="/FinanceList" icon={<FaCog />} label="Finances" isOpen={isOpen} />
         <NavItem to="/Profile" icon={<FaInfoCircle />} label="Profile" isOpen={isOpen} />
-        <NavItem to="/about" icon={<FaInfoCircle />} label="Profile" isOpen={isOpen} />
+        <NavItem to="/EmpAboutUs" icon={<FaInfoCircle />} label="About" isOpen={isOpen} />
         <NavItem to="/login" icon={<FaSignOutAlt />} label="Logout" isOpen={isOpen} />
       </nav>
 
@@ -124,4 +125,4 @@ const DropdownItem = ({ to, label }) => {
   );
 };
 
-export default Sidebar;
+export default EmpSidebar;

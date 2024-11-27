@@ -94,7 +94,7 @@ const AddCandidates = () => {
             currentItems.map((jd, index) => (
               <div key={index} className='flex flex-col justify-between items-end gap-5 self-stretch'>
                 <div className='flex justify-between items-center self-stretch rounded-md border border-[#9B9B9B] bg-white shadow-[6px_6px_20px_0px_rgba(0,0,0,0.12)] p-4 mt-6'>
-                  <h1 className='text-gray-800 text-center font-sans text-base font-normal leading-6 tracking-tight w-1/9'>#{jd._id.slice(-4)}</h1>
+                  <h1 className='text-gray-800 text-center font-sans text-base font-normal leading-6 tracking-tight w-1/9'>#{jd._id}</h1>
 
                   <div className='flex flex-row items-center'>
                     <div className='flex w-[40px] h-[40px] p-[7.655px_7.832px_8.345px_8.168px] justify-center items-center rounded-[45px] bg-[#EAF1F3]'>

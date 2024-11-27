@@ -4,6 +4,7 @@ import MonthlyDashboard from '../../Recruiter/Dashboard/MonthlyDashboard';
 // import JobFilters from '../../Recruiter/JD/JobFilters.js';
 import Yearly from '../../Recruiter/Dashboard/Yearly';
 import Sidebar from '../../global/Sidebar.js'
+import EmpSidebar from '../../global/EmpSidebar.js';
 import JobCard from './JobsCard.js';
 
 function EmpDashboard() {
@@ -23,7 +24,7 @@ function EmpDashboard() {
   };
   return (
     <div className='max-h-screen flex flex-row gap-0'>
-      <Sidebar className='max-[30%] ' />
+      <EmpSidebar className='max-[30%] ' />
       <div className="w-full px-5  mt-10">
         {/* Tabs Section */}
         <div className="flex space-x-1 text-[var(--Teal,#378BA6)] text-center text-[18px] font-normal leading-[36px] ">

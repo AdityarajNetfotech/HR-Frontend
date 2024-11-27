@@ -45,9 +45,15 @@ const LoginForm = () => {
             });
 
             console.log('Fetched User Details:', userResponse.data.user); // Log the fetched user details
-
+            
             localStorage.setItem('userId', fetchedUserId); // Persist user ID in localStorage
-            navigate('/Dashboard');
+            if( userResponse.data.user.joinAs === "client"){
+                navigate("/EmployerDashboard")
+            }else if(response.data.joinAs === "admin"){
+                navigate('/AdminDashboard')
+            }else {
+                navigate('/Dashboard');
+            }
         } catch (error) {
             console.error('Login failed:', error.response ? error.response.data.message : error.message);
             setError(error.response ? error.response.data.message : 'Something went wrong');

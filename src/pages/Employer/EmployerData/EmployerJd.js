@@ -1,5 +1,6 @@
 import React from 'react'
 import Sidebar from '../../global/Sidebar'
+import EmpSidebar from '../../global/EmpSidebar'
 import JobFilters from '../../Recruiter/JD/JobFilters'
 import EmployerDetailes from './EmployerDetailes'
 function EmployerJd() {
@@ -7,7 +8,7 @@ function EmployerJd() {
   return (
     <div className='max-h-screen flex flex-row gap-4'>
       <div className='max-[30%]'>
-        <Sidebar />
+        <EmpSidebar />
       </div>
       <div className=" w-[85%] p-4 bg-[#EAF1F4] h-full">
         <h1>Hello </h1>

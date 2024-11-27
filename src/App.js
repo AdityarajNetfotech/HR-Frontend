@@ -58,6 +58,7 @@ import Admin_Finance from './pages/Admin/Finance/Admin_Finance';
 import AdminEmployerMaster from './pages/Admin/EmployerMaster/EmployerMaster'
 import AdminRecruterMaster from './pages/Admin/RecruterMaster/AdminRecruterMaster'
 import ChatSupport from './pages/Recruiter/ChatSupport/ChatSupport';
+import EmpAbout from './Components/EmpAboutUs/EmpAbout'
 function App() {
   return (
     <>
@@ -66,7 +67,7 @@ function App() {
 
 
           <Route path='/chat-support' element={<ChatSupport />} />
-
+          <Route path='/EmpAbout' element={<EmpAbout />} />
           <Route path='/' element={<MainLandingPage />} />
           <Route path='/about' element={<AboutUs />} />
           <Route path='/login' element={<LoginForm />} />
