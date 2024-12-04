@@ -4,10 +4,14 @@ import { NavLink } from 'react-router-dom';
 import R from '../../Images/R.png';
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from "axios"
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [openDropdown, setOpenDropdown] = useState(null);
+  const navigate = useNavigate()
+
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -17,22 +21,48 @@ const Sidebar = () => {
     setOpenDropdown(openDropdown === label ? null : label);
   };
 
+
+  const handleLogout = async () => {
+    console.log("Logout button clicked");
+    try {
+      // console.log("Before logout:", localStorage.getItem('userId'));
+
+      const response = await axios.get('http://localhost:4000/api/logout'); // API call to backend
+      console.log(response.data);
+
+      if (response.data.success) {
+        // Clear localStorage items
+        localStorage.removeItem('userId'); // Replace 'userId' with your actual key name
+        localStorage.removeItem('token');  // If token is stored
+        console.log("After removal:", localStorage.getItem('userId')); // Check if cleared
+
+        // Redirect to home page
+        navigate('/');
+      } else {
+        console.error("Logout failed: ", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error during logout: ", error);
+    }
+  };
+
+
   return (
     <div className={`flex flex-col h-[1101px] rounded-r-xl bg-[var(--Teal,#378BA6)] text-white ${isOpen ? 'w-64' : 'w-20'} transition-all duration-300`}>
       {/* Sidebar Header */}
       <div className="flex items-center justify-between p-4">
-      <div className="flex items-center">
-  <Link to="/Dashboard" className="flex items-center">
-    <div className={`w-12 h-full ${isOpen ? '' : 'hidden'}`}>
-      <img src={R} alt="Recrutify Logo" />
-    </div>
-    {isOpen && (
-      <h1 className="text-white font-jost text-4xl font-medium leading-normal w-[182.582px] h-[46.315px] flex-shrink-0">
-        Recrutify
-      </h1>
-    )}
-  </Link>
-</div>
+        <div className="flex items-center">
+          <Link to="/Dashboard" className="flex items-center">
+            <div className={`w-12 h-full ${isOpen ? '' : 'hidden'}`}>
+              <img src={R} alt="Recrutify Logo" />
+            </div>
+            {isOpen && (
+              <h1 className="text-white font-jost text-4xl font-medium leading-normal w-[182.582px] h-[46.315px] flex-shrink-0">
+                Recrutify
+              </h1>
+            )}
+          </Link>
+        </div>
       </div>
       <button onClick={toggleSidebar} className="flex justify-center p-2 rounded focus:outline-none bg-none">
         <MdOutlineArrowForwardIos size={30} />
@@ -67,8 +97,8 @@ const Sidebar = () => {
         <NavItem to="/chat-support" icon={<FaMoneyBill />} label="Chat Support" isOpen={isOpen} />
         <NavItem to="/FinanceList" icon={<FaCog />} label="Finances" isOpen={isOpen} />
         <NavItem to="/Profile" icon={<FaInfoCircle />} label="Profile" isOpen={isOpen} />
-        <NavItem to="/about" icon={<FaInfoCircle />} label="Profile" isOpen={isOpen} />
-        <NavItem to="/login" icon={<FaSignOutAlt />} label="Logout" isOpen={isOpen} />
+        <NavItem to="/about" icon={<FaInfoCircle />} label="About" isOpen={isOpen} />
+        <NavItem icon={<FaSignOutAlt />}  onClick={handleLogout} label="Logout" isOpen={isOpen} />
       </nav>
 
       {/* Footer */}
@@ -81,18 +111,18 @@ const Sidebar = () => {
   );
 };
 
-const NavItem = ({ to, icon, label, isOpen }) => {
+const NavItem = ({ to, icon, label, isOpen, onClick }) => {
   return (
-    <NavLink
-      to={to}
-      className="flex items-center p-4 rounded-r-lg hover:bg-white hover:text-black cursor-pointer"
-      activeClassName="bg-[var(--Teal,#378BA6)]"
+    <div
+      className={`flex items-center p-4 rounded-r-lg hover:bg-white hover:text-black cursor-pointer`}
+      onClick={onClick}
     >
       {icon}
       {isOpen && <span className="ml-2">{label}</span>}
-    </NavLink>
+    </div>
   );
 };
+
 
 const DropdownNavItem = ({ to, icon, label, isOpen, openDropdown, onDropdownToggle, children }) => {
   return (

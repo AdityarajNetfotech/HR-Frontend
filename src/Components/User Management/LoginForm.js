@@ -13,52 +13,48 @@ const LoginForm = () => {
     const [userId, setUserId] = useState(null); // State to hold the user ID
     const navigate = useNavigate();
 
-    const getSignupForm = () => {
-        return {
-            emailOrPhone, password
-        };
-    };
-
     const handleLogin = async (e) => {
         e.preventDefault();
-        const LoginForm = getSignupForm();
-
+    
         try {
             const response = await axios.post('http://localhost:4000/api/signin', {
                 email: emailOrPhone,
                 password,
                 withCredentials: true,
-            }
-            // , {
-              
-            // }
-          );
-
+            });
+    
             console.log('Login successful:', response.data);
             const fetchedUserId = response.data.userId; // Store user ID from response
-            setUserId(fetchedUserId); // Store user ID in state
-            console.log('User ID:', fetchedUserId); // Log the user ID to the console
-
+            setUserId(fetchedUserId);
+            console.log('User ID:', fetchedUserId);
+    
             // Fetch user details using the user ID
             const userResponse = await axios.get(`http://localhost:4000/api/user/${fetchedUserId}`, {
                 withCredentials: true,
             });
-
-            console.log('Fetched User Details:', userResponse.data.user); // Log the fetched user details
-            
-            localStorage.setItem('userId', fetchedUserId); // Persist user ID in localStorage
-            if( userResponse.data.user.joinAs === "client"){
-                navigate("/EmployerDashboard")
-            }else if(response.data.joinAs === "admin"){
-                navigate('/AdminDashboard')
-            }else {
-                navigate('/Dashboard');
+    
+            const user = userResponse.data.user;
+            console.log('Fetched User Details:', user);
+    
+            // Persist user ID in localStorage
+            localStorage.setItem('userId', fetchedUserId);
+    
+            // Redirect based on user type
+            if (user.joinAs === "client") {
+                navigate("/EmployerDashboard");
+            } else if (user.joinAs === "recruiter") {
+                navigate("/Dashboard");
+            } else if (user.joinAs === "admin") {
+                navigate("/AdminDashboard");
+            } else {
+                navigate("/Dashboard");
             }
         } catch (error) {
             console.error('Login failed:', error.response ? error.response.data.message : error.message);
             setError(error.response ? error.response.data.message : 'Something went wrong');
         }
     };
+    
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible); // Toggle password visibility correctly

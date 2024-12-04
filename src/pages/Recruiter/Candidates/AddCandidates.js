@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import axios to fetch data
 import ExportIcon from '../../../Images/ExportIcon.png';
+import DeleteIcon from '../../../Images/DeleteIcon.png';
 import Chat from '../../../Images/ChatIcon.png';
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
 import Sidebar from '../../global/Sidebar';
@@ -13,7 +14,7 @@ const AddCandidates = () => {
   const [lockedJobDetails, setLockedJobDetails] = useState([]); // State to store locked job details
   const [errorMessage, setErrorMessage] = useState(''); // State for error message
   const [currentPage, setCurrentPage] = useState(1); // State for current page
-  const itemsPerPage = 5; // Number of items per page
+  const itemsPerPage = 1; // Number of items per page
 
   // Function to get locked job details
   const getJobDetails = async () => {
@@ -23,12 +24,27 @@ const AddCandidates = () => {
       // Filter only locked JDs
       const lockedJDs = jobDetails.filter(jd => jd.locked === true);
       setLockedJobDetails(lockedJDs); // Set locked JDs in state
-      console.log(lockedJDs);
+      // console.log(lockedJDs);
     } catch (error) {
       console.error('Error fetching job details:', error);
       setErrorMessage('Error fetching job details.');
     }
   };
+
+
+  const deleteJD = async (id) => {
+    try {
+      const response = await axios.delete(`http://localhost:4000/api/jd/delete/${id}`);
+      if (response.data.success) {
+        setLockedJobDetails((prevJDs) => prevJDs.filter((jd) => jd._id !== id)); // Remove the deleted JD from the state
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.log("Error deleting JD:", error);
+    }
+  };
+
+
 
   // Fetch job details when component mounts
   useEffect(() => {
@@ -46,6 +62,9 @@ const AddCandidates = () => {
   // Pagination calculation
   const totalPages = Math.ceil(lockedJobDetails.length / itemsPerPage);
   const currentItems = lockedJobDetails.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+
+
 
   return (
     <div className='max-h-screen flex flex-row gap-0'>
@@ -85,6 +104,7 @@ const AddCandidates = () => {
           <h1 className='text-black text-center font-jost text-xl font-normal leading-9 w-1/7'>DEADLINE</h1>
           <h1 className='text-black text-center font-jost text-xl font-normal leading-9 w-1/7'>STATUS</h1>
           <h1 className='text-black text-center font-jost text-xl font-normal leading-9 w-1/7'>DETAIL</h1>
+          <h1 className='text-black text-center font-jost text-xl font-normal leading-9 w-1/7'>DELETE JD</h1>
         </div>
 
         {/* Map through locked JDs */}
@@ -127,6 +147,10 @@ const AddCandidates = () => {
                   <button onClick={() => toggleAccordion(index)} className='flex w-[108px] p-[4px_12px] justify-between items-center gap-[10px] rounded-[12px] border border-[#1C3941] bg-[#378BA6]'>
                     <h1 className='text-white font-jost text-base font-semibold leading-5 tracking-tight'>More</h1>
                     {renderIcon(index)}
+                  </button>
+                  <button className="p-2 h-10 rounded-lg hover:bg-[rgba(55,139,166,0.20)] bg-[rgba(55,139,166,0.30)]"
+                    onClick={() => deleteJD(jd._id)}>
+                    <img src={DeleteIcon} alt="Delete" />
                   </button>
                 </div>
                 {/* Accordion Content */}
