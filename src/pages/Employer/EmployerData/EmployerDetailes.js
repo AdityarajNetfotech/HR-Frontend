@@ -1,123 +1,214 @@
-import React ,{useState} from 'react'
-// import EmployerCard from './EmployerCard'
-import EmployerList from './EmployerList'
+import React, { useState, useEffect } from 'react';
+import EmployerList from './EmployerList';
+import Pagination from '../../global/Pagination'; // Import the Pagination component
+import axios from "axios";
+import { Link } from 'react-router-dom';
 
 const EmployerDetailes = () => {
-  const [selectedJob, setSelectedJob] = useState(null);
+  const [jobs, setJobs] = useState([]); // All jobs data
+  const [filteredJobs, setFilteredJobs] = useState([]); // Filtered jobs data
+  const [searchTerm, setSearchTerm] = useState(''); // Search term state
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
+  const [currentPage, setCurrentPage] = useState(1); // Current page
+  const [selectedJob, setSelectedJob] = useState(null); // Selected job state
+  const [sortOption, setSortOption] = useState('Latest'); // Sorting state
+  const [locationFilter, setLocationFilter] = useState(''); // Location filter state
+  const [locations, setLocations] = useState([]); // Dynamically fetched locations
+  const [jobTitleFilter, setJobTitleFilter] = useState('');
+  const [jobTitles, setJobTitles] = useState([]); // State for dynamic job titles
+  const jobsPerPage = 4; // Number of jobs per page
+
+  // Fetch jobs from backend
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/api/showJDs');
+        console.log(response.data);
+
+        const fetchedJobs = response.data.jds;
+        setJobs(fetchedJobs); // Assuming `jds` is the array in response
+        setFilteredJobs(fetchedJobs); // Initialize filtered jobs
+
+        // Extract unique locations and job titles
+        const uniqueLocations = [
+          ...new Set(fetchedJobs.map((job) => job.location).filter(Boolean))
+        ];
+        setLocations(uniqueLocations);
+
+        const uniqueJobTitles = [
+          ...new Set(fetchedJobs.map((job) => job.job_title).filter(Boolean))
+        ];
+        setJobTitles(uniqueJobTitles);
+
+      } catch (err) {
+        setError(err.response?.data?.message || 'Failed to load jobs');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchTerm(value);
+
+    // Filter jobs by job title, company name, or JD ID
+    const filtered = jobs.filter((job) =>
+      job.industry.toLowerCase().includes(value) ||
+      job.company_Name.toLowerCase().includes(value) ||
+      job._id.toLowerCase().includes(value)
+    );
+    setFilteredJobs(filtered);
+    setCurrentPage(1); // Reset to the first page
+  };
+
+  // Handle sorting
+  const handleSortChange = (e) => {
+    const value = e.target.value;
+    setSortOption(value);
+
+    // Sorting logic
+    const sortedJobs = [...filteredJobs].sort((a, b) => {
+      if (value === 'Latest') {
+        return new Date(b.createdAt) - new Date(a.createdAt); // Assuming `createdAt` contains job creation date
+      } else if (value === 'Oldest') {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      }
+      return 0;
+    });
+
+    setFilteredJobs(sortedJobs);
+  };
+
+  // Handle job title filter change
+  const handleJobTitleChange = (e) => {
+    const selectedTitle = e.target.value;
+    setJobTitleFilter(selectedTitle);
+
+    // Filter jobs by job title
+    const filtered = jobs.filter((job) =>
+      selectedTitle === '' || job.job_title === selectedTitle
+    );
+    setFilteredJobs(filtered);
+  };
+
+  const handleLocationChange = (e) => {
+    const value = e.target.value;
+    setLocationFilter(value);
+
+    // Filter jobs by location
+    const filtered = jobs.filter((job) =>
+      value === '' || (job.location && job.location.toLowerCase() === value.toLowerCase())
+    );
+
+    setFilteredJobs(filtered);
+    setCurrentPage(1); // Reset to the first page
+  };
+
+  // Reset filters
+  const handleResetFilters = () => {
+    setSearchTerm('');
+    setFilteredJobs(jobs);
+    setLocationFilter('');
+    setJobTitleFilter('');
+    setCurrentPage(1);
+  };
+
+  // Calculate paginated jobs
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+
+  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   const handleJobClick = (job) => {
     setSelectedJob(job);
   };
 
-  const jobs = [
-    {
-      id: '12345678',
-      name: 'Samuel Matthew',
-      title: 'Graphic Designer',
-      company: 'Neftotech Solutions',
-      location: 'Kharadi, Pune',
-      industry: 'Design',
-      experience: '02 Years',
-      salary: '1,60,000/- p.a.',
-      type: 'Full time, Hybrid',
-      interviewRounds: '04',
-      noticePeriod: '01 month',
-      priority: 'On Priority',
-      submissionsRequired: '02',
-      uploadedOn: '15th July\'24, 10:30am',
-      deliveryRequired: '30th July\'24',
-      replacementPeriod: '05 days',
-      skills: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras facilisis faucibus odio arcu duis dui, adipiscing facilisis.',
-      comments: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras facilisis faucibus odio arcu duis dui, adipiscing facilisis.',
-      status: 'Open',
-      payout: '1500/-',
-      absoluteValue: '1500/-',
-      signUpRate: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras facilisis faucibus odio arcu duis dui, adipiscing facilisis.',
-      paymentTerms: [
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras facilisis faucibus odio arcu duis dui, adipiscing facilisis.',
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras facilisis faucibus odio arcu duis dui, adipiscing facilisis.',
-      ],
-      importantNotes: [
-        'User Rating will drop in case the assured delivery date is missed, also the JD will be given to other users.',
-        'Please note: User Rating will drop in case the assured delivery date is missed, also the JD will be given to other users.',
-      ],
-    },
-    {
-      id: '34567890',
-      name: 'Samuel M',
-      title: 'Marketing Manager',
-      company: 'BrightFuture Ltd.',
-      location: 'Mumbai, Maharashtra',
-      industry: 'Marketing',
-      experience: '05 Years',
-      salary: '3,00,000/- p.a.',
-      type: 'Full time, On-site',
-      interviewRounds: '02',
-      noticePeriod: '01 month',
-      priority: 'Medium',
-      submissionsRequired: '03',
-      uploadedOn: '10th July\'24, 11:00am',
-      deliveryRequired: '05th August\'24',
-      replacementPeriod: '10 days',
-      skills: 'Experience with digital marketing strategies, SEO, and social media management.',
-      comments: 'Looking for a candidate with strong leadership skills and a track record of successful campaigns.',
-      status: 'Closed',
-      payout: '2500/-',
-      absoluteValue: '2500/-',
-      signUpRate: 'Please include references from previous employers in your application.',
-      paymentTerms: [
-        'Payment upon successful hiring of candidates.',
-        'All invoices to be submitted within 7 days of placement.'
-      ],
-      importantNotes: [
-        'Experience with international markets is a plus.',
-        'Candidates should be prepared for a comprehensive interview process.'
-      ],
-    },
-    {
-      id: '45678901',
-      name: 'S Matthew',
-      title: 'Data Analyst',
-      company: 'DataSolutions Inc.',
-      location: 'Hyderabad, Telangana',
-      industry: 'Data Analysis',
-      experience: '02 Years',
-      salary: '1,80,000/- p.a.',
-      type: 'Full time, Hybrid',
-      interviewRounds: '04',
-      noticePeriod: '01 month',
-      priority: 'High',
-      submissionsRequired: '02',
-      uploadedOn: '25th July\'24, 02:00pm',
-      deliveryRequired: '20th August\'24',
-      replacementPeriod: '05 days',
-      skills: 'Strong knowledge of SQL, Excel, and data visualization tools like Tableau.',
-      comments: 'Candidate should have analytical thinking and the ability to work with large datasets.',
-      status: 'Rework',
-      payout: '1600/-',
-      absoluteValue: '1600/-',
-      signUpRate: 'Candidates must have experience in a similar role.',
-      paymentTerms: [
-        'Payments will be made after successful hiring.',
-        'Invoices must be submitted with detailed candidate information.'
-      ],
-      importantNotes: [
-        'Candidates should be proficient in statistical analysis.',
-        'Experience with Python or R is an advantage.'
-      ],
-    },
-    // Add more job data here
-  ];
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="min-h-screen max-w-8xl bg-white p-4 gap-4 flex items-start ">
-      <div className="w-full">
-        {/* <JobFilters/> */}
-        <EmployerList jobs={jobs} onJobClick={handleJobClick}/>
+    <section>
+      {/* Filter */}
+      <div id='candidateOne-filter'>
+        <div className="candidateOne-filter_search">
+          <i className="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            placeholder="Search Here..."
+            className="candidateOne-filter_search-bar"
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </div>
+
+        <div className='filter_option'>
+          <span><i className="fa-solid fa-sort"></i> Sort By:</span>
+          <select name="Sort By" value={sortOption} onChange={handleSortChange}>
+            <option value="Latest">Latest</option>
+            <option value="Oldest">Oldest</option>
+          </select>
+        </div>
+
+        <div className="filter_option">
+          <select
+            name="Job Title"
+            value={jobTitleFilter}
+            onChange={handleJobTitleChange}
+          >
+            <option value="">All Job Titles</option>
+            {jobTitles.map((title, index) => (
+              <option key={index} value={title}>
+                {title}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className='filter_option'>
+          <select name="Location" value={locationFilter} onChange={handleLocationChange}>
+            <option value="">All Locations</option>
+            {locations.map((location, index) => (
+              <option key={index} value={location}>{location}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className='filter_option'>
+          <button onClick={handleResetFilters}>
+            <i className="fa-solid fa-arrow-rotate-left"></i> Reset Filter
+          </button>
+        </div>
       </div>
-    </div>
+      <br />
+
+      <button className='w-full flex p-2 px-3 justify-center items-center gap-2 self-stretch rounded-lg bg-gray-400'>
+        <Link to="/AddJDForm" className='text-white text-center font-semibold text-2xl leading-7 font-jost'>Add New Candidates</Link>
+      </button>
+
+      <div className="max-w-8xl bg-white p-4 gap-4 flex items-start ">
+        <div className="w-full">
+          {/* Render paginated jobs */}
+          <EmployerList jobs={currentJobs} onJobClick={handleJobClick} />
+          {/* Render pagination */}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      </div>
+    </section>
   );
 };
 
 export default EmployerDetailes;
-

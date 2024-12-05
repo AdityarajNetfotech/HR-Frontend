@@ -20,26 +20,26 @@ const SignupForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const signupForm = getSignupForm();
-    
-    
 
     try {
       console.log('SignUpData= ', signupForm);
 
-      const response = await axios.post('http://localhost:4000/api/signup',signupForm);
-      const result = await response.json();
-      if (response.ok) {
-        alert('SignUp Form submitted successfully!');
-       
+      const response = await axios.post('http://localhost:4000/api/signup', signupForm);
+
+      // Success ke liye status 200 ya 201 check karein
+      if (response.status === 200 || response.status === 201) {
+        alert(response.data.message);
+        console.log(response.data.message); // Extra debugging ke liye
       } else {
-        alert('Failed to submit form: ' + result.message);
+        alert('Something went wrong! Please try again.');
       }
-      
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('An error occurred while submitting the form.');
     }
   };
+
+
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
@@ -107,7 +107,7 @@ const SignupForm = () => {
                 className="w-full p-2 border border-[var(--Teal,#378BA6)] rounded-lg text-[#A4A4A4] text-base font-normal leading-[20.8px] tracking-[0.08px] font-jost"
                 required
               >
-                <option/>
+                <option />
                 <option value="recruiter">recruiter</option>
                 <option value="client">client</option>
                 <option value="admin">admin</option>
@@ -123,7 +123,7 @@ const SignupForm = () => {
                 required
                 defaultValue={"Select"}
               >
-                <option/>
+                <option />
                 <option value="New York">New York</option>
                 <option value="Los Angeles">Los Angeles</option>
                 <option value="Chicago">Chicago</option>
@@ -153,8 +153,8 @@ const SignupForm = () => {
               // href=""
               className="w-full py-3 text-white mb-4 flex h-[52px] px-[12px]  justify-center items-center gap-[8px] self-stretch rounded-[8px] bg-[var(--Teal,#378BA6)]"
             >
-                <span class="text-white text-center font-jost text-[24px] font-semibold leading-[116.667%]">Submit</span>
-              
+              <span class="text-white text-center font-jost text-[24px] font-semibold leading-[116.667%]">Submit</span>
+
             </button>
           </div>
         </form>
