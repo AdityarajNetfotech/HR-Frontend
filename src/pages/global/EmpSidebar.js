@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaHome, FaUser, FaDatabase, FaComments, FaMoneyBill, FaCog, FaInfoCircle, FaSignOutAlt } from 'react-icons/fa';
+import { FaHome, FaUser, FaComments, FaMoneyBill, FaCog, FaInfoCircle, FaSignOutAlt } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import R from '../../Images/R.png';
 import { MdOutlineArrowForwardIos } from "react-icons/md";
@@ -9,32 +9,21 @@ import axios from "axios";
 
 const EmpSidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [openDropdown, setOpenDropdown] = useState(null);
   const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleDropdownToggle = (label) => {
-    setOpenDropdown(openDropdown === label ? null : label);
-  };
-
   const handleLogout = async () => {
     console.log("Logout button clicked");
     try {
-      // console.log("Before logout:", localStorage.getItem('userId'));
-
-      const response = await axios.get('http://localhost:4000/api/logout'); // API call to backend
+      const response = await axios.get('http://localhost:4000/api/logout');
       console.log(response.data);
 
       if (response.data.success) {
-        // Clear localStorage items
-        localStorage.removeItem('userId'); // Replace 'userId' with your actual key name
-        localStorage.removeItem('token');  // If token is stored
-        console.log("After removal:", localStorage.getItem('userId')); // Check if cleared
-
-        // Redirect to home page
+        localStorage.removeItem('userId');
+        localStorage.removeItem('token');
         navigate('/');
       } else {
         console.error("Logout failed: ", response.data.message);
@@ -68,21 +57,10 @@ const EmpSidebar = () => {
       {/* Navigation */}
       <nav className="flex flex-col flex-grow mt-10">
         <NavItem to="/EmployerDashboard" icon={<FaHome />} label="Dashboard" isOpen={isOpen} />
-        <DropdownNavItem
-          to="/EmpJDdetail"
-          icon={<FaDatabase />}
-          label="JD Lists"
-          isOpen={isOpen}
-          openDropdown={openDropdown}
-          onDropdownToggle={() => handleDropdownToggle('JD Lists')}
-        >
-          <DropdownItem to="/JDList" label="Recent JD" />
-          <DropdownItem to="/JDList" label="Archive JD" />
-        </DropdownNavItem>
         <NavItem to="/EmployerJd" icon={<FaComments />} label="New JD" isOpen={isOpen} />
         <NavItem to="/EmpCandidates" icon={<FaComments />} label="Candidates" isOpen={isOpen} />
-        <NavItem to="/chat-support" icon={<FaMoneyBill />} label="Chat Support" isOpen={isOpen} />
-        <NavItem to="/FinanceList" icon={<FaCog />} label="Finances" isOpen={isOpen} />
+        <NavItem icon={<FaMoneyBill />} label="Chat Support" isOpen={isOpen} />
+        <NavItem icon={<FaCog />} label="Finances" isOpen={isOpen} />
         <NavItem to="/Profile" icon={<FaInfoCircle />} label="Profile" isOpen={isOpen} />
         <NavItem to="/EmpAboutUs" icon={<FaInfoCircle />} label="About" isOpen={isOpen} />
         <NavItem
@@ -106,50 +84,20 @@ const EmpSidebar = () => {
 const NavItem = ({ to, icon, label, isOpen, onClick }) => {
   const handleClick = (e) => {
     if (onClick) {
-      e.preventDefault(); // Prevent navigation if onClick is provided
+      e.preventDefault();
       onClick();
     }
   };
 
   return (
     <NavLink
-      to={to || "#"} // Fallback to "#" if no `to` is provided
+      to={to || "#"}
       onClick={handleClick}
       className="flex items-center p-4 rounded-r-lg hover:bg-white hover:text-black cursor-pointer"
       activeClassName="bg-[var(--Teal,#378BA6)]"
     >
       {icon}
       {isOpen && <span className="ml-2">{label}</span>}
-    </NavLink>
-  );
-};
-
-const DropdownNavItem = ({ to, icon, label, isOpen, openDropdown, onDropdownToggle, children }) => {
-  return (
-    <div>
-      <div
-        onClick={onDropdownToggle}
-        className={`flex items-center p-4 rounded-r-lg hover:bg-white hover:text-black cursor-pointer ${openDropdown === label ? 'bg-white text-black' : ''}`}
-      >
-        {icon}
-        {isOpen && <span className="ml-2">{label}</span>}
-      </div>
-      {isOpen && openDropdown === label && (
-        <div className="pl-8 bg-gray-200">
-          {children}
-        </div>
-      )}
-    </div>
-  );
-};
-
-const DropdownItem = ({ to, label }) => {
-  return (
-    <NavLink
-      to={to}
-      className="block py-2 px-4 text-black hover:bg-gray-300"
-    >
-      {label}
     </NavLink>
   );
 };

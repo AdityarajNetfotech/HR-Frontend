@@ -4,6 +4,7 @@ import axios from "axios";
 import CandidateCard from "../DashBoard/CandidateCard";
 import Pagination from "../../global/Pagination";
 import EmpSidebar from "../../global/EmpSidebar";
+import AdminID from "../../global/AdminID";
 
 const EmpCandidates = ({ limit = Infinity }) => {
   const [jobs, setJobs] = useState([]);
@@ -123,6 +124,12 @@ const EmpCandidates = ({ limit = Infinity }) => {
       </div>
 
       <div className="max-w-full mx-auto p-6 bg-white rounded-lg shadow-lg">
+
+        <div className='flex justify-between' style={{ marginBottom: "50px" }}>
+          <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; Employer Candidates</strong> </h1>
+          <AdminID />
+        </div>
+
         <section id="candidateOne-filter">
           <div className="candidateOne-filter_search">
             <i className="fa-solid fa-magnifying-glass"></i>

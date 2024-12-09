@@ -3,6 +3,8 @@ import axios from 'axios';
 import Sidebar from '../../global/Sidebar';
 import ExportIcon from '../../../Images/ExportIcon.png';
 import Pagination from '../../global/Pagination'; // Import Pagination component
+import AdminSidebar from '../../global/AdminSidebar';
+import AdminID from '../../global/AdminID';
 
 const AdminRecruterMaster = () => {
   const [users, setUsers] = useState([]);
@@ -34,12 +36,12 @@ const AdminRecruterMaster = () => {
 
   // Filter users based on the search term (employee ID)
   const filteredUsers = users
-  .filter(user => 
-    user._id.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by ID
-    user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by First Name
-    user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by Last Name
-    (user.company && user.company.toLowerCase().includes(searchTerm.toLowerCase())) // Search by Company
-  )
+    .filter(user =>
+      user._id.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by ID
+      user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by First Name
+      user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by Last Name
+      (user.company && user.company.toLowerCase().includes(searchTerm.toLowerCase())) // Search by Company
+    )
 
   // Sort users based on the selected sort order (Latest or Oldest)
   const sortedUsers = [...filteredUsers].sort((a, b) => {
@@ -70,12 +72,15 @@ const AdminRecruterMaster = () => {
   return (
     <div className='flex flex-row gap-0 h-full'>
       <div className='max-[30%]'>
-        <Sidebar />
+        <AdminSidebar />
       </div>
       <div className='w-[100%] bg-[#EAF1F4] flex flex-col p-5 flex-1'>
         {/* Header Section */}
         {/* Table Header */}
-
+        <div className='flex justify-between' style={{ marginBottom: "50px" }}>
+          <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; Recruiter Master</strong> </h1>
+          <AdminID />
+        </div>
         <section id='candidateOne-filter'>
           <div className="candidateOne-filter_search">
             <i className="fa-solid fa-magnifying-glass"></i>
@@ -190,7 +195,7 @@ const AdminRecruterMaster = () => {
                     </p>
                   </button>
                 </div>
-                <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] '>
+                <h1 style={{border:"1px solid red"}} className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] '>
                   {user.details || '0'}
                 </h1>
               </div>

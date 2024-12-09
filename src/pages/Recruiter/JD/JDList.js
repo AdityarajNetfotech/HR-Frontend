@@ -83,13 +83,11 @@ const JDList = () => {
 
   // Handle job click - toggle JobDetails visibility
   const handleJobClick = (job) => {
-    // If the same job is clicked again, hide the details (toggle visibility)
-    if (selectedJob && selectedJob.id === job.id) {
-      setSelectedJob(null);
+    if (selectedJob?.id === job.id) {
+      setSelectedJob(null); // Deselect if already selected
     } else {
-      setSelectedJob(job);
+      setSelectedJob(job); // Select the new job
     }
-    setShowModal(false);  // Ensuring the modal doesn't open
   };
 
   // Reset filters and search
@@ -135,19 +133,15 @@ const JDList = () => {
   return (
     <div className='min-h-screen flex flex-row gap-4'>
       <Sidebar className='max-[30%]' />
-      
       <div className='w-[100%]'>
         <div className="min-h-screen max-w-8xl bg-[#EAF1F3] p-4 gap-4 flex flex-col items-start">
           <div className="w-full">
-            {/* JobFilters Component */}
             <JobFilters 
               filters={filters} 
               setFilters={setFilters} 
               searchQuery={searchQuery} 
               setSearchQuery={setSearchQuery} 
             />
-
-            {/* Cancel All Filters Button */}
             <div className="mb-4">
               <button
                 onClick={resetFilters}
@@ -158,22 +152,21 @@ const JDList = () => {
             </div>
           </div>
           <div className="flex gap-4">
-            {/* Job List with Pagination */}
             <div className="w-[70%]">
               {currentJobs.map((job) => (
                 <JobCard key={job.id} job={job} onJobClick={handleJobClick} />
               ))}
             </div>
 
-            {/* Job Details Section on the Right */}
             {selectedJob && (
               <div className="w-[30%]">
-                <JobDetails job={selectedJob} />
+                <JobDetails 
+                  job={selectedJob} 
+                  onLockClick={() => setShowModal(true)} 
+                />
               </div>
             )}
           </div>
-
-          {/* Pagination Controls */}
           <div className="w-full flex justify-end">
             <Pagination
               currentPage={currentPage}
@@ -182,7 +175,7 @@ const JDList = () => {
             />
           </div>
 
-          {showModal && selectedJob && (
+          {showModal && selectedJob?.id && (
             <LockForMeModal
               id={selectedJob.id}
               onClose={() => setShowModal(false)}

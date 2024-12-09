@@ -3,6 +3,8 @@ import Sidebar from '../../global/Sidebar';
 import ExportIcon from '../../../Images/ExportIcon.png';
 import Chat from '../../../Images/ChatIcon.png';
 import Pagination from '../../global/Pagination';
+import AdminSidebar from '../../global/AdminSidebar';
+import AdminID from '../../global/AdminID';
 
 function Admin_Finance() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -12,10 +14,15 @@ function Admin_Finance() {
         <>
             <div className="max-h-screen flex flex-row gap-0 h-full">
                 <div className="max-[30%]">
-                    <Sidebar />
+                    <AdminSidebar />
                 </div>
 
+
                 <div className="w-full bg-[#EAF1F4] flex flex-col p-5 gap-33 flex-1">
+                    <div className='flex justify-between' style={{ marginBottom: "50px" }}>
+                        <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; Finance</strong> </h1>
+                        <AdminID />
+                    </div>
                     {/* Header Section */}
                     <div className="flex flex-col w-auto flex-wrap justify-center items-start gap-1 p-2.5 self-stretch bg-[#FBEFD0] mb-5">
                         {/* User Information */}

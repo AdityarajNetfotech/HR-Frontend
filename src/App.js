@@ -59,6 +59,8 @@ import AdminEmployerMaster from './pages/Admin/EmployerMaster/EmployerMaster'
 import AdminRecruterMaster from './pages/Admin/RecruterMaster/AdminRecruterMaster'
 import ChatSupport from './pages/Recruiter/ChatSupport/ChatSupport';
 import EmpAbout from './Components/EmpAboutUs/EmpAbout'
+import AdminSidebar from './pages/global/AdminSidebar';
+import AdminID from './pages/global/AdminID';
 function App() {
   return (
     <>
@@ -78,7 +80,7 @@ function App() {
           <Route path='/Profile-Success' element={<ProfileSuccess />} />
           <Route path='/Profile-Recruiter' element={<PersonalInfo />} />
           <Route path='/ResetPassword' element={<ResetPassword />} />
-          <Route path='/JDList' element={<JDList />} />
+          <Route path='/JDList/recent' element={<JDList />} />
           <Route path='/Dashboard' element={<Dashboard />} />
           <Route path='/LockModal' element={<LockForMeModal />} />
           <Route path='/JDSignUpSuccess' element={<SignupSuccessJD />} />
@@ -115,6 +117,8 @@ function App() {
 
 
           {/* //ADMIN// */}
+
+          <Route path='/AdminID' element={<AdminID />} />
           <Route path='/Admin/About-Us' element={<Admin_About_Us />} />
           <Route path='/Admin/BankInfo' element={<Admin_BankInfo />} />
           <Route path='/Admin/PersonalInfo' element={<Admin_PersonalInfo />} />

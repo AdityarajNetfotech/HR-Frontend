@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
@@ -48,6 +48,11 @@ function LockForMeModal({ id, onClose }) {
       alert('Please accept the terms to proceed.');
     }
   };
+
+  useEffect(() => {
+    console.log('LockForMeModal received ID:', id);
+  }, [id]);
+  
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">

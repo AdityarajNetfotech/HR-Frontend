@@ -15,7 +15,9 @@ import SubmissionIcon from '../../../Images/SubmissionIcon.png';
 import NoticePeriodIcon from '../../../Images/NoticePeriodIcon.png';
 import InterviewIcon from '../../../Images/InterviewIcon.png';
 import PriorityIcon from '../../../Images/PriorityIcon.png'
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import AdminID from '../../global/AdminID.js';
+
 function Dashboard() {
   const [activeTab, setActiveTab] = useState('WeeklyDashboard'); // For managing active tab
   const [jobs, setJobs] = useState([]); // To store job data
@@ -80,10 +82,14 @@ function Dashboard() {
 
   return (
     <>
-      <div className='min-h-screen flex flex-row gap-20 bg-[#EAF1F3]'>
+      <div className='min-h-screen flex flex-row gap-10 bg-[#EAF1F3]'>
         <Sidebar className='max-[30%] ' />
         <div className="max-w-8xl justify-center mt-10">
           {/* Tabs Section */}
+          <div className='flex justify-between' style={{ marginBottom: "50px" }}>
+            <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; Dashboard</strong> </h1>
+            <AdminID />
+          </div>
           <div className="flex space-x-1 text-[var(--Teal,#378BA6)] text-center text-[18px] font-normal leading-[36px] ">
             <button
               className={` w-[208px] ${activeTab === 'WeeklyDashboard' ? 'bg-white text-[var(--Teal,#378BA6)] border border-[var(--Teal,#378BA6)] rounded-t-xl font-semibold' : 'bg-[#EAF1F3] rounded-t-xl'}`}
@@ -114,7 +120,7 @@ function Dashboard() {
               <div className="text-[#4F4F4F] font-jost text-[24px] font-semibold leading-[28px]">
                 New JD's
               </div>
-              <button 
+              <button
                 className='flex h-[52px] p-[8px_12px] justify-center items-center gap-[8px] rounded-lg bg-[#A4A4A4]'
                 onClick={() => navigate('/jdlist')} // Navigate to JDList page
               >
@@ -161,7 +167,7 @@ function Dashboard() {
                     </div>
 
                   </div>
-                  
+
                 </div>
               ))}
             </div>

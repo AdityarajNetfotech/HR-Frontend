@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate from react
 import Sidebar from '../../global/Sidebar';
 import ExportIcon from '../../../Images/ExportIcon.png';
 import Chat from '../../../Images/ChatIcon.png';
+import AdminSidebar from '../../global/AdminSidebar';
+import AdminID from '../../global/AdminID';
 
 function Adminjds() {
     const [lockedJobDetails, setLockedJobDetails] = useState([]);
@@ -45,11 +47,14 @@ function Adminjds() {
     return (
         <div className=' flex flex-row gap-0 h-full'>
             <div className='max-[30%]'>
-                <Sidebar />
+                <AdminSidebar />
             </div>
             <div className='w-[100%] bg-[#EAF1F4] flex flex-col p-5 gap-33 flex-1'>
                 {/* Header Section */}
-
+                <div className='flex justify-between' style={{ marginBottom: "50px" }}>
+                    <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; JD Master</strong> </h1>
+                    <AdminID />
+                </div>
 
                 {/* Table Header */}
                 <div className='h-[52px] self-stretch bg-[rgba(55,139,166,0.30)] flex justify-between items-center p-8 mt-[20px]'>
@@ -92,7 +97,7 @@ function Adminjds() {
                                     {/* <h1 className='text-gray-800 ml-2'>{jd.jobTitle}</h1> */}
                                 </div>
                                 <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px]'>
-                                {jd.createdAt.substring(0, 10)}
+                                    {jd.createdAt.substring(0, 10)}
                                 </h1>
                                 <div>
                                     <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px]'>

@@ -6,6 +6,7 @@ import Yearly from '../../Recruiter/Dashboard/Yearly';
 import Sidebar from '../../global/Sidebar.js'
 import EmpSidebar from '../../global/EmpSidebar.js';
 import JobCard from './JobsCard.js';
+import AdminID from '../../global/AdminID.js';
 
 function EmpDashboard() {
   const [activeTab, setActiveTab] = useState('Terms'); // Fix useState usage
@@ -27,6 +28,10 @@ function EmpDashboard() {
       <EmpSidebar className='max-[30%] ' />
       <div className="w-full px-5  mt-10">
         {/* Tabs Section */}
+        <div className='flex justify-between' style={{ marginBottom: "50px" }}>
+          <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; Dashboard</strong> </h1>
+          <AdminID />
+        </div>
         <div className="flex space-x-1 text-[var(--Teal,#378BA6)] text-center text-[18px] font-normal leading-[36px] ">
           <button
             className={` w-[208px] ${activeTab === 'WeeklyDashboard' ? 'bg-white text-[var(--Teal,#378BA6)] border border-[var(--Teal,#378BA6)] rounded-t-xl font-semibold' : 'bg-[#EAF1F3] rounded-t-xl'}`}

@@ -9,6 +9,7 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import Pagination from '../../global/Pagination';
 import Filter, { initialFilters } from '../../global/Filter';
+import AdminID from '../../global/AdminID';
 
 
 const CandidatesOne = ({ limit = Infinity }) => {
@@ -57,7 +58,10 @@ const CandidatesOne = ({ limit = Infinity }) => {
         <Sidebar />
       </div>
       <div className='w-[100%] bg-[#EAF1F4] flex flex-col py-5 gap-33 flex-1 p-6'>
-        <h1>Candidates List</h1>
+        <div className='flex justify-between' style={{ marginBottom: "50px" }}>
+          <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; Candidates Database</strong> </h1>
+          <AdminID />
+        </div>
 
         <Filter candidates={candidates} setFilteredCandidates={setFilteredCandidates} filters={filters} setFilters={setFilters} />
 

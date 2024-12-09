@@ -7,6 +7,7 @@ import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
 import Sidebar from '../../global/Sidebar';
 import CandidateProgress from './CandidateProgress';
 import Pagination from '../../global/Pagination';
+import AdminID from '../../global/AdminID';
 
 const AddCandidates = () => {
   const [currentIcon, setCurrentIcon] = useState('ArrowUp');
@@ -70,6 +71,10 @@ const AddCandidates = () => {
     <div className='max-h-screen flex flex-row gap-0'>
       <div className='max-[30%]'><Sidebar /></div>
       <div className='w-[100%] bg-[#EAF1F4] flex flex-col py-5 gap-33 flex-1 px-4'>
+        <div className='flex justify-between' style={{ marginBottom: "50px" }}>
+          <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; My Workplace</strong> </h1>
+          <AdminID />
+        </div>
         {/* Header Section */}
         <div className='flex flex-col justify-center items-start gap-1 p-2.5 self-stretch bg-[#FBEFD0] mb-[20px] w-full'>
           <div className='flex justify-between items-center self-stretch w-full'>

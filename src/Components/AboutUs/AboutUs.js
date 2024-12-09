@@ -4,6 +4,7 @@ import FAQ from './FAQ';
 import Contact from './Contact';
 import Sidebar from '../../pages/global/Sidebar';
 import { MdArrowBackIos } from "react-icons/md";
+import AdminID from '../../pages/global/AdminID';
 
 function AboutUs() {
   const [activeTab, setActiveTab] = useState('Terms'); // Fix useState usage
@@ -27,7 +28,10 @@ function AboutUs() {
         <Sidebar />
       </div>
       <div>
-        <div className='flex flex-row items-center mt-5 ml-6'><MdArrowBackIos /><p className='text-black font-jost text-2xl font-extrabold leading-normal'>About Us</p></div>
+        <div className='flex justify-between mt-5' style={{ marginBottom: "50px" }}>
+          <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; Dashboard</strong> </h1>
+          <AdminID />
+        </div>
         <div className=" w-[70%] mt-10 m-[auto]">
 
 

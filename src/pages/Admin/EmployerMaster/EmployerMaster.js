@@ -3,6 +3,8 @@ import axios from 'axios';
 import Sidebar from '../../global/Sidebar';
 import ExportIcon from '../../../Images/ExportIcon.png';
 import Pagination from '../../global/Pagination';
+import AdminSidebar from '../../global/AdminSidebar';
+import AdminID from '../../global/AdminID';
 
 const EmployerMaster = () => {
   const [users, setUsers] = useState([]);
@@ -31,16 +33,16 @@ const EmployerMaster = () => {
   }, []);
 
   // Filter users based on applied filters
-const filteredUsers = users
-  .filter(user => 
-    user._id.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by ID
-    user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by First Name
-    user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by Last Name
-    (user.company && user.company.toLowerCase().includes(searchTerm.toLowerCase())) // Search by Company
-  )
-  .filter(user => (jobTitle ? user.jobTitle === jobTitle : true))
-  .filter(user => (status ? user.status === status : true))
-  .filter(user => (location ? user.location === location : true));
+  const filteredUsers = users
+    .filter(user =>
+      user._id.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by ID
+      user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by First Name
+      user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by Last Name
+      (user.company && user.company.toLowerCase().includes(searchTerm.toLowerCase())) // Search by Company
+    )
+    .filter(user => (jobTitle ? user.jobTitle === jobTitle : true))
+    .filter(user => (status ? user.status === status : true))
+    .filter(user => (location ? user.location === location : true));
 
 
   // Sorting logic
@@ -83,10 +85,13 @@ const filteredUsers = users
   return (
     <div className='flex flex-row gap-0 h-full'>
       <div className='max-[30%]'>
-        <Sidebar />
+        <AdminSidebar />
       </div>
       <div className='w-[100%] bg-[#EAF1F4] flex flex-col p-5 flex-1'>
-
+        <div className='flex justify-between' style={{ marginBottom: "50px" }}>
+          <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; Employer Master</strong> </h1>
+          <AdminID />
+        </div>
         <section id='candidateOne-filter'>
           <div className="candidateOne-filter_search">
             <i className="fa-solid fa-magnifying-glass"></i>

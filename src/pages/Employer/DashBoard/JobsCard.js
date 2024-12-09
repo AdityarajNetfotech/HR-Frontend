@@ -17,6 +17,8 @@
     const getBackendData = async () => {
       try {
         const response = await axios.get("http://localhost:4000/api/locked-jds");
+        console.log(response.data);
+        
         const jobsData = response.data.lockedJDs;
 
         const jobsWithCandidates = await Promise.all(

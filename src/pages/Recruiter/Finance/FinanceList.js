@@ -5,6 +5,7 @@ import Sidebar from '../../global/Sidebar';
 import ExportIcon from '../../../Images/ExportIcon.png';
 import Chat from '../../../Images/ChatIcon.png';
 import Pagination from '../../global/Pagination';
+import AdminID from '../../global/AdminID';
 
 function FinanceList() {
   const [lockedJobDetails, setLockedJobDetails] = useState([]);
@@ -12,6 +13,10 @@ function FinanceList() {
   const [searchTerm, setSearchTerm] = useState(''); // State to store search term
   const [sortOption, setSortOption] = useState('Latest'); // New state for sorting
   const [errorMessage, setErrorMessage] = useState('');
+  const [uniqueJobTitles, setUniqueJobTitles] = useState([]); // State for storing unique job titles
+  const [selectedJobTitle, setSelectedJobTitle] = useState(''); // State for selected job title
+  const [uniqueStatuses, setUniqueStatuses] = useState([]); // State for storing unique statuses
+  const [selectedStatus, setSelectedStatus] = useState(''); // State for selected status
   const navigate = useNavigate(); // Initialize useNavigate
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
@@ -20,6 +25,8 @@ function FinanceList() {
   const getJobDetails = async () => {
     try {
       const response = await axios.get('http://localhost:4000/api/showJDs');
+      console.log(response.data);
+
       return response.data.jds;
     } catch (error) {
       console.error('Error fetching job details:', error);
@@ -42,6 +49,11 @@ function FinanceList() {
     fetchJobDetails();
   }, []);
 
+  useEffect(() => {
+    const jobTitles = [...new Set(lockedJobDetails.map(jd => jd.job_title))]; // Extract unique job titles
+    setUniqueJobTitles(jobTitles);
+  }, [lockedJobDetails]);
+
   // Function to handle search by jd._id
   const handleSearch = (e) => {
     const value = e.target.value;
@@ -55,8 +67,8 @@ function FinanceList() {
     }
   };
 
-   // Function to handle sorting
-   const handleSort = (e) => {
+  // Function to handle sorting
+  const handleSort = (e) => {
     const selectedOption = e.target.value;
     setSortOption(selectedOption);
 
@@ -72,12 +84,46 @@ function FinanceList() {
     setFilteredJobDetails(sorted);
   };
 
+  const handleJobTitleFilter = (e) => {
+    const selectedTitle = e.target.value;
+    setSelectedJobTitle(selectedTitle);
+
+    if (selectedTitle === '') {
+      setFilteredJobDetails(lockedJobDetails); // Reset to all jobs if no title selected
+    } else {
+      const filtered = lockedJobDetails.filter(jd => jd.job_title === selectedTitle);
+      setFilteredJobDetails(filtered);
+    }
+  };
+
+  // Extract unique statuses when lockedJobDetails is updated
+  useEffect(() => {
+    const statuses = [...new Set(lockedJobDetails.map(jd => jd.jd_status))]; // Extract unique statuses
+    setUniqueStatuses(statuses);
+  }, [lockedJobDetails]);
+
+  // Handle filtering by status
+  const handleStatusFilter = (e) => {
+    const selectedStatus = e.target.value;
+    setSelectedStatus(selectedStatus);
+
+    if (selectedStatus === '') {
+      setFilteredJobDetails(lockedJobDetails); // Reset to all jobs if no status selected
+    } else {
+      const filtered = lockedJobDetails.filter(jd => jd.jd_status === selectedStatus);
+      setFilteredJobDetails(filtered);
+    }
+  };
+
   // Function to reset filters
   const handleResetFilters = () => {
     setSearchTerm('');
     setSortOption('Latest');
-    setFilteredJobDetails(lockedJobDetails);
+    setSelectedJobTitle(''); // Reset the job title filter
+    setSelectedStatus('');   // Reset the status filter
+    setFilteredJobDetails(lockedJobDetails); // Reset to all jobs
   };
+
 
 
   // Function to handle navigation to FinanceSummery page
@@ -97,6 +143,10 @@ function FinanceList() {
         <Sidebar />
       </div>
       <div className='w-[100%] bg-[#EAF1F4] flex flex-col p-5 gap-33 flex-1'>
+        <div className='flex justify-between' style={{ marginBottom: "50px" }}>
+          <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; Finance</strong> </h1>
+          <AdminID />
+        </div>
         {/* Header Section */}
 
         <div className='flex flex-col w-auto h-full flex-wrap justify-center items-start gap-1 p-2.5 self-stretch bg-[#FBEFD0] mb-[20px]'>
@@ -146,29 +196,24 @@ function FinanceList() {
           </div>
 
           <div className='filter_option'>
-            <select name="Job Title">
+            <select name="Job Title" value={selectedJobTitle} onChange={handleJobTitleFilter}>
               <option value="">Job Title</option>
-              <option value="Senior Software Engineer">Senior Software Engineer</option>
-              <option value="Junior Software Engineer">Junior Software Engineer</option>
-              <option value="Flutter">Flutter</option>
-              <option value="Dev Ops Engineeer">Dev Ops Engineeer</option>
+              {uniqueJobTitles.map((title, index) => (
+                <option key={index} value={title}>
+                  {title}
+                </option>
+              ))}
             </select>
           </div>
 
           <div className='filter_option'>
-            <select name="Status">
+            <select name="Status" value={selectedStatus} onChange={handleStatusFilter}>
               <option value="">Status</option>
-              <option value="Fresher">Active</option>
-              <option value="Experienced">Pending</option>
-            </select>
-          </div>
-
-          <div className='filter_option'>
-            <select name="Location">
-              <option value="">Location</option>
-              <option value="Pune">Pune</option>
-              <option value="Hyderabad">Hyderabad</option>
-              <option value="Mumbai">Mumbai</option>
+              {uniqueStatuses.map((status, index) => (
+                <option key={index} value={status}>
+                  {status}
+                </option>
+              ))}
             </select>
           </div>
 
