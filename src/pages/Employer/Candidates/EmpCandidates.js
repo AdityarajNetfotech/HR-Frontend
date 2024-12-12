@@ -13,8 +13,8 @@ const EmpCandidates = ({ limit = Infinity }) => {
     search: "",
     sortBy: "Latest",
     jobTitle: "",
-    status: "",
     location: "",
+    company: "", // Add company filter
   });
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 1;
@@ -56,10 +56,12 @@ const EmpCandidates = ({ limit = Infinity }) => {
   const applyFilters = () => {
     let updatedJobs = [...jobs];
 
-    // Apply search filter
+    // Apply search filter for both job title and company name
     if (filters.search) {
-      updatedJobs = updatedJobs.filter((job) =>
-        job.job_title.toLowerCase().includes(filters.search.toLowerCase())
+      updatedJobs = updatedJobs.filter(
+        (job) =>
+          job.job_title.toLowerCase().includes(filters.search.toLowerCase()) ||
+          job.company_Name.toLowerCase().includes(filters.search.toLowerCase()) // Added company search
       );
     }
 
@@ -70,13 +72,10 @@ const EmpCandidates = ({ limit = Infinity }) => {
       );
     }
 
-    // Apply status filter
-    if (filters.status) {
+    // Apply company filter
+    if (filters.company) {
       updatedJobs = updatedJobs.filter(
-        (job) =>
-          job.candidates.some(
-            (candidate) => candidate.status === filters.status
-          )
+        (job) => job.company_Name === filters.company
       );
     }
 
@@ -91,7 +90,7 @@ const EmpCandidates = ({ limit = Infinity }) => {
     if (filters.sortBy === "Latest") {
       updatedJobs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     } else if (filters.sortBy === "Oldest") {
-      updatedJobs.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      updatedJobs.sort((a, b) => new Date(a.createdAt) - new Date(a.createdAt));
     }
 
     setFilteredJobs(updatedJobs);
@@ -107,8 +106,8 @@ const EmpCandidates = ({ limit = Infinity }) => {
       search: "",
       sortBy: "Latest",
       jobTitle: "",
-      status: "",
       location: "",
+      company: "", // Reset company filter
     });
   };
 
@@ -117,6 +116,10 @@ const EmpCandidates = ({ limit = Infinity }) => {
     currentPage * jobsPerPage
   );
 
+  // Extract unique job titles and company names from the jobs data
+  const jobTitles = Array.from(new Set(jobs.map((job) => job.job_title)));
+  const companies = Array.from(new Set(jobs.map((job) => job.company_Name)));
+
   return (
     <div className="h-full flex flex-row">
       <div className="max-[30%]">
@@ -124,9 +127,11 @@ const EmpCandidates = ({ limit = Infinity }) => {
       </div>
 
       <div className="max-w-full mx-auto p-6 bg-white rounded-lg shadow-lg">
-
         <div className='flex justify-between' style={{ marginBottom: "50px" }}>
-          <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; Employer Candidates</strong> </h1>
+          <h1 className='flex justify-center items-center'>
+            <i className="fa-solid fa-angle-left"></i>
+            <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; Employer Candidates</strong>
+          </h1>
           <AdminID />
         </div>
 
@@ -156,16 +161,22 @@ const EmpCandidates = ({ limit = Infinity }) => {
           <div className="filter_option">
             <select name="jobTitle" value={filters.jobTitle} onChange={handleFilterChange}>
               <option value="">Job Title</option>
-              <option value="Developer">Developer</option>
-              <option value="Designer">Designer</option>
+              {jobTitles.map((title) => (
+                <option key={title} value={title}>
+                  {title}
+                </option>
+              ))}
             </select>
           </div>
 
           <div className="filter_option">
-            <select name="status" value={filters.status} onChange={handleFilterChange}>
-              <option value="">Status</option>
-              <option value="Active">Active</option>
-              <option value="Pending">Pending</option>
+            <select name="company" value={filters.company} onChange={handleFilterChange}>
+              <option value="">Company</option>
+              {companies.map((company) => (
+                <option key={company} value={company}>
+                  {company}
+                </option>
+              ))}
             </select>
           </div>
 

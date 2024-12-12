@@ -9,13 +9,13 @@ import AdminID from '../../global/AdminID';
 const EmployerMaster = () => {
   const [users, setUsers] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
-  const [currentPage, setCurrentPage] = useState(1); // Current page state
-  const [searchTerm, setSearchTerm] = useState(''); // Search state
-  const [sortOrder, setSortOrder] = useState('Latest'); // Sort state
-  const [jobTitle, setJobTitle] = useState(''); // Job Title state
-  const [status, setStatus] = useState(''); // Status state
-  const [location, setLocation] = useState(''); // Location state
-  const itemsPerPage = 6; // Set number of items per page
+  const [currentPage, setCurrentPage] = useState(1); 
+  const [searchTerm, setSearchTerm] = useState(''); 
+  const [sortOrder, setSortOrder] = useState('Latest'); 
+  const [jobTitle, setJobTitle] = useState(''); 
+  const [status, setStatus] = useState(''); 
+  const [location, setLocation] = useState(''); 
+  const itemsPerPage = 6; 
 
   const fetchUsers = async () => {
     try {
@@ -32,20 +32,19 @@ const EmployerMaster = () => {
     fetchUsers();
   }, []);
 
-  // Filter users based on applied filters
+
   const filteredUsers = users
     .filter(user =>
-      user._id.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by ID
-      user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by First Name
-      user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by Last Name
-      (user.company && user.company.toLowerCase().includes(searchTerm.toLowerCase())) // Search by Company
+      user._id.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      (user.company && user.company.toLowerCase().includes(searchTerm.toLowerCase()))
     )
     .filter(user => (jobTitle ? user.jobTitle === jobTitle : true))
     .filter(user => (status ? user.status === status : true))
     .filter(user => (location ? user.location === location : true));
 
 
-  // Sorting logic
   const sortedUsers = filteredUsers.sort((a, b) => {
     if (sortOrder === 'Latest') {
       return new Date(b.createdAt) - new Date(a.createdAt);
@@ -97,7 +96,7 @@ const EmployerMaster = () => {
             <i className="fa-solid fa-magnifying-glass"></i>
             <input
               type="text"
-              placeholder="Search by Employee ID"
+              placeholder="Search Here"
               className="candidateOne-filter_search-bar"
               value={searchTerm}
               onChange={handleSearchChange}
@@ -115,25 +114,19 @@ const EmployerMaster = () => {
           <div className='filter_option'>
             <select name="Job Title" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)}>
               <option value="">Job Title</option>
-              <option value="Developer">Developer</option>
-              <option value="Designer">Designer</option>
+              <option value="Developer">Google</option>
             </select>
           </div>
 
           <div className='filter_option'>
             <select name="Status" value={status} onChange={(e) => setStatus(e.target.value)}>
               <option value="">Status</option>
-              <option value="Fresher">Active</option>
-              <option value="Experienced">Pending</option>
             </select>
           </div>
 
           <div className='filter_option'>
             <select name="Location" value={location} onChange={(e) => setLocation(e.target.value)}>
               <option value="">Location</option>
-              <option value="Pune">Pune</option>
-              <option value="Hyderabad">Hyderabad</option>
-              <option value="Mumbai">Mumbai</option>
             </select>
           </div>
 

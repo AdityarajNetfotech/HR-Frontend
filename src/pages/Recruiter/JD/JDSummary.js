@@ -11,6 +11,7 @@ import NoticePeriodIcon from '../../../Images/NoticePeriodIcon.png';
 import InterviewIcon from '../../../Images/InterviewIcon.png';
 import PriorityIcon from '../../../Images/PriorityIcon.png';
 import { IoIosArrowForward } from "react-icons/io";
+import { useLocation } from 'react-router-dom';
 
 
 // Default values for the job prop
@@ -22,9 +23,9 @@ const defaultJob = {
   location: 'N/A',
   work_experience: 'N/A',
   salary: 'N/A',
-  notice_period : 'N/A',
+  notice_period: 'N/A',
   interview_rounds: 'N/A',
-  job_type:'N/A',
+  job_type: 'N/A',
   priority_tag: 'N/A',
   delivery_deadline: 'N/A',
   replacement_period: 'N/A',
@@ -40,9 +41,8 @@ const defaultJob = {
 };
 
 const JDSummary = ({ job }) => {
-  // Destructure job properties with fallback to default values
   const {
-    job_title= defaultJob.job_title,
+    job_title = defaultJob.job_title,
     company_Name = defaultJob.company_Name,
     experience = defaultJob.experience,
     industry = defaultJob.industry,
@@ -50,19 +50,19 @@ const JDSummary = ({ job }) => {
     work_experience = defaultJob.work_experience,
     salary = defaultJob.salary,
     notice_period = defaultJob.notice_period,
-    interview_rounds= defaultJob.interview_rounds,
-    job_type= defaultJob.job_type,
-    priority_tag= defaultJob.priority_tag,
+    interview_rounds = defaultJob.interview_rounds,
+    job_type = defaultJob.job_type,
+    priority_tag = defaultJob.priority_tag,
     delivery_deadline = defaultJob.delivery_deadline,
-    replacement_period= defaultJob.replacement_period,
-    no_of_vacancy= defaultJob.no_of_vacancy,
-    absolute_payout= defaultJob.absolute_payout,
+    replacement_period = defaultJob.replacement_period,
+    no_of_vacancy = defaultJob.no_of_vacancy,
+    absolute_payout = defaultJob.absolute_payout,
     delivery_payout = defaultJob.delivery_payout,
     sign_up_rate = defaultJob.sign_up_rate,
     skills_required = defaultJob.skills_required,
-    additional_comments= defaultJob.additional_comments,
+    additional_comments = defaultJob.additional_comments,
     jd_status = defaultJob.jd_status,
-    locked= defaultJob.locked,
+    locked = defaultJob.locked,
     lockedBy = defaultJob.lockedBy
 
   } = job || {};
@@ -73,7 +73,7 @@ const JDSummary = ({ job }) => {
       <div className="flex p-2 px-4 justify-between items-center self-stretch rounded-lg bg-[#378BA6]/30">
         <div>
           <h2 className="text-center text-dark-gray text-2xl font-medium leading-9">SUMMARY SHEET</h2>
-          
+
         </div>
         <div className="flex items-center space-x-2">
           <button className="text-gray-500">
@@ -83,12 +83,12 @@ const JDSummary = ({ job }) => {
         </div>
       </div>
 
-<p className="flex w-32 my-3 items-center justify-center px-2 py-1 mb-2 bg-gray-200 text-gray-700 rounded text-center text-sm font-normal leading-[18.2px] tracking-[0.07px]">JD ID: {job.id}</p>
+      <p className="flex w-32 my-3 items-center justify-center px-2 py-1 mb-2 bg-gray-200 text-gray-700 rounded text-center text-sm font-normal leading-[18.2px] tracking-[0.07px]">JD ID: {job.id}</p>
 
       {/* Recruiter Details */}
       <div className="bg-yellow-100 p-4 rounded-lg mb-6">
         <p className="text-black text-ellipsis overflow-hidden font-medium text-2xl leading-7 truncate">Recruiter Details:</p>
-        <hr className='my-1'/>
+        <hr className='my-1' />
         <div className="flex items-center">
           <div className="custom-clamp text-dark-grey text-ellipsis overflow-hidden font-medium text-2xl leading-7">R01 : {job.JD_id}</div>
           <div className='w-[0.737px] h-[42px] bg-[#848484] mx-3'></div>
@@ -150,7 +150,7 @@ const JDSummary = ({ job }) => {
             <h3 className="flex items-center self-stretch p-[6px_12px] rounded-[4px] bg-[#C3DCE4] text-[#115469] text-center font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">Payout Details</h3>
             <div className="grid grid-cols-2 gap-0 border mt-3 border-gray-400 rounded-md text-center">
               <div className="p-2 border-r border-b border-gray-400 bg-[#EAF1F3] text-[#4F4F4F] text-center font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">
-              Delivery Payout
+                Delivery Payout
               </div>
               <div className="p-2 border-b border-gray-400 text-[#4F4F4F] text-center font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">
                 {job.delivery_payout}
@@ -199,9 +199,9 @@ const JDSummary = ({ job }) => {
 
       {/* Footer */}
       <div className="flex gap-3 mt-7 justify-between">
-            <button className="flex py-2 px-3 justify-center items-center gap-2 rounded-lg border border-[#A4A4A4] bg-white text-[#4F4F4F] text-center text-[20px] font-bold leading-[36px] font-jos">Close</button>
-            <button className="flex py-2 px-3 justify-center items-center gap-2 self-stretch rounded-lg bg-[#378BA6] text-white text-center text-[20px] font-bold leading-[36px] font-jos">Go to My Workplace <IoIosArrowForward className='items-center' /> </button>
-        </div>
+        <button className="flex py-2 px-3 justify-center items-center gap-2 rounded-lg border border-[#A4A4A4] bg-white text-[#4F4F4F] text-center text-[20px] font-bold leading-[36px] font-jos">Close</button>
+        <button className="flex py-2 px-3 justify-center items-center gap-2 self-stretch rounded-lg bg-[#378BA6] text-white text-center text-[20px] font-bold leading-[36px] font-jos">Go to My Workplace <IoIosArrowForward className='items-center' /> </button>
+      </div>
     </div>
   );
 };

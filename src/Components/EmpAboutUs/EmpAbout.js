@@ -1,9 +1,10 @@
 import React, { useState } from 'react'; // Import useState from React
 import EmpTermsandcondition from './EmpTermsandcondition';
 import EmpFAQ from './EmpFAQ';
-import EmpContact from './EmpContact';
 import EmpSidebar from '../../pages/global/EmpSidebar';
 import { MdArrowBackIos } from "react-icons/md";
+import Contact from '../AboutUs/Contact';
+import AdminID from '../../pages/global/AdminID';
 
 function EmpAboutUs() {
   const [activeTab, setActiveTab] = useState('Terms'); // Fix useState usage
@@ -15,7 +16,7 @@ function EmpAboutUs() {
       case 'FAQ':
         return <EmpFAQ />;
       case 'Contact':
-        return <EmpContact />;
+        return <Contact />;
       default:
         return <EmpTermsandcondition />;
     }
@@ -27,11 +28,12 @@ function EmpAboutUs() {
         <EmpSidebar />
       </div>
       <div>
-        <div className='flex flex-row items-center mt-5 ml-6'><MdArrowBackIos /><p className='text-black font-jost text-2xl font-extrabold leading-normal'>About Us</p></div>
+        <div className='flex justify-between mt-5' style={{ marginBottom: "50px" }}>
+          <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; About</strong> </h1>
+          <AdminID />
+        </div>
+
         <div className=" w-[70%] mt-10 m-[auto]">
-
-
-
           {/* Tabs Section */}
           <div className="flex space-x-1 text-[var(--Teal,#378BA6)] text-center text-[18px] font-normal leading-[36px] ">
             <button

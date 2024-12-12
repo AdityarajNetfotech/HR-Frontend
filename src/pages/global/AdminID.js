@@ -2,25 +2,27 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function AdminID() {
-    // const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
 
-    // useEffect(() => {
-    //     // Fetch user profile when the component mounts
-    //     const fetchUserProfile = async () => {
-    //         try {
-    //             const response = await axios.get('http://localhost:4000/api/me'); // Adjust the URL to your actual API endpoint
-    //             setUser(response.data.user); // Assuming the response contains the user object
-    //         } catch (error) {
-    //             console.error("Error fetching user profile:", error);
-    //         }
-    //     };
+    useEffect(() => {
+        // Fetch user profile when the component mounts
+        const fetchUserProfile = async () => {
+            try {
+                const response = await axios.get('http://localhost:4000/api/me'); // Adjust the URL to your actual API endpoint
+                console.log(response.data);
+                
+                setUser(response.data.user); // Assuming the response contains the user object
+            } catch (error) {
+                console.error("Error fetching user profile:", error);
+            }
+        };
         
-    //     fetchUserProfile();
-    // }, []);
+        fetchUserProfile();
+    }, []);
 
-    // if (!user) {
-    //     return <div>Loading...</div>; // Optional: Show loading state while fetching data
-    // }
+    if (!user) {
+        return <div>Loading...</div>; // Optional: Show loading state while fetching data
+    }
 
     return (
         <>

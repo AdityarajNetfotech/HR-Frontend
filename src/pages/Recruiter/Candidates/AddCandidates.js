@@ -11,26 +11,48 @@ import AdminID from '../../global/AdminID';
 
 const AddCandidates = () => {
   const [currentIcon, setCurrentIcon] = useState('ArrowUp');
-  const [isAccordionOpen, setIsAccordionOpen] = useState(null); // Track which accordion is open
-  const [lockedJobDetails, setLockedJobDetails] = useState([]); // State to store locked job details
-  const [errorMessage, setErrorMessage] = useState(''); // State for error message
-  const [currentPage, setCurrentPage] = useState(1); // State for current page
-  const itemsPerPage = 1; // Number of items per page
+  const [isAccordionOpen, setIsAccordionOpen] = useState(null);
+  const [lockedJobDetails, setLockedJobDetails] = useState([]);
+  const [filteredJobDetails, setFilteredJobDetails] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [locationFilter, setLocationFilter] = useState('');
+  const [selectedJobTitle, setSelectedJobTitle] = useState('');
+  const [jobTitles, setJobTitles] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [statuses, setStatuses] = useState([]); // State for storing unique statuses
+  const [statusFilter, setStatusFilter] = useState(''); // Add this state if not defined yet
+  const [errorMessage, setErrorMessage] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState('Latest');
+  const itemsPerPage = 1;
 
   // Function to get locked job details
   const getJobDetails = async () => {
     try {
       const response = await axios.get('http://localhost:4000/api/showJDs');
       const jobDetails = response.data.jds;
-      // Filter only locked JDs
       const lockedJDs = jobDetails.filter(jd => jd.locked === true);
-      setLockedJobDetails(lockedJDs); // Set locked JDs in state
-      // console.log(lockedJDs);
+      setLockedJobDetails(lockedJDs);
+
+      // Extract unique job titles, locations, and statuses
+      const uniqueJobTitles = [...new Set(lockedJDs.map(jd => jd.job_title))];
+      const uniqueLocations = [...new Set(lockedJDs.map(jd => jd.location))];
+      const uniqueStatuses = [...new Set(lockedJDs.map(jd => jd.jd_status))]; // Unique statuses
+
+      setJobTitles(uniqueJobTitles);
+      setLocations(uniqueLocations);
+      setStatuses(uniqueStatuses); // Set unique statuses
+
+      setFilteredJobDetails(lockedJDs);
     } catch (error) {
       console.error('Error fetching job details:', error);
       setErrorMessage('Error fetching job details.');
     }
   };
+
+  useEffect(() => {
+    getJobDetails();
+  }, []);
 
 
   const deleteJD = async (id) => {
@@ -60,9 +82,111 @@ const AddCandidates = () => {
     return isAccordionOpen === index ? <IoIosArrowUp size={24} /> : <IoIosArrowDown size={24} />;
   };
 
-  // Pagination calculation
-  const totalPages = Math.ceil(lockedJobDetails.length / itemsPerPage);
-  const currentItems = lockedJobDetails.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  // Adjusted handleSearch and pagination logic for filtering.
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    if (query) {
+      const filtered = lockedJobDetails.filter((jd) =>
+        jd._id.toLowerCase().includes(query) || jd.job_title.toLowerCase().includes(query)
+      );
+      setFilteredJobDetails(filtered);
+    } else {
+      setFilteredJobDetails(lockedJobDetails);
+    }
+  };
+
+  // Sorting function
+  const handleSort = (order) => {
+    setSortOrder(order);
+    const sortedDetails = [...filteredJobDetails].sort((a, b) => {
+      if (order === 'Latest') {
+        return new Date(b.delivery_deadline) - new Date(a.delivery_deadline);
+      } else if (order === 'Oldest') {
+        return new Date(a.delivery_deadline) - new Date(b.delivery_deadline);
+      }
+      return 0;
+    });
+    setFilteredJobDetails(sortedDetails);
+  };
+
+  const handleJobTitleFilter = (e) => {
+    const selectedTitle = e.target.value;
+    setSelectedJobTitle(selectedTitle);
+
+    let filtered = lockedJobDetails.filter(jd =>
+      jd.job_title.includes(selectedTitle)
+    );
+
+    if (searchQuery) {
+      filtered = filtered.filter(jd =>
+        jd._id.toLowerCase().includes(searchQuery) || jd.job_title.toLowerCase().includes(searchQuery)
+      );
+    }
+
+    setFilteredJobDetails(filtered);
+  };
+
+  const handleStatusFilter = (e) => {
+    const selectedStatus = e.target.value;
+    setStatusFilter(selectedStatus); // Set the selected status in state
+
+    let filtered = lockedJobDetails;
+
+    if (selectedStatus) {
+      filtered = filtered.filter(jd => jd.jd_status === selectedStatus);
+    }
+
+    if (searchQuery) {
+      filtered = filtered.filter(jd =>
+        jd._id.toLowerCase().includes(searchQuery) || jd.job_title.toLowerCase().includes(searchQuery)
+      );
+    }
+
+    setFilteredJobDetails(filtered);
+  };
+
+
+  const handleLocationFilter = (e) => {
+    const location = e.target.value;
+    setLocationFilter(location);
+
+    filterJobDetails(searchQuery, location);
+  };
+
+  const filterJobDetails = (query, location) => {
+    let filtered = lockedJobDetails;
+
+    if (query) {
+      filtered = filtered.filter((jd) =>
+        jd._id.toLowerCase().includes(query) || jd.job_title.toLowerCase().includes(query)
+      );
+    }
+
+    if (location) {
+      filtered = filtered.filter((jd) => jd.location.toLowerCase().includes(location.toLowerCase()));
+    }
+
+    setFilteredJobDetails(filtered);
+  };
+
+  useEffect(() => {
+    setFilteredJobDetails(lockedJobDetails); // Initialize filtered data with full data
+  }, [lockedJobDetails]);
+
+  // Pagination calculation updated to use filteredJobDetails
+  const totalPages = Math.ceil(filteredJobDetails.length / itemsPerPage);
+  const currentItems = filteredJobDetails.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  const resetFilter = () => {
+    setSearchQuery('');
+    setSortOrder('Latest'); // Reset sorting order to 'Latest'
+    setSelectedJobTitle(''); // Reset job title filter
+    setLocationFilter('');
+    setStatusFilter(''); // Reset the status filter
+    setFilteredJobDetails(lockedJobDetails); // Reset to original locked job details
+  };
 
 
 
@@ -97,6 +221,89 @@ const AddCandidates = () => {
               <div className='w-px h-7 bg-gray-500'></div>
               <h1 className='text-dark-grey font-jost text-base font-normal leading-custom tracking-custom text-[#4F4F4F]'>Total Incentives</h1>
             </div>
+          </div>
+        </div>
+
+        {/* Filter */}
+        <div id='candidateOne-filter'>
+          <div className="candidateOne-filter_search">
+            <i className="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              placeholder=" Search Here"
+              className="candidateOne-filter_search-bar"
+              value={searchQuery}
+              onChange={handleSearch}
+            />
+          </div>
+
+          <div className='filter_option'>
+            <span><i className="fa-solid fa-sort"></i> Sort By:</span>
+            <select
+              name="Sort By"
+              value={sortOrder}
+              onChange={(e) => handleSort(e.target.value)}
+            >
+              <option value="Latest">Latest</option>
+              <option value="Oldest">Oldest</option>
+            </select>
+          </div>
+
+          <div className='filter_option'>
+            <span><i className="fa-solid fa-filter"></i> Filter By:</span>
+            <select
+              name="Filter By"
+            >
+              <option value="">All</option>
+              <option value="Latest">Latest</option>
+              <option value="Oldest">Oldest</option>
+            </select>
+          </div>
+
+          <div className='filter_option'>
+            <select
+              name="Job Title"
+              value={selectedJobTitle}
+              onChange={handleJobTitleFilter}
+            >
+              <option value="">Job Title</option>
+              {jobTitles.map((title, index) => (
+                <option key={index} value={title}>{title}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className='filter_option'>
+            <select
+              name="Status"
+              value={statusFilter}
+              onChange={handleStatusFilter}
+            >
+              <option value="">Status</option>
+              {statuses.map((status, index) => (
+                <option key={index} value={status}>{status}</option>
+              ))}
+            </select>
+
+          </div>
+
+          <div className='filter_option'>
+            <select
+              name="Job Title"
+              onChange={handleLocationFilter}
+              value={locationFilter}
+            >
+              <option value="">Location</option>
+              {locations.map((location, index) => (
+                <option key={index} value={location}>{location}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className='filter_option'>
+            <button onClick={resetFilter}>
+              <i className="fa-solid fa-arrow-rotate-left"></i> Reset Filter
+            </button>
           </div>
         </div>
 

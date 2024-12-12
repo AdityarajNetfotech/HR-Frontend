@@ -29,7 +29,7 @@ function AboutUs() {
       </div>
       <div>
         <div className='flex justify-between mt-5' style={{ marginBottom: "50px" }}>
-          <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; Dashboard</strong> </h1>
+          <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; About</strong> </h1>
           <AdminID />
         </div>
         <div className=" w-[70%] mt-10 m-[auto]">

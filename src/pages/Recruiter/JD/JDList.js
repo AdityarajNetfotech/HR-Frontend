@@ -6,6 +6,7 @@ import LockForMeModal from './LockForMeModal';
 import Sidebar from '../../global/Sidebar';
 import Pagination from '../../global/Pagination';
 import JobFilters from './JobFilters';
+import AdminID from '../../global/AdminID';
 
 const JDList = () => {
   const [selectedJob, setSelectedJob] = useState(null);
@@ -133,14 +134,18 @@ const JDList = () => {
   return (
     <div className='min-h-screen flex flex-row gap-4'>
       <Sidebar className='max-[30%]' />
-      <div className='w-[100%]'>
-        <div className="min-h-screen max-w-8xl bg-[#EAF1F3] p-4 gap-4 flex flex-col items-start">
+      <div className='w-[100%]  bg-[#EAF1F3]'>
+        <div className='flex justify-between mt-5' style={{ marginBottom: "50px" }}>
+          <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; JD List</strong> </h1>
+          <AdminID />
+        </div>
+        <div className="min-h-screen max-w-8xl p-4 gap-4 flex flex-col items-start">
           <div className="w-full">
-            <JobFilters 
-              filters={filters} 
-              setFilters={setFilters} 
-              searchQuery={searchQuery} 
-              setSearchQuery={setSearchQuery} 
+            <JobFilters
+              filters={filters}
+              setFilters={setFilters}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
             />
             <div className="mb-4">
               <button
@@ -160,9 +165,9 @@ const JDList = () => {
 
             {selectedJob && (
               <div className="w-[30%]">
-                <JobDetails 
-                  job={selectedJob} 
-                  onLockClick={() => setShowModal(true)} 
+                <JobDetails
+                  job={selectedJob}
+                  onLockClick={() => setShowModal(true)}
                 />
               </div>
             )}

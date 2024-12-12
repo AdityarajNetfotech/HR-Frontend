@@ -5,46 +5,30 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    text-align: center;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
+#candidateOne-filter>.candidateOne-filter_search:nth-child(1) {
+   margin: 11px 8px 0px 8px;
+   height: 35px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
 #candidateOne-filter>.filter_option {
+    justify-content: center;
+    display: flex;
     text-align: center;
-    padding: 8px 0px;
+    padding: 18px 5px;
     border-left: 1px solid rgba(128, 128, 128, 0.578);
     border-right: 1px solid rgba(128, 128, 128, 0.578);
-    width: 8rem;
-}
-
-#candidateOne-filter>.filter_option:nth-child(4) {
-    text-align: center;
-    padding: 8px 0px;
-    border-left: 1px solid rgba(128, 128, 128, 0.578);
-    border-right: 1px solid rgba(128, 128, 128, 0.578);
-    width: 7rem !important;
-}
-#candidateOne-filter>.filter_option:nth-child(5) {
-    text-align: center;
-    padding: 8px 0px;
-    border-left: 1px solid rgba(128, 128, 128, 0.578);
-    border-right: 1px solid rgba(128, 128, 128, 0.578);
-    width: 9.5rem !important;
-}
-
-#candidateOne-filter>.filter_option:nth-child(6) {
-    text-align: center;
-    padding: 8px 0px;
-    border-left: 1px solid rgba(128, 128, 128, 0.578);
-    border-right: 1px solid rgba(128, 128, 128, 0.578);
-    width: 7rem !important;
 }
 
 #candidateOne-filter>.filter_option>select {
+    color: #378BA6;
     outline: none;
-}
-
-#candidateOne-filter>.filter_option>select>option:checked {
-    color: blue;
 }
 
 .candidateOne-filter_search {
@@ -65,9 +49,3 @@
     border: none;
     outline: none;
 }
-
-
-
-
-
-

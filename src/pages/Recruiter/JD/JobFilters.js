@@ -14,7 +14,7 @@ const JobFilters = ({ filters, setFilters, searchQuery, setSearchQuery }) => {
   const toggleStatusDropdown = () => setIsStatusOpen(!isStatusOpen);
 
   return (
-    <div className="p-4 bg-gray-100 rounded-md mb-4 w-[1165px] h-[60px] flex flex-row items-center justify-center bg-white gap-4">
+    <div className="rounded-md mb-4 w-[1165px] h-[60px] flex flex-row items-center justify-center bg-white gap-4">
       {/* Search Bar */}
       <div className="w-[264px] h-[60px] p-0 px-3 gap-1 rounded-l-lg border-r border-r-[0.5px] border-gray-400 flex items-center">
         <input 

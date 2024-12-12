@@ -62,7 +62,7 @@ const EmpSidebar = () => {
         <NavItem icon={<FaMoneyBill />} label="Chat Support" isOpen={isOpen} />
         <NavItem icon={<FaCog />} label="Finances" isOpen={isOpen} />
         <NavItem to="/Profile" icon={<FaInfoCircle />} label="Profile" isOpen={isOpen} />
-        <NavItem to="/EmpAboutUs" icon={<FaInfoCircle />} label="About" isOpen={isOpen} />
+        <NavItem to="/EmpAbout" icon={<FaInfoCircle />} label="About" isOpen={isOpen} />
         <NavItem
           icon={<FaSignOutAlt />}
           onClick={handleLogout}

@@ -4,6 +4,35 @@ import Email from '../../Images/Email.png';
 import MapPin from '../../Images/Map Pin.png';
 
 const Contact = () => {
+
+  const [result, setResult] = React.useState("Submit");
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult("Sending....");
+    const formData = new FormData(event.target);
+
+    formData.append("access_key", "51d57e80-b40c-48cd-aad3-b368819e4abf");
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
+    console.log(response);
+
+
+    const data = await response.json();
+
+    if (data.success) {
+      setResult("Form Submitted Successfully");
+      event.target.reset();
+    } else {
+      console.log("Error", data);
+      setResult(data.message);
+    }
+  };
+
+
   return (
     <div className='w-full max-w-[100%] h-auto py-8 px-4 sm:px-6 md:px-8 lg:px-10  rounded-br-lg rounded-bl-lg border border-[#378BA6] border-opacity-50 bg-white shadow-lg flex flex-col mx-auto'>
       <div className='w-full'>
@@ -18,23 +47,23 @@ const Contact = () => {
           </h1>
           <div className='flex flex-col gap-4 sm:gap-6'>
             <div className='flex flex-row items-start gap-4'>
-              <img src={MapPin} alt="Map Pin" className='w-8 h-8 sm:w-10 sm:h-10'/>
+              <img src={MapPin} alt="Map Pin" className='w-8 h-8 sm:w-10 sm:h-10' />
               <p className='text-[#848484] text-sm sm:text-base'>
-                2715 Ash Dr. San Jose, South<br/>Dakota 83475
+                2715 Ash Dr. San Jose, South<br />Dakota 83475
               </p>
             </div>
             <div className='w-full border-t border-[#E6E6E6]'></div>
             <div className='flex flex-row items-start gap-4'>
-              <img src={Email} alt="Email" className='w-8 h-8 sm:w-10 sm:h-10'/>
+              <img src={Email} alt="Email" className='w-8 h-8 sm:w-10 sm:h-10' />
               <p className='text-[#848484] text-sm sm:text-base'>
-                Proxy@gmail.com<br/>Text@gmail.com
+                Proxy@gmail.com<br />Text@gmail.com
               </p>
             </div>
             <div className='w-full border-t border-[#E6E6E6]'></div>
             <div className='flex flex-row items-start gap-4'>
-              <img src={Phonecall} alt="Phone Call" className='w-8 h-8 sm:w-10 sm:h-10'/>
+              <img src={Phonecall} alt="Phone Call" className='w-8 h-8 sm:w-10 sm:h-10' />
               <p className='text-[#848484] text-sm sm:text-base'>
-                +91 9999999999<br/>(162)-787-9090
+                +91 9999999999<br />(162)-787-9090
               </p>
             </div>
           </div>
@@ -42,7 +71,7 @@ const Contact = () => {
         <div className='w-full lg:w-1/2 lg:pl-8 mt-8 lg:mt-0 '>
           <div className='pt-4 px-4 sm:px-6 lg:px-8 gap-4 rounded-[8px] border border-[#378BA6] bg-white flex flex-col'>
             <p className='font-jost text-[20px] sm:text-[24px] font-semibold leading-[24px] sm:leading-[28px] text-left mb-4'>Contact Us</p>
-            <form className='flex flex-col gap-4'>
+            <form onSubmit={onSubmit} className='flex flex-col gap-4'>
               {/* Name Field */}
               <label htmlFor='name' className='text-left'>
                 <span className='block font-jost text-[14px] sm:text-[16px] font-semibold leading-[20px] sm:leading-[24px] text-[#378BA6]'>Name</span>
@@ -81,9 +110,8 @@ const Contact = () => {
 
               {/* Submit Button */}
               <button
-                type='submit'
                 className='w-full py-2 bg-[#378BA6] text-white hover:bg-[#2c6f8c] transition-colors duration-300 font-semibold mb-8 rounded-lg'>
-                Submit
+                {result}
               </button>
             </form>
           </div>

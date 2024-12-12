@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sidebar from '../../global/Sidebar';
 import ExportIcon from '../../../Images/ExportIcon.png';
-import Pagination from '../../global/Pagination'; // Import Pagination component
+import Pagination from '../../global/Pagination'; 
 import AdminSidebar from '../../global/AdminSidebar';
 import AdminID from '../../global/AdminID';
 
@@ -10,9 +10,9 @@ const AdminRecruterMaster = () => {
   const [users, setUsers] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState(''); // New state for search input
-  const [sortOrder, setSortOrder] = useState('Latest'); // State for sorting
-  const itemsPerPage = 6; // Define how many items you want per page
+  const [searchTerm, setSearchTerm] = useState(''); 
+  const [sortOrder, setSortOrder] = useState('Latest'); 
+  const itemsPerPage = 6; 
 
   const fetchUsers = async () => {
     try {
@@ -86,7 +86,7 @@ const AdminRecruterMaster = () => {
             <i className="fa-solid fa-magnifying-glass"></i>
             <input
               type="text"
-              placeholder=" Search by Employee ID"
+              placeholder=" Search Here"
               className="candidateOne-filter_search-bar"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)} // Update search term
@@ -111,8 +111,6 @@ const AdminRecruterMaster = () => {
               name="Filter By"
             >
               <option value="">All</option>
-              <option value="Latest">Latest</option>
-              <option value="Oldest">Oldest</option>
             </select>
           </div>
 
@@ -121,8 +119,7 @@ const AdminRecruterMaster = () => {
               name="Job Title"
             >
               <option value="">Job Title</option>
-              <option value="Developer">Developer</option>
-              <option value="Designer">Designer</option>
+              <option value="google">Google</option>
             </select>
           </div>
 
@@ -130,7 +127,6 @@ const AdminRecruterMaster = () => {
             <select name="Status">
               <option value="">Status</option>
               <option value="Fresher">Active</option>
-              <option value="Experienced">Pending</option>
             </select>
           </div>
 
@@ -139,9 +135,6 @@ const AdminRecruterMaster = () => {
               name="Location"
             >
               <option value="">Location</option>
-              <option value="Pune">Pune</option>
-              <option value="Hyderabad">Hyderabad</option>
-              <option value="Mumbai">Mumbai</option>
             </select>
           </div>
 
