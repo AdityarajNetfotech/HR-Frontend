@@ -11,7 +11,7 @@ function SelectFromJD() {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  
+
   const getJobDetails = async () => {
     try {
       const response = await axios.get('http://localhost:4000/api/showJDs');
@@ -42,14 +42,18 @@ function SelectFromJD() {
     }
   }, [candidate]);
 
-  
+
   const handleAddCandidateToJD = async (jd) => {
+    // Check if the candidate is already added to the JD
+    if (jd.candidates && jd.candidates.includes(candidate._id)) {
+      alert('This candidate has already been added to this JD.');
+      return;
+    }
+  
     try {
-    
       await axios.post(`http://localhost:4000/api/add-candidate`, { jd_id: jd._id, candidate_id: candidate._id });
       alert('Candidate successfully added to the JD!');
-
-      
+  
       setTimeout(() => {
         navigate('/FinanceCandidate', { state: { jd, candidate } });
       }, 3000);
@@ -58,6 +62,7 @@ function SelectFromJD() {
       setErrorMessage('Error adding candidate to JD.');
     }
   };
+  
 
   return (
     <div className='h-full gap-6 p-4 bg-[#EAF1F4] flex flex-col items-center lg:h-[auto]'>
