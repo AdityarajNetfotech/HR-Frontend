@@ -60,6 +60,23 @@ const CandidatesOne = ({ limit = Infinity }) => {
     }
   };
 
+  const candidateDelete = async (candidateId) => {
+    try {
+      const res = await axios.delete(`http://localhost:4000/api/candidate/delete/${candidateId}`);
+      console.log(res.data);
+
+      if (res.data.success) {
+        alert('Candidate successfully Deleted!');
+        setCandidates((prevCandidates) =>
+          prevCandidates.filter((candidate) => candidate._id !== candidateId)
+        );
+      }
+    } catch (error) {
+      console.error("Error deleting candidate:", error.message);
+    }
+  };
+
+
   useEffect(() => {
     applyFilters();
   }, [candidates, filters]);
@@ -224,8 +241,8 @@ const CandidatesOne = ({ limit = Infinity }) => {
                       </h1>
                     </div>
 
-                    <div className='flex h-[40px] w-[40px] justify-end items-end bg-[#EAF1F3] ml-8'>
-                      <MdDelete className='w-16 h-auto' />
+                    <div className='flex h-[40px] w-[40px] justify-end items-end bg-[#EAF1F3] ml-8 cursor-pointer'>
+                      <MdDelete onClick={() => candidateDelete(candidate._id)} className='w-16 h-auto' />
                     </div>
                   </div>
                 </div>

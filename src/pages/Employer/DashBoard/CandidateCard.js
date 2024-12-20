@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import industryIcon from '../../../Images/IndustryIcon.png';
 import LocationIcon from '../../../Images/LocationIcon.png';
@@ -7,50 +7,73 @@ import PDFIcon from '../../../Images/PDFIcon.png';
 import ExportIcon from '../../../Images/ExportIcon.png';
 
 const CandidateCard = ({ candidates, jobId }) => {
+  const [Rejectcandidates, setRejectCandidates] = useState([]);
+
   const jd_id = jobId
-  
+
   if (!candidates) return <div>No candidate details available</div>;
-  
+
   if (candidates.candidate != null) {
     candidates = candidates.candidate;
   }
-  
-  
+
+
 
   const handleSelectCandidate = async () => {
     try {
       // Fetch current candidates from the JD progress to check if the candidate is already added
       const response = await axios.get(`http://localhost:4000/api/jds/${jd_id}/candidates`);
       const existingCandidates = response.data.candidates;
-  
+
       // Check if the candidate is already added by comparing the candidate's ID
       const isCandidateAlreadyAdded = existingCandidates.some(candidate => candidate._id === candidates._id);
-  
+
       if (isCandidateAlreadyAdded) {
         alert('This candidate is already added.');
         return; // Exit if candidate is already in the progress
       }
-  
+
       // If not already added, proceed with adding the candidate
       const addResponse = await axios.post('http://localhost:4000/api/add-candidate', {
         jd_id,
         candidate_id: candidates._id,
       });
-  
+
       if (addResponse.data.success) {
         alert('Candidate successfully added!');
       } else {
         alert('Failed to add candidate. Please try again.');
       }
-  
+
     } catch (error) {
       console.error('Error adding candidate to JD:', error);
       alert('Failed to add candidate. Please try again.');
     }
   };
-  
-  
 
+
+  const handleRejectCandidate = async (candidateId) => {
+    try {
+      const response = await axios.post('http://localhost:4000/api/jd/remove-candidate', {
+        jdId: jd_id, // Align with backend parameter names
+        candidateId,
+      });
+  
+      if (response.data.success) {
+        alert('Candidate successfully removed!');
+        // Update the candidates list in state
+        setRejectCandidates((prevCandidates) => 
+          prevCandidates.filter((candidate) => candidate._id !== candidateId)
+        );
+      } else {
+        alert('Failed to remove candidate. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error removing candidate:', error);
+      alert('An error occurred. Please try again.');
+    }
+  };
+  
 
 
   return (
@@ -123,7 +146,7 @@ const CandidateCard = ({ candidates, jobId }) => {
           </div>
           <div className='flex flex-row justify-between gap-4 '>
             <button className="flex w-[120px] h-[34px] p-[8px_12px] justify-center items-center gap-2 rounded-[8px] bg-[#A4A4A4] text-white text-center font-jost text-[18px] font-semibold leading-[28px]" onClick={handleSelectCandidate}>Select</button>
-            <button className="flex w-[120px] h-[34px] p-[8px_12px] justify-center items-center gap-2 rounded-[8px] bg-[#378BA6] text-white text-center font-jost text-[18px] font-semibold leading-[28px]">Reject</button>
+            <button onClick={() => handleRejectCandidate(candidates._id)} className="flex w-[120px] h-[34px] p-[8px_12px] justify-center items-center gap-2 rounded-[8px] bg-[#378BA6] text-white text-center font-jost text-[18px] font-semibold leading-[28px]">Reject</button>
           </div>
         </div>
       </div>
