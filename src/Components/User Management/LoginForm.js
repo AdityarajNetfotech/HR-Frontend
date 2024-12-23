@@ -13,84 +13,37 @@ const LoginForm = () => {
     const [userId, setUserId] = useState(null); // State to hold the user ID
     const navigate = useNavigate();
 
-    // const handleLogin = async (e) => {
-    //     e.preventDefault();
-    
-    //     try {
-    //         const response = await axios.post('http://localhost:4000/api/signin', {
-    //             email: emailOrPhone,
-    //             password,
-    //             withCredentials: true,
-    //         });
-    
-    //         console.log('Login successful:', response.data);
-    //         const fetchedUserId = response.data.userId; // Store user ID from response
-    //         setUserId(fetchedUserId);
-    //         console.log('User ID:', fetchedUserId);
-    
-    //         // Fetch user details using the user ID
-    //         const userResponse = await axios.get(`http://localhost:4000/api/user/${fetchedUserId}`, {
-    //             withCredentials: true,
-    //         });
-    
-    //         const user = userResponse.data.user;
-    //         console.log('Fetched User Details:', user);
-    
-    //         // Persist user ID in localStorage
-    //         localStorage.setItem('userId', fetchedUserId);
-    
-    //         // Redirect based on user type
-    //         if (user.joinAs === "client") {
-    //             navigate("/EmployerDashboard");
-    //         } else if (user.joinAs === "recruiter") {
-    //             navigate("/Dashboard");
-    //         } else if (user.joinAs === "admin") {
-    //             navigate("/AdminDashboard");
-    //         } else {
-    //             navigate("/Dashboard");
-    //         }
-    //     } catch (error) {
-    //         console.error('Login failed:', error.response ? error.response.data.message : error.message);
-    //         setError(error.response ? error.response.data.message : 'Something went wrong');
-    //     }
-    // };
-    
-
-
     const handleLogin = async (e) => {
         e.preventDefault();
-    
+
         try {
-            const response = await axios.post('http://localhost:4000/api/signin', {
-                email: emailOrPhone,
-                password,
-                withCredentials: true,
-            });
-    
+            const response = await axios.post('http://localhost:4000/api/signin',
+                {
+                    email: emailOrPhone,
+                    password,
+                },
+                {
+                    withCredentials: true,
+                }
+            );
+
             console.log('Login successful:', response.data);
             const fetchedUserId = response.data.userId; // Store user ID from response
-            const token = response.data.token; // Assuming the token is in the response body
-    
+
             setUserId(fetchedUserId);
             console.log('User ID:', fetchedUserId);
-    
-            // Save token in localStorage
-            if (token) {
-                localStorage.setItem('authToken', token);
-                console.log('Token saved:', token);
-            }
-    
+
             // Fetch user details using the user ID
             const userResponse = await axios.get(`http://localhost:4000/api/user/${fetchedUserId}`, {
                 withCredentials: true,
             });
-    
+
             const user = userResponse.data.user;
             console.log('Fetched User Details:', user);
-    
+
             // Persist user ID in localStorage
             localStorage.setItem('userId', fetchedUserId);
-    
+
             // Redirect based on user type
             if (user.joinAs === "client") {
                 navigate("/EmployerDashboard");
@@ -106,8 +59,6 @@ const LoginForm = () => {
             setError(error.response ? error.response.data.message : 'Something went wrong');
         }
     };
-    
-
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible); // Toggle password visibility correctly
