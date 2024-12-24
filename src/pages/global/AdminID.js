@@ -2,38 +2,58 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function AdminID() {
-    const [user, setUser] = useState(null);
+
+    const [user, setUser] = useState(null); // State to hold user data
 
     useEffect(() => {
-        // Fetch user profile when the component mounts
         const fetchUserProfile = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/api/me'); // Adjust the URL to your actual API endpoint
+                const response = await axios.get('http://localhost:4000/api/memyprofile', {
+                    withCredentials: true, // Ensure cookies are sent for token authentication
+                });
                 console.log(response.data);
-                
-                setUser(response.data.user); // Assuming the response contains the user object
+
+                const userData = response.data.user;
+
+                if (userData) {
+                    userData.firstName = capitalize(userData.firstName);
+                    userData.lastName = capitalize(userData.lastName);
+                }
+
+                setUser(userData);
             } catch (error) {
                 console.error("Error fetching user profile:", error);
             }
         };
-        
+
         fetchUserProfile();
     }, []);
 
-    if (!user) {
-        return <div>Loading...</div>; // Optional: Show loading state while fetching data
-    }
+
+    const capitalize = (str) => {
+        return str.toUpperCase();
+    };
+
+    const formatUserID = (id) => {
+        return id.length > 4 ? `${id.slice(0, 4)}...` : id; // Keep first 4 digits and add "..." if longer
+    };
 
     return (
         <>
             <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                <i style={{ fontSize: "20px", borderRadius: "50%", padding: "10px 12px" }} className="fa-regular fa-bell bg-blue-100"></i>
+                <i style={{ fontSize: "20px", borderRadius: "50%", padding: "10px 12px" }} className="fa-regular fa-bell bg-blue-100 cursor-pointer"></i>
 
                 <div className="flex items-center gap-2">
-                    <i style={{ fontSize: "20px", borderRadius: "50%", padding: "10px 12px" }} className="fa-regular fa-user bg-blue-100"></i>
-                    <div>
-                        <h1><strong>SAAD AKHTAR</strong></h1>
-                        <h1>ID: 1234567</h1> {/* Displaying the user ID */}
+                    <i style={{ fontSize: "20px", borderRadius: "50%", padding: "10px 12px" }} className="fa-regular fa-user bg-blue-100 cursor-pointer"></i>
+                    <div className='cursor-pointer'>
+                        {user ? (
+                            <>
+                                <h1><strong>{user.firstName} {user.lastName}</strong></h1>
+                                <h1>ID: {formatUserID(user._id)}</h1>
+                            </>
+                        ) : (
+                            <h1>Loading...</h1>
+                        )}
                     </div>
                 </div>
             </div>
