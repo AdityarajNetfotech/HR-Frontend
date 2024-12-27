@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import eye from '../../Images/Eye.png';
 import Google from '../../Images/Googleicon.png';
+import OAuth from './OAuth';
 
 const LoginForm = () => {
     const [emailOrPhone, setEmailOrPhone] = useState('');
@@ -126,12 +127,7 @@ const LoginForm = () => {
                     >
                         Confirm
                     </button>
-                    <div className="mb-5">
-                        <button className="w-full py-3 flex h-[40px] p-[12px] justify-center items-center self-stretch rounded-[12px] border-[0.5px] border-[var(--Teal,#378BA6)] bg-[var(--White,#FFF)]">
-                            <span className="mr-2"><img src={Google} alt="Google icon" /></span>
-                            <span className="text-[var(--Teal,#378BA6)] text-center font-poppins text-[16px] font-medium leading-[120%] tracking-[0.32px] opacity-70">Or Sign in with Google</span>
-                        </button>
-                    </div>
+                    <OAuth />
                 </form>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 <div className="mt-5 text-center">

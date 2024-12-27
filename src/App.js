@@ -61,13 +61,12 @@ import ChatSupport from './pages/Recruiter/ChatSupport/ChatSupport';
 import EmpAbout from './Components/EmpAboutUs/EmpAbout'
 import AdminSidebar from './pages/global/AdminSidebar';
 import AdminID from './pages/global/AdminID';
+
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-
-
           <Route path='/chat-support' element={<ChatSupport />} />
           <Route path='/EmpAbout' element={<EmpAbout />} />
           <Route path='/' element={<MainLandingPage />} />
@@ -97,7 +96,7 @@ function App() {
           <Route path='/SubmitCandidateModal' element={<SubmitCandidateModal />} />
           <Route path='/CandidateIncompleteModal' element={<CandidateIncompleteModal />} />
           <Route path='/CandidateAddedModal' element={<CandidateAddedModal />} />
-          <Route path='/CandidateFeedback' element={<CandidateFeedback/>} />
+          <Route path='/CandidateFeedback' element={<CandidateFeedback />} />
           <Route path='/EmployerJd' element={<EmployerJd />} />
           <Route path='/EmployerFile' element={<EmployerFile />} />
           {/* <Route path='/CandidateCard' element={<CandidateCard />} /> */}
@@ -124,17 +123,17 @@ function App() {
           <Route path='/Admin/PersonalInfo' element={<Admin_PersonalInfo />} />
           <Route path='/Admin/Profile' element={<Admin_Profile />} />
           <Route path='/Admin/Reset-Password' element={<Admin_Reset_Password />} />
-          <Route path='/Admin/Finance' element={<Admin_Finance/>} />
+          <Route path='/Admin/Finance' element={<Admin_Finance />} />
           <Route path='/Admin/Finance/invoice' element={<Admin_Finance_Invoice />} />
           <Route path='/Admin/Finance/JD-Details' element={<Admin_Finance_JD_Details />} />
           {/* <Route path='/Adminjds' element={<Adminjds/>} /> */}
-          <Route path='/AdminSummery' element={<AdminSummery/>} />
-          <Route path='/AdminDashboard' element={<AdminDashboard/>} />
-          <Route path='/AEmployerMaster' element={<EmployerMaster/>} />
-          <Route path='/Adminjds' element={<Adminjds/>} />
-          <Route path='/AdminEmployerfile' element={<AdminEmployerfile/>} />
-          <Route path='/AdminEmployerMaster' element={<AdminEmployerMaster/>} />
-          <Route path='/AdminRecruterMaster' element={<AdminRecruterMaster/>} />
+          <Route path='/AdminSummery' element={<AdminSummery />} />
+          <Route path='/AdminDashboard' element={<AdminDashboard />} />
+          <Route path='/AEmployerMaster' element={<EmployerMaster />} />
+          <Route path='/Adminjds' element={<Adminjds />} />
+          <Route path='/AdminEmployerfile' element={<AdminEmployerfile />} />
+          <Route path='/AdminEmployerMaster' element={<AdminEmployerMaster />} />
+          <Route path='/AdminRecruterMaster' element={<AdminRecruterMaster />} />
 
 
 
