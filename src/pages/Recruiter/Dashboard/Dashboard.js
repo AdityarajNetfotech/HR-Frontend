@@ -122,7 +122,7 @@ function Dashboard() {
               </div>
               <button
                 className='flex h-[52px] p-[8px_12px] justify-center items-center gap-[8px] rounded-lg bg-[#A4A4A4]'
-                onClick={() => navigate('/jdlist')} // Navigate to JDList page
+                onClick={() => navigate('/jdlist/recent')} // Navigate to JDList page
               >
                 <h1 className='text-white-custom text-center font-jost text-18px font-semibold leading-28px text-white'>
                   See More
@@ -132,8 +132,9 @@ function Dashboard() {
 
             {/* Job List Section */}
             <div className='max-w-8xl '>
-              {jobs.slice(0, showMoreJobs ? jobs.length : 3).map((job) => (
-                <div key={job.id} className="bg-white p-4 mb-4 w-[1092px] h-[182px] shadow-md rounded-lg">
+              {jobs.slice(0, showMoreJobs ? jobs.length : 3).map((job, index) => (
+                <div key={index} className="bg-white p-4 mb-4 w-[1092px] h-[210px] shadow-md rounded-lg">
+                  <h1 className='px-1 mb-1'>Sr No. {index + 1}</h1>
                   <div>
                     <p className="flex max-w-max items-center justify-center px-2 py-1 mb-1 bg-gray-200 text-gray-700 rounded text-center text-sm font-normal leading-[18.2px] tracking-[0.07px]">JD ID: {job.id}</p>
                     <h3 className="flex flex-col items-left h-9 overflow-hidden text-gray-800 text-ellipsis whitespace-nowrap font-jost text-2xl font-bold leading-9">{job.job_title}</h3>

@@ -61,59 +61,78 @@ import ChatSupport from './pages/Recruiter/ChatSupport/ChatSupport';
 import EmpAbout from './Components/EmpAboutUs/EmpAbout'
 import AdminSidebar from './pages/global/AdminSidebar';
 import AdminID from './pages/global/AdminID';
+import ProtectedRoute from './Components/User Management/ProtectedRoute';
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/chat-support' element={<ChatSupport />} />
-          <Route path='/EmpAbout' element={<EmpAbout />} />
+          <Route path='/protectedroute' element={<ProtectedRoute />} />
+
+
           <Route path='/' element={<MainLandingPage />} />
           <Route path='/about' element={<AboutUs />} />
           <Route path='/login' element={<LoginForm />} />
           <Route path='/Signup' element={<SignupForm />} />
-          <Route path='/otp' element={<OTPVerification />} />
           <Route path='/Signup-Success' element={<SignupSuccess />} />
-          <Route path='/Multiform' element={<MultiStepForm />} />
+          <Route path='/otp' element={<OTPVerification />} />
           <Route path='/Profile-Success' element={<ProfileSuccess />} />
-          <Route path='/Profile-Recruiter' element={<PersonalInfo />} />
+          <Route path='/Multiform' element={<MultiStepForm />} />
           <Route path='/ResetPassword' element={<ResetPassword />} />
-          <Route path='/JDList/recent' element={<JDList />} />
-          <Route path='/Dashboard' element={<Dashboard />} />
-          <Route path='/LockModal' element={<LockForMeModal />} />
+          <Route path='/Profile-Recruiter' element={<PersonalInfo />} />
+
+
+
+
+
           <Route path='/JDSignUpSuccess' element={<SignupSuccessJD />} />
           <Route path='/JDSummary' element={<JDSummary />} />
           <Route path='/FinanceList' element={<FinanceList />} />
-          <Route path='/Candidate-Form' element={<CandidateForm />} />
           <Route path='/FinanceCandidate' element={<FinanceCandidate />} />
           <Route path='/FinancePayroll' element={<FinancePayroll />} />
           <Route path='/Candidates' element={<Candidates />} />
-          <Route path='/MyWorkspace' element={<AddCandidates />} />
-          <Route path='/CandidatesOne' element={<CandidatesOne />} />
-          <Route path='/SelectFromJD' element={<SelectFromJD />} />
           <Route path='/AddCandidateModal' element={<AddCandidateModal />} />
           <Route path='/SubmitCandidateModal' element={<SubmitCandidateModal />} />
           <Route path='/CandidateIncompleteModal' element={<CandidateIncompleteModal />} />
           <Route path='/CandidateAddedModal' element={<CandidateAddedModal />} />
           <Route path='/CandidateFeedback' element={<CandidateFeedback />} />
-          <Route path='/EmployerJd' element={<EmployerJd />} />
-          <Route path='/EmployerFile' element={<EmployerFile />} />
           {/* <Route path='/CandidateCard' element={<CandidateCard />} /> */}
           <Route path='/CandidateJobCard' element={<JobCard />} />
-          <Route path='/EmployerDashboard' element={<EmpDashboard />} />
-          <Route path='/EmpJDdetail' element={<EmpJDdetail />} />
-          <Route path='/AddJDForm' element={<AddNewJDForm />} />
-          <Route path='/Employee-DashBoard' element={<EmpDashboard />} />
           <Route path='/SelectCandidate' element={<SelectCandidate />} />
-          <Route path='/EmpCandidates' element={<EmpCandidates />} />
-          <Route path='/EmpJDList' element={<EmpJDList />} />
           <Route path='/FinanceSummery' element={<FinanceSummery />} />
-          <Route path='/EmpJDMaster' element={<EmpJDMaster />} />
           <Route path='/JD_Master_Details/:id' element={<JD_Master_Details />} />
 
 
+          {/* //EMPLOYER// */}
+          <Route path='/EmployerDashboard' element={<EmpDashboard />} />
+          <Route path='/Employee-DashBoard' element={<EmpDashboard />} />
+          <Route path='/EmpJDList' element={<EmpJDList />} />
+          <Route path='/EmpJDMaster' element={<EmpJDMaster />} />
+          <Route path='/EmpAbout' element={<EmpAbout />} />
+          <Route path='/EmpCandidates' element={<EmpCandidates />} />
+          <Route path='/EmployerJd' element={<EmployerJd />} />
+          <Route path='/EmployerFile' element={<EmployerFile />} />
+          <Route path='/EmpJDdetail' element={<EmpJDdetail />} />
+          <Route path='/AddJDForm' element={<AddNewJDForm />} />
+          <Route path='/SelectFromJD' element={<SelectFromJD />} />
 
+
+
+          <Route path='/chat-support' element={<ChatSupport />} />
+
+          {/* //RECRUITER// */}
+          <Route path='/JDList/recent' element={<JDList />} />
+          <Route path='/Dashboard' element={<Dashboard />} />
+          <Route path='/LockModal' element={<LockForMeModal />} />
+          <Route path='/CandidatesOne' element={<CandidatesOne />} />
+          <Route path='/MyWorkspace' element={<AddCandidates />} />
+          <Route path='/Candidate-Form' element={<CandidateForm />} />
+
+
+
+
+          <Route path='/chat-support' element={<ChatSupport />} />
 
           {/* //ADMIN// */}
 
@@ -137,6 +156,7 @@ function App() {
 
 
 
+          <Route path='/chat-support' element={<ChatSupport />} />
 
         </Routes>
       </BrowserRouter>

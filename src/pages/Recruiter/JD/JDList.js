@@ -33,6 +33,8 @@ const JDList = () => {
   const getBackendData = async () => {
     try {
       const response = await axios.get('http://localhost:4000/api/showJDs');
+      console.log(response.data);
+      
       const formattedJobs = response.data.jds.map((job) => ({
         id: job._id,
         job_title: job.job_title,
@@ -107,18 +109,32 @@ const JDList = () => {
   };
 
   // Filtering jobs
-  const filteredJobs = jobs.filter((job) => {
-    const matchesSearch = job.job_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.location.toLowerCase().includes(searchQuery.toLowerCase());
+  // const filteredJobs = jobs.filter((job) => {
+  //   const matchesSearch = job.job_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     job.location.toLowerCase().includes(searchQuery.toLowerCase());
 
+  //   const matchesFilters = (filters.location === '' || job.location === filters.location) &&
+  //     (filters.industry === '' || job.industry === filters.industry) &&
+  //     (filters.title === '' || job.job_title === filters.title) &&
+  //     (filters.status === '' || job.status === filters.status);
+
+  //   return matchesSearch && matchesFilters;
+  // });
+
+  const filteredJobs = jobs.filter((job) => {
+    const matchesSearch = (job.job_title && job.job_title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (job.company && job.company.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (job.location && job.location.toLowerCase().includes(searchQuery.toLowerCase()));
+  
     const matchesFilters = (filters.location === '' || job.location === filters.location) &&
       (filters.industry === '' || job.industry === filters.industry) &&
       (filters.title === '' || job.job_title === filters.title) &&
       (filters.status === '' || job.status === filters.status);
-
+  
     return matchesSearch && matchesFilters;
   });
+  
 
   // Logic for pagination
   const indexOfLastJob = currentPage * jobsPerPage;

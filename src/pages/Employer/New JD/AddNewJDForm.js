@@ -35,12 +35,17 @@ const AddNewJDForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const AddNewJDForm = getAddNewJDForm();
-
+        
+        const userID = localStorage.getItem('userId');
 
         try {
+            const jdData = { ...AddNewJDForm, user: userID };
+
+            console.log('JD Data with User ID:', jdData);
+
             console.log('JD Data', AddNewJDForm);
 
-            const response = await axios.post('http://localhost:4000/api/jd/create', AddNewJDForm);
+            const response = await axios.post('http://localhost:4000/api/jd/create', jdData);
             console.log(response);
             
             if (response.status === 201) {

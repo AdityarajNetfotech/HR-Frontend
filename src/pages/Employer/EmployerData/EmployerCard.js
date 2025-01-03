@@ -64,7 +64,7 @@ const EmployerCard = ({ job, onClick }) => {
               </div>
               <div style={{ display: "flex", gap: "10px", justifyContent: "center", alignItems: "center", width: "80px", borderRadius: "4px", padding: "2px" }} className='bg-blue-100'>
                 <img src={ExportIcon} alt="Export Icon" style={{ height: "23px" }} />
-                <i class="fa-solid fa-trash" style={{ fontSize: "16px" }}></i>
+                <i className="fa-solid fa-trash" style={{ fontSize: "16px" }}></i>
               </div>
             </div>
           </div>
@@ -82,11 +82,11 @@ const EmployerCard = ({ job, onClick }) => {
               <h1 className='text-gray-600 text-base font-normal ml-2'>Salary:</h1>
               <h1 className='text-gray-600 text-base font-normal'>{job.salary}</h1>
             </div>
-            <a href='/SelectFromJD'>
+            {/* <a href='/SelectFromJD'>
               <button className='flex flex-row items-center justify-center gap-2 py-2 px-3  ml-[270px]  rounded-md border border-gray-400 bg-[#378BA6]'><h1 className='text-white text-center font-bold text-base-lg font-jost'>Upload jd</h1>
                 <FaExternalLinkAlt className='text-white' />
               </button>
-            </a>
+            </a> */}
           </div>
 
 

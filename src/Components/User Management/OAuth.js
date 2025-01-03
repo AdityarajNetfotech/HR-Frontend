@@ -2,122 +2,13 @@ import React, { useState, useEffect } from 'react'
 import Google from '../../Images/Googleicon.png';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import axios from "axios";
-import { app } from '../../firebase.js';
 import { useNavigate } from 'react-router-dom';
+import { app } from '../../firebase';
 
 function OAuth() {
 
     const [userId, setUserId] = useState(null); // State for user ID
     const navigate = useNavigate();
-
-    // const handleGoogleLogin = async () => {
-    //     try {
-    //         const provider = new GoogleAuthProvider();
-    //         const auth = getAuth(app);
-    //         const result = await signInWithPopup(auth, provider);
-
-    //         const response = await fetch("http://localhost:4000/api/google-signin", {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json"
-    //             },
-    //             body: JSON.stringify({
-    //                 email: result.user.email
-    //             })
-    //         });
-
-    //         if (response.ok) {
-    //             const data = await response.json();
-    //             localStorage.setItem("userID", data.user._id); // Save userID in localStorage
-    //             alert("Login successful!");
-    //             console.log("User data:", data);
-    //         } else {
-    //             const errorData = await response.json();
-    //             alert("Login failed: " + errorData.message);
-    //         }
-    //     } catch (error) {
-    //         console.error("Error during Google login:", error);
-    //         alert("Something went wrong. Please try again.");
-    //     }
-    // };
-
-
-
-    // const handleGoogleLogin = async () => {
-    //     try {
-    //         const provider = new GoogleAuthProvider();
-    //         const auth = getAuth(app);
-    //         const result = await signInWithPopup(auth, provider);
-
-    //         const response = await fetch("http://localhost:4000/api/google-signin", {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             credentials: "include", // Include credentials (cookies)
-    //             body: JSON.stringify({
-    //                 email: result.user.email,
-    //             }),
-    //         });
-
-    //         if (response.ok) {
-    //             const data = await response.json();
-    //             console.log("Backend Response:", data); // Debugging
-
-    //             if (data.user && data.user._id) {
-    //                 localStorage.setItem("userID", data.user._id); // Save userID
-    //                 alert("Login successful!");
-    //             } else {
-    //                 alert("User data missing in response.");
-    //             }
-    //         } else {
-    //             const errorData = await response.json();
-    //             alert("Login failed: " + errorData.message);
-    //         }
-    //     } catch (error) {
-    //         console.error("Error during Google login:", error);
-    //         alert("Something went wrong. Please try again.");
-    //     }
-    // };
-    // const handleGoogleLogin = async () => {
-    //     try {
-    //         const provider = new GoogleAuthProvider();
-    //         const auth = getAuth(app);
-    //         const result = await signInWithPopup(auth, provider);
-
-    //         const response = await fetch("http://localhost:4000/api/google-signin", {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             credentials: "include", // Include cookies
-    //             body: JSON.stringify({
-    //                 email: result.user.email,
-    //             }),
-    //         });
-
-    //         if (response.ok) {
-    //             const data = await response.json();
-    //             console.log("Backend Response:", data); // Debugging
-
-    //             if (data.success && data.userId) {
-    //                 localStorage.setItem("userID", data.userId); // Save userID
-    //                 alert("Login successful!");
-    //             } else {
-    //                 alert("User ID not found in response.");
-    //             }
-    //         } else {
-    //             const errorData = await response.json();
-    //             alert("Login failed: " + errorData.message);
-    //         }
-    //     } catch (error) {
-    //         console.error("Error during Google login:", error);
-    //         alert("Something went wrong. Please try again.");
-    //     }
-    // };
-
-
-
 
     const handleGoogleLogin = async () => {
         try {

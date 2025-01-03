@@ -23,8 +23,13 @@ const EmployerDetailes = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/showJDs');
-        console.log(response.data);
+        // Use the correct API endpoint for `getJDsByUser`
+        const response = await axios.get('http://localhost:4000/api/ShowUserJD', {
+          withCredentials: true // This ensures cookies are sent with the request
+        });
+
+
+        console.log("res", response.data);
 
         const fetchedJobs = response.data.jds;
         setJobs(fetchedJobs); // Assuming `jds` is the array in response
@@ -42,7 +47,7 @@ const EmployerDetailes = () => {
         setJobTitles(uniqueJobTitles);
 
       } catch (err) {
-        setError(err.response?.data?.message || 'Failed to load jobs');
+        console.log("No JD's found for this candidate");
       } finally {
         setLoading(false);
       }
@@ -50,6 +55,7 @@ const EmployerDetailes = () => {
 
     fetchJobs();
   }, []);
+
 
   // Handle search input change
   const handleSearchChange = (e) => {
@@ -198,13 +204,22 @@ const EmployerDetailes = () => {
       <div className="max-w-8xl bg-white p-4 gap-4 flex items-start ">
         <div className="w-full">
           {/* Render paginated jobs */}
-          <EmployerList jobs={currentJobs} onJobClick={handleJobClick} />
-          {/* Render pagination */}
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
+          {currentJobs.length === 0 ? (
+            <div className="text-center text-gray-500 text-lg">
+              No JD's found for this candidate
+            </div>
+          ) : (
+            <>
+              {/* Render paginated jobs */}
+              <EmployerList jobs={currentJobs} onJobClick={handleJobClick} />
+              {/* Render pagination */}
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </>
+          )}
         </div>
       </div>
     </section>
