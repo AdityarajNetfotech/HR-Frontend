@@ -87,7 +87,6 @@ function App() {
 
 
           <Route path='/JDSignUpSuccess' element={<SignupSuccessJD />} />
-          <Route path='/JDSummary' element={<JDSummary />} />
           <Route path='/FinanceList' element={<FinanceList />} />
           <Route path='/FinanceCandidate' element={<FinanceCandidate />} />
           <Route path='/FinancePayroll' element={<FinancePayroll />} />
@@ -128,7 +127,7 @@ function App() {
           <Route path='/CandidatesOne' element={<CandidatesOne />} />
           <Route path='/MyWorkspace' element={<AddCandidates />} />
           <Route path='/Candidate-Form' element={<CandidateForm />} />
-
+          <Route path='/JDSummary' element={<JDSummary />} />
 
 
 

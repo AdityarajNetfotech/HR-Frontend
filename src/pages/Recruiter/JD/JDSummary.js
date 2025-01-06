@@ -11,61 +11,15 @@ import NoticePeriodIcon from '../../../Images/NoticePeriodIcon.png';
 import InterviewIcon from '../../../Images/InterviewIcon.png';
 import PriorityIcon from '../../../Images/PriorityIcon.png';
 import { IoIosArrowForward } from "react-icons/io";
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 
-// Default values for the job prop
-const defaultJob = {
-  job_title: 'N/A',
-  company_Name: 'N/A',
-  experience: 'N/A',
-  industry: 'N/A',
-  location: 'N/A',
-  work_experience: 'N/A',
-  salary: 'N/A',
-  notice_period: 'N/A',
-  interview_rounds: 'N/A',
-  job_type: 'N/A',
-  priority_tag: 'N/A',
-  delivery_deadline: 'N/A',
-  replacement_period: 'N/A',
-  no_of_vacancy: 'N/A',
-  absolute_payout: 'N/A',
-  delivery_payout: 'N/A',
-  sign_up_rate: 'N/A',
-  skills_required: 'N/A',
-  additional_comments: 'N/A',
-  jd_status: 'N/A',
-  locked: 'N/A',
-  lockedBy: 'N/A',
-};
-
-const JDSummary = ({ job }) => {
-  const {
-    job_title = defaultJob.job_title,
-    company_Name = defaultJob.company_Name,
-    experience = defaultJob.experience,
-    industry = defaultJob.industry,
-    location = defaultJob.location,
-    work_experience = defaultJob.work_experience,
-    salary = defaultJob.salary,
-    notice_period = defaultJob.notice_period,
-    interview_rounds = defaultJob.interview_rounds,
-    job_type = defaultJob.job_type,
-    priority_tag = defaultJob.priority_tag,
-    delivery_deadline = defaultJob.delivery_deadline,
-    replacement_period = defaultJob.replacement_period,
-    no_of_vacancy = defaultJob.no_of_vacancy,
-    absolute_payout = defaultJob.absolute_payout,
-    delivery_payout = defaultJob.delivery_payout,
-    sign_up_rate = defaultJob.sign_up_rate,
-    skills_required = defaultJob.skills_required,
-    additional_comments = defaultJob.additional_comments,
-    jd_status = defaultJob.jd_status,
-    locked = defaultJob.locked,
-    lockedBy = defaultJob.lockedBy
-
-  } = job || {};
+const JDSummary = () => {
+  
+  const { state } = useLocation();
+  
+  const job = state ? state.jobData : {};
+  console.log("JDSummary", job);
 
   return (
     <div className="p-6 bg-gray-100 rounded-lg shadow-lg max-w-4xl mx-auto">
@@ -83,26 +37,26 @@ const JDSummary = ({ job }) => {
         </div>
       </div>
 
-      <p className="flex w-32 my-3 items-center justify-center px-2 py-1 mb-2 bg-gray-200 text-gray-700 rounded text-center text-sm font-normal leading-[18.2px] tracking-[0.07px]">JD ID: {job.id}</p>
+      <p style={{width: "250px"}} className="flexmy-3 items-center justify-center px-2 py-1 mb-2 mt-2 bg-gray-200 text-gray-700 rounded text-center text-sm font-normal">JD ID: {job.id || "NA"}</p>
 
       {/* Recruiter Details */}
       <div className="bg-yellow-100 p-4 rounded-lg mb-6">
         <p className="text-black text-ellipsis overflow-hidden font-medium text-2xl leading-7 truncate">Recruiter Details:</p>
         <hr className='my-1' />
         <div className="flex items-center">
-          <div className="custom-clamp text-dark-grey text-ellipsis overflow-hidden font-medium text-2xl leading-7">R01 : {job.JD_id}</div>
+          <div className="custom-clamp text-dark-grey text-ellipsis overflow-hidden font-medium text-2xl leading-7">R01 :</div>
           <div className='w-[0.737px] h-[42px] bg-[#848484] mx-3'></div>
           <div>
-            <p className="font-bold text-gray-800">{job.name}</p>
-            <p className="text-sm text-gray-600">ID: {job.id}</p>
+            <p className="font-bold text-gray-800">{job.name || "NA"}</p>
+            <p className="text-sm text-gray-600">ID: {job.id || "NA"}</p>
           </div>
         </div>
       </div>
 
       {/* Job Title and Company */}
       <div className="mb-4">
-        <h3 className="flex flex-col justify-center text-dark-grey text-ellipsis overflow-hidden whitespace-nowrap font-normal text-2xl leading-9">Job Title: <span className="text-custom-gray font-jost text-2xl font-semibold leading-9">{job.job_title}</span></h3>
-        <p className="flex flex-col justify-center w-auto h-[20.809px] overflow-hidden text-[#378BA6] whitespace-nowrap text-[20px] font-normal leading-28px font-jost">Company:{job.company_Name} </p>
+        <h3 className="text-dark-grey text-ellipsis overflow-hidden whitespace-nowrap font-normal text-2xl leading-9">Job Title: <span className="text-custom-gray font-jost text-2xl font-semibold leading-9">{job.job_title || "NA"}</span></h3>
+        <p className="flex flex-col justify-center w-auto h-[20.809px] overflow-hidden text-[#378BA6] whitespace-nowrap text-[20px] font-normal leading-28px font-jost">Company: {job.company || "NA"} </p>
       </div>
 
       {/* Job Description and Payout Details */}
@@ -112,35 +66,35 @@ const JDSummary = ({ job }) => {
           <div className="bg-gray-100 p-3 rounded-md">
             <h3 className="flex items-center self-stretch p-[6px_12px] rounded-[4px] bg-[#C3DCE4] text-[#115469] text-center font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">Job Description</h3>
             <ol className="list-inside list-none text-sm text-gray-700">
-              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={LocationIcon} alt='Location' />Location: {job.location}</li>
-              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={IndustryIcon} alt='Industry' />Industry: {job.industry}</li>
-              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={ExperienceIcon} alt='Experience' />Experience: {job.experience}</li>
-              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={SalaryIcon} alt='Salary' />Salary: {job.salary}</li>
-              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={JobTypeIcon} alt='Job Type' />Type: {job.job_type}</li>
-              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={InterviewIcon} alt='Interview Rounds' />Interview Rounds: {job.interview_rounds}</li>
-              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={NoticePeriodIcon} alt='Notice Period' />Notice Period: {job.notice_period}</li>
+              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={LocationIcon} alt='Location' />Location: {job.location || "NA"}</li>
+              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={IndustryIcon} alt='Industry' />Industry: {job.industry || "NA"}</li>
+              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={ExperienceIcon} alt='Experience' />Experience: {job.experience || "NA"}</li>
+              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={SalaryIcon} alt='Salary' />Salary: {job.salary || "NA"}</li>
+              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={JobTypeIcon} alt='Job Type' />Type: {job.job_type || "NA"}</li>
+              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={InterviewIcon} alt='Interview Rounds' />Interview Rounds: {job.interviewRounds || "NA"}</li>
+              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={NoticePeriodIcon} alt='Notice Period' />Notice Period: {job.noticePeriod || "NA"}</li>
             </ol>
           </div>
 
           <div className="bg-gray-100 p-3 rounded-md">
             <h3 className="flex items-center self-stretch p-[6px_12px] rounded-[4px] bg-[#C3DCE4] text-[#115469] text-center font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">Submission Details</h3>
             <ul className="list-none list-inside text-sm text-gray-700">
-              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={PriorityIcon} alt='Priority' />Priority: {job.priority_tag}</li>
-              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={SubmissionIcon} alt='Submissions Required' />No. of Submissions Required: {job.no_of_vacancy}</li>
+              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={PriorityIcon} alt='Priority' />Priority: {job.priority || "NA"}</li>
+              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={SubmissionIcon} alt='Submissions Required' />No. of Submissions Required: {job.no_of_vacancy || "NA"}</li>
               {/* <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={TimeIcon} alt='Uploaded On' />Uploaded on: {uploadedOn}</li> */}
-              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={TimeIcon} alt='Delivery Required' />Delivery Required: {job.delivery_deadline}</li>
-              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={TimeIcon} alt='Replacement Period' />Replacement Period: {job.replacement_period}</li>
+              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={TimeIcon} alt='Delivery Required' />Delivery Required: {job.delivery_deadline || "NA"}</li>
+              <li className='flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]'><img src={TimeIcon} alt='Replacement Period' />Replacement Period: {job.replacementPeriod || "NA"}</li>
             </ul>
           </div>
 
           <div className="bg-gray-100 p-3 rounded-md">
             <h3 className="flex items-center self-stretch p-[6px_12px] rounded-[4px] bg-[#C3DCE4] text-[#115469] text-center font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">Skills Required</h3>
-            <p className="flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">{job.skills_required}</p>
+            <p className="flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">{job.skills_required || "NA"}</p>
           </div>
 
           <div className="bg-gray-100 p-3 rounded-md">
             <h3 className="flex items-center self-stretch p-[6px_12px] rounded-[4px] bg-[#C3DCE4] text-[#115469] text-center font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">Additional Comments</h3>
-            <p className="flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">{job.additional_comments}</p>
+            <p className="flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">{job.additional_comments || "NA"}</p>
           </div>
         </div>
 
@@ -153,20 +107,20 @@ const JDSummary = ({ job }) => {
                 Delivery Payout
               </div>
               <div className="p-2 border-b border-gray-400 text-[#4F4F4F] text-center font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">
-                {job.delivery_payout}
+                {job.delivery_payout || "NA"}
               </div>
               <div className="bg-[#EAF1F3] p-2 border-r border-gray-400 text-gray-700 text-center font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">
                 Absolute Payout
               </div>
               <div className="p-2 border-gray-400 text-[#4F4F4F] text-center font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">
-                {job.absolute_payout}
+                {job.absoluteValue || "NA"}
               </div>
             </div>
           </div>
 
           <div className="bg-gray-100 p-3 rounded-md">
             <h3 className="flex items-center self-stretch p-[6px_12px] rounded-[4px] bg-[#C3DCE4] text-[#115469] text-center font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">Sign Up Rate with Client</h3>
-            <p className="flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">{job.sign_up_rate}</p>
+            <p className="flex gap-2 my-1 text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px]">{job.signUpRate || "NA"}</p>
           </div>
 
           <div className="bg-gray-100 p-3 rounded-md">
@@ -199,45 +153,22 @@ const JDSummary = ({ job }) => {
 
       {/* Footer */}
       <div className="flex gap-3 mt-7 justify-between">
-        <button className="flex py-2 px-3 justify-center items-center gap-2 rounded-lg border border-[#A4A4A4] bg-white text-[#4F4F4F] text-center text-[20px] font-bold leading-[36px] font-jos">Close</button>
-        <button className="flex py-2 px-3 justify-center items-center gap-2 self-stretch rounded-lg bg-[#378BA6] text-white text-center text-[20px] font-bold leading-[36px] font-jos">Go to My Workplace <IoIosArrowForward className='items-center' /> </button>
+        <button className="flex py-2 px-3 justify-center items-center gap-2 rounded-lg border border-[#A4A4A4] bg-white text-[#4F4F4F] text-center text-[20px] font-bold leading-[36px] font-jos">
+          <Link to="/JDList/recent">Close</Link>
+        </button>
+        <button className="flex py-2 px-3 justify-center items-center gap-2 self-stretch rounded-lg bg-[#378BA6] text-white text-center text-[20px] font-bold leading-[36px] font-jos">
+          <Link to="/MyWorkspace">Go to My Workplace</Link>
+          <IoIosArrowForward className='items-center' />
+        </button>
       </div>
     </div>
   );
 };
 
-// Define prop types
+
 JDSummary.propTypes = {
-  job: PropTypes.shape({
-    job_title: PropTypes.string,               // Job title
-    company_Name: PropTypes.string,            // Company Name
-    experience: PropTypes.string,              // Experience (e.g., 2 years)
-    industry: PropTypes.string,                // Industry type
-    location: PropTypes.string,                // Job location
-    work_experience: PropTypes.string,         // Work experience description
-    salary: PropTypes.string,                  // Salary
-    notice_period: PropTypes.string,           // Notice period duration
-    interview_rounds: PropTypes.string,        // Number of interview rounds
-    job_type: PropTypes.string,                // Job type (e.g., Full-time, Part-time)
-    priority_tag: PropTypes.string,            // Priority tag
-    delivery_deadline: PropTypes.string,       // Delivery deadline
-    replacement_period: PropTypes.string,      // Replacement period
-    no_of_vacancy: PropTypes.string,           // Number of vacancies
-    absolute_payout: PropTypes.string,         // Absolute payout amount
-    delivery_payout: PropTypes.string,         // Delivery payout amount
-    sign_up_rate: PropTypes.string,            // Sign-up rate percentage
-    skills_required: PropTypes.string,         // Required skills
-    additional_comments: PropTypes.string,     // Additional comments
-    jd_status: PropTypes.string,               // JD status (e.g., Open, Locked)
-    locked: PropTypes.bool,                    // Locked status (true/false)
-    lockedBy: PropTypes.string                 // ID of the user who locked the JD
-  })
+  jobData: PropTypes.object,
 };
 
-
-// Define default props
-JDSummary.defaultProps = {
-  job: defaultJob
-};
 
 export default JDSummary;

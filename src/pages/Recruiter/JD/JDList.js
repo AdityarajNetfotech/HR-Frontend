@@ -56,7 +56,7 @@ const JDList = () => {
         delivery_payout: job.delivery_payout,
         additional_comments: job.additional_comments,
         skills_required: job.skills_required,
-        jd_status: job.jd_status,
+        lock_status: job.locked,
         uploadedOn: new Date(job.createdAt).toLocaleDateString(),
         comments: job.remarks,
         status: job.jd_status,
@@ -108,20 +108,6 @@ const JDList = () => {
     });
   };
 
-  // Filtering jobs
-  // const filteredJobs = jobs.filter((job) => {
-  //   const matchesSearch = job.job_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     job.location.toLowerCase().includes(searchQuery.toLowerCase());
-
-  //   const matchesFilters = (filters.location === '' || job.location === filters.location) &&
-  //     (filters.industry === '' || job.industry === filters.industry) &&
-  //     (filters.title === '' || job.job_title === filters.title) &&
-  //     (filters.status === '' || job.status === filters.status);
-
-  //   return matchesSearch && matchesFilters;
-  // });
-
   const filteredJobs = jobs.filter((job) => {
     const matchesSearch = (job.job_title && job.job_title.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (job.company && job.company.toLowerCase().includes(searchQuery.toLowerCase())) ||
@@ -152,7 +138,7 @@ const JDList = () => {
       <Sidebar className='max-[30%]' />
       <div className='w-[100%]  bg-[#EAF1F3]'>
         <div className='flex justify-between mt-5' style={{ marginBottom: "50px" }}>
-          <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; JD List</strong> </h1>
+          <h1 className='flex justify-center items-center'><i className="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; JD List</strong> </h1>
           <AdminID />
         </div>
         <div className="min-h-screen max-w-8xl p-4 gap-4 flex flex-col items-start">
@@ -198,7 +184,7 @@ const JDList = () => {
 
           {showModal && selectedJob?.id && (
             <LockForMeModal
-              id={selectedJob.id}
+              job={selectedJob}
               onClose={() => setShowModal(false)}
             />
           )}

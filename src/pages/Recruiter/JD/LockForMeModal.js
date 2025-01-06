@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-function LockForMeModal({ id, onClose }) {
+function LockForMeModal({ job, onClose }) {
   const [isChecked, setIsChecked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate(); // Initialize useNavigate
+
+  const id = job.id
 
   const handleConfirm = async () => {
     if (isChecked) {
@@ -28,7 +30,7 @@ function LockForMeModal({ id, onClose }) {
         onClose(); // Notify parent component that modal is closed
 
         // Redirect to JDSummary page and pass data through state
-        navigate(`/jdsummary`, { state: { jobData: response.data } }); // Adjust the path based on your route setup
+        navigate(`/jdsummary`, { state: { jobData: job } }); // Adjust the path based on your route setup
       } catch (error) {
         console.error('Error locking JD:', error);
         if (error.response) {
@@ -52,7 +54,7 @@ function LockForMeModal({ id, onClose }) {
   useEffect(() => {
     console.log('LockForMeModal received ID:', id);
   }, [id]);
-  
+
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">

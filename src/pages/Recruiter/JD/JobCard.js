@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React from 'react';
 import { IoIosArrowForward } from "react-icons/io";
 import LocationIcon from '../../../Images/LocationIcon.png';
 import IndustryIcon from '../../../Images/IndustryIcon.png';
@@ -8,7 +8,7 @@ import SalaryIcon from '../../../Images/SalaryIcon.png';
 
 const JobCard = ({ job, onJobClick }) => {
   return (
-    <div className="p-4 border border-[var(--Teal,#378BA6)] rounded-md cursor-pointer flex justify-between items-start mb-4" style={{ width: '850px'}}>
+    <div className="p-4 border border-[var(--Teal,#378BA6)] rounded-md cursor-pointer flex justify-between items-start mb-4" style={{ width: '850px' }}>
       <div>
         <p className="flex max-w-max items-center justify-center px-2 py-1 mb-1 bg-gray-200 text-gray-700 rounded text-center text-sm font-normal leading-[18.2px] tracking-[0.07px]">
           JD ID: {job.id}
@@ -17,7 +17,7 @@ const JobCard = ({ job, onJobClick }) => {
           {job.job_title}
         </h3>
         <p className="flex h-5 mb-1 justify-start self-stretch overflow-hidden text-[var(--Teal,#378BA6)] truncate font-jost text-lg leading-5">
-          Company: <b>{job.company}</b> 
+          Company: <b>{job.company}</b>
         </p>
         <hr className='w-[695px] h-[1.5px] bg-black my-1' />
         <div className="grid grid-cols-2 gap-1 font-jost text-base text-[#4F4F4F]">
@@ -29,7 +29,7 @@ const JobCard = ({ job, onJobClick }) => {
             <img src={IndustryIcon} alt='IndustryIcon' />
             <span className='ml-2 font-jost'>Industry: {job.industry}</span>
           </div>
-          <div className="flex items-center col-span-2"> 
+          <div className="flex items-center col-span-2">
             <div className="flex flex-wrap gap-4 w-full justify-between">
               <div className="flex ">
                 <img src={ExperienceIcon} alt='ExperienceIcon' />
@@ -49,16 +49,22 @@ const JobCard = ({ job, onJobClick }) => {
       </div>
 
       <div className="text-right">
-        <p className="text-black font-jost text-sm font-semibold leading-9">
+        {/* <p className="text-black font-jost text-sm font-semibold leading-9">
           Status: <span className={`w-[75px] h-[14px] px-3 py-2 flex-col justify-center rounded-md text-center font-jost text-base font-normal leading-[28px] 
           ${job.status === 'Open' ? 'bg-[#DBF0CA] text-[#477C1D]' :
             job.status === 'Closed' ? 'bg-[var(--Primary-Orange,#ECB015)] text-white' : 
             job.status === 'Rework' ? 'bg-[#D2EAF2] text-[#115469]' : 'bg-[#FFFB9A] text-[#A38740]'}`}>
             {job.status}
           </span>
+        </p> */}
+        <p className={"flex max-w-max items-center justify-center px-2 py-1 mb-1 rounded text-center text-sm font-normal leading-[18.2px] tracking-[0.07px]"}>
+          Status:
+          <span className={`w-20 mx-1 py-1 ${job.lock_status ? 'bg-[#DBF0CA] text-[#477C1D]' : 'bg-[#FFFB9A] text-[#A38740]'}`}>
+            {job.lock_status ? "Locked" : "Not Locked"}
+          </span>
         </p>
 
-        <IoIosArrowForward onClick={() => onJobClick(job)} 
+        <IoIosArrowForward onClick={() => onJobClick(job)}
           className='bg-[var(--Teal,#378BA6)] w-10 h-10 text-white rounded-lg ml-20 mt-20' />
       </div>
     </div>
