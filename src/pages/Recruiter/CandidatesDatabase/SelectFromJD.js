@@ -13,8 +13,17 @@ function SelectFromJD() {
 
 
   const getJobDetails = async () => {
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      alert("User not authenticated.");
+      return;
+    }
+
     try {
-      const response = await axios.get('http://localhost:4000/api/showJDs');
+      const response = await axios.get("http://localhost:4000/api/ShowUserLockJD", {
+        params: { userId },
+      });
       return response.data.jds;
     } catch (error) {
       console.error('Error fetching job details:', error);
@@ -49,11 +58,11 @@ function SelectFromJD() {
       alert('This candidate has already been added to this JD.');
       return;
     }
-  
+
     try {
       await axios.post(`http://localhost:4000/api/add-candidate`, { jd_id: jd._id, candidate_id: candidate._id });
       alert('Candidate successfully added to the JD!');
-  
+
       setTimeout(() => {
         navigate('/FinanceCandidate', { state: { jd, candidate } });
       }, 3000);
@@ -62,7 +71,7 @@ function SelectFromJD() {
       setErrorMessage('Error adding candidate to JD.');
     }
   };
-  
+
 
   return (
     <div className='h-full gap-6 p-4 bg-[#EAF1F4] flex flex-col items-center lg:h-[auto]'>

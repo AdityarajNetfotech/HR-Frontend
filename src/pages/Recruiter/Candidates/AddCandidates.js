@@ -21,16 +21,27 @@ const AddCandidates = () => {
   const [locations, setLocations] = useState([]);
   const [statuses, setStatuses] = useState([]); // State for storing unique statuses
   const [statusFilter, setStatusFilter] = useState(''); // Add this state if not defined yet
-  const [errorMessage, setErrorMessage] = useState('');
+  // const [errorMessage, setErrorMessage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState('Latest');
   const itemsPerPage = 1;
 
   // Function to get locked job details
   const getJobDetails = async () => {
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      alert("User not authenticated.");
+      return;
+    }
+
     try {
-      const response = await axios.get('http://localhost:4000/api/showJDs');
+      const response = await axios.get("http://localhost:4000/api/ShowUserLockJD", {
+        params: { userId },
+      });
       const jobDetails = response.data.jds;
+      console.log(jobDetails);
+
       const lockedJDs = jobDetails.filter(jd => jd.locked === true);
       setLockedJobDetails(lockedJDs);
 
@@ -45,8 +56,8 @@ const AddCandidates = () => {
 
       setFilteredJobDetails(lockedJDs);
     } catch (error) {
-      console.error('Error fetching job details:', error);
-      setErrorMessage('Error fetching job details.');
+      console.error("No locked JDs found for this user");
+      // setErrorMessage("No locked JDs found for this user")
     }
   };
 
@@ -321,7 +332,7 @@ const AddCandidates = () => {
 
         {/* Map through locked JDs */}
         <div className='flex flex-col justify-between items-end gap-5 self-stretch'>
-          {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
+          {/* {errorMessage && <p className='text-red-500'>{errorMessage}</p>} */}
           {currentItems.length > 0 ? (
             currentItems.map((jd, index) => (
               <div key={index} className='flex flex-col justify-between items-end gap-5 self-stretch'>

@@ -17,18 +17,29 @@ function LockForMeModal({ job, onClose }) {
         console.log('JD Value:', id);
         return;
       }
-
+  
       setLoading(true);
       try {
         console.log('Locking JD with ID:', id);
-
-        // Corrected endpoint and method
-        const response = await axios.put(`http://localhost:4000/api/lock/${id}`);
+  
+        // Assuming user data is available in localStorage or context
+        const userId = localStorage.getItem('userId');  // Modify based on how you store user data
+  
+        if (!userId) {
+          alert('User is not authenticated.');
+          return;
+        }
+  
+        // Send the userId in the request payload
+        const response = await axios.put(`http://localhost:4000/api/lock/${id}`, {
+          userId,  // Send userId in the request body or URL params, based on your backend setup
+        });
+  
         console.log('Response:', response.data);
         alert('Job Description Locked!');
-
+  
         onClose(); // Notify parent component that modal is closed
-
+  
         // Redirect to JDSummary page and pass data through state
         navigate(`/jdsummary`, { state: { jobData: job } }); // Adjust the path based on your route setup
       } catch (error) {
@@ -50,6 +61,7 @@ function LockForMeModal({ job, onClose }) {
       alert('Please accept the terms to proceed.');
     }
   };
+  
 
   useEffect(() => {
     console.log('LockForMeModal received ID:', id);
