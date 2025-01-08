@@ -23,7 +23,7 @@ const CandidateFilter = ({ onFilterChange }) => {
         setNoticePeriod(uniqueNoticePeriods);
       } catch (error) {
         console.log('Error fetching data:', error);
-      }
+      } 
     };
 
     fetchUniqueFilters();

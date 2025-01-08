@@ -145,58 +145,58 @@ const AdminRecruterMaster = () => {
           </div>
         </section>
 
-        <div className='h-[52px] self-stretch bg-[rgba(55,139,166,0.30)] flex justify-between items-center p-8 mt-[20px]'>
-          <h1 className='text-black font-jost text-xl'>EMPLOYEE ID</h1>
-          <h1 className='text-black font-jost text-xl'>NAME</h1>
-          <h1 className='text-black font-jost text-xl'>COMPANY</h1>
-          <h1 className='text-black font-jost text-xl'>JD POSTING</h1>
-          <h1 className='text-black font-jost text-xl'>PERFORMANCE STATUS</h1>
-          <h1 className='text-black font-jost text-xl'>DETAILS</h1>
+        <div className='grid grid-cols-6 gap-4 h-[82px] bg-[rgba(55,139,166,0.30)] items-center p-4 mt-[20px] rounded-md shadow-md'>
+  <h1 className='text-black font-jost text-xl'>EMPLOYEE ID</h1>
+  <h1 className='text-black font-jost text-xl'>NAME</h1>
+  <h1 className='text-black font-jost text-xl'>CREATED AT</h1>
+  <h1 className='text-black font-jost text-xl'>MOBILE NUMBER</h1>
+  <h1 className='text-black font-jost text-xl'>PERFORMANCE STATUS</h1>
+  <h1 className='text-black font-jost text-xl'>DETAILS</h1>
+</div>
+
+<div className='flex flex-col gap-4 mt-6'>
+  {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+  {currentUsers.length > 0 ? (
+    currentUsers.map((user, index) => (
+      <div key={index} className='grid grid-cols-6 gap-4 items-center rounded-md border bg-white p-3 shadow-md'>
+       <h1 className='text-gray-800'>#{user._id.slice(0,15)}</h1>
+        <div className='flex items-center'>
+          
+          <div className="flex flex-row gap-2">
+            <h1 className="text-[#4F4F4F] cursor-pointer font-semibold ">
+              {user.firstName}
+            </h1>
+            <h1 className="text-[#4F4F4F] cursor-pointer font-semibold ">
+              {user.lastName}
+            </h1>
+          </div>
         </div>
-        <div className='flex flex-col gap-4 mt-6'>
-          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-          {currentUsers.length > 0 ? (
-            currentUsers.map((user, index) => (
-              <div key={index} className='flex items-center rounded-md border bg-white p-3 shadow-md justify-between'>
-                <h1 className='text-gray-800 mr-10'>{user._id}</h1>
-                <div className='flex items-center mr-16'>
-                  <div className='flex w-[40px] h-[40px] justify-center items-center bg-[#EAF1F3] rounded-full'>
-                    <img src={ExportIcon} alt='Export' className='w-16 h-auto' />
-                  </div>
-                  <div className="flex flex-col">
-                    <h1 className="text-gray-800 ml-2 cursor-pointer font-semibold text-[16px]">
-                      {user.firstName}
-                    </h1>
-                    <h1 className="text-gray-800 ml-2 cursor-pointer font-semibold text-[16px]">
-                      {user.lastName}
-                    </h1>
-                  </div>
-                </div>
-                <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mr-32'>
-                  {user.company || 'Google'}
-                </h1>
-                <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mr-64'>
-                  {user.jdPosting || '04'}
-                </h1>
-                <div className='flex flex-row mr-[220px] gap-4'>
-                  <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] '>
-                    {user.performanceStatus || 'Active'}
-                  </h1>
-                  <button className="w-[78px] h-[26px] px-[12px] py-[4px] gap-[10px] rounded-[12px] border border-black">
-                    <p className="font-[Jost] text-[14px] font-normal leading-[18.2px] tracking-[0.005em] text-center text-[#4E4949]">
-                      Stats
-                    </p>
-                  </button>
-                </div>
-                <h1 style={{border:"1px solid red"}} className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] '>
-                  {user.details || '0'}
-                </h1>
-              </div>
-            ))
-          ) : (
-            <h2>No users available.</h2>
-          )}
-        </div>
+        <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto'>
+          {user.mobileNumber}
+        </h1>
+        <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto'>
+          {user.createdAt.split('T')[0]}
+        </h1>
+        <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto'>
+          {user.jdPosting || '04'}
+        </h1>
+        <div
+  className={`flex flex-row gap-4 px-4 py-2 rounded-md mx-auto${
+    index % 2 === 0
+      ? 'bg-[#DBF0CA] text-[#477C1D]'
+      : 'bg-[#A4A4A480] text-[#4F4F4F]'
+  }`}
+>
+  <h1 className='font-jost text-base font-normal leading-custom tracking-[0.08px]'>
+    {index % 2 === 0 ? 'Active' : 'Inactive'}
+  </h1>
+</div>
+      </div>
+    ))
+  ) : (
+    <h2>No users available.</h2>
+  )}
+</div>
 
         {/* Pagination Component */}
         <Pagination

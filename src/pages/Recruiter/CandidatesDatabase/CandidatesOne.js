@@ -10,6 +10,7 @@ import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import Pagination from '../../global/Pagination';
 import AdminID from '../../global/AdminID';
 import '../../global/Filter.css';
+import { Link } from 'react-router-dom';
 
 const initialFilters = {
   location: '',
@@ -147,6 +148,7 @@ const CandidatesOne = ({ limit = Infinity }) => {
           <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; Candidates Database</strong> </h1>
           <AdminID />
         </div>
+        
 
         {/* Filter Section */}
         <section id='candidateOne-filter'>
@@ -218,6 +220,11 @@ const CandidatesOne = ({ limit = Infinity }) => {
             </button>
           </div>
         </section>
+        <div className="w-full flex justify-end mt-4">
+  <button className="w-[20%] flex p-2 px-3 justify-center items-center gap-2 self-stretch rounded-lg bg-gray-400">
+    <Link to="/Candidate-Form" className="text-white text-center font-semibold text-xl leading-7 font-jost">Add New Candidate</Link>
+  </button>
+</div>
 
         <div className='w-full flex flex-col gap-4 mt-4'>
           {paginatedCandidates.length > 0 ? (
@@ -273,15 +280,14 @@ const CandidatesOne = ({ limit = Infinity }) => {
                       {candidate.cv_link ? 'Download' : 'Not available'}
                     </a>
                   </div>
-                </div>
-
-                <div className='flex justify-end mt-2'>
+                  <div className='flex justify-end mt-2'>
                   <button
                     className='rounded-lg bg-[#378BA6] text-[#FFFEFE] flex flex-row gap-2 items-center px-6 py-2 self-end'
                     onClick={() => handleMoveToJD(candidate)}
                   >
                     Move to JD
                   </button>
+                </div>
                 </div>
               </div>
             ))

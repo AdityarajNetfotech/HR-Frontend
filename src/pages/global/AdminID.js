@@ -35,7 +35,7 @@ function AdminID() {
     };
 
     const formatUserID = (id) => {
-        return id.length > 4 ? `${id.slice(0, 4)}...` : id; // Keep first 4 digits and add "..." if longer
+        return id.length > 4 ? `${id.slice(0, 23)}...` : id; // Keep first 4 digits and add "..." if longer
     };
 
     return (

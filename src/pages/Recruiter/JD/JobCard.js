@@ -8,7 +8,7 @@ import SalaryIcon from '../../../Images/SalaryIcon.png';
 
 const JobCard = ({ job, onJobClick }) => {
   return (
-    <div className="p-4 border border-[var(--Teal,#378BA6)] rounded-md cursor-pointer flex justify-between items-start mb-4" style={{ width: '850px' }}>
+    <div className="p-4 border border-[var(--Teal,#378BA6)] bg-[white] rounded-md cursor-pointer flex justify-between items-start mb-4" style={{ width: '850px' }}>
       <div>
         <p className="flex max-w-max items-center justify-center px-2 py-1 mb-1 bg-gray-200 text-gray-700 rounded text-center text-sm font-normal leading-[18.2px] tracking-[0.07px]">
           JD ID: {job.id}

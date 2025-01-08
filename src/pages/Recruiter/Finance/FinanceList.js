@@ -19,7 +19,7 @@ function FinanceList() {
   const [selectedStatus, setSelectedStatus] = useState(''); // State for selected status
   const navigate = useNavigate(); // Initialize useNavigate
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 8;
 
   // Function to get job details
   const getJobDetails = async () => {
@@ -138,7 +138,7 @@ function FinanceList() {
   const currentJobs = filteredJobDetails.slice(indexOfFirstJob, indexOfLastJob);
 
   return (
-    <div className='max-h-screen flex flex-row gap-0 h-[100%]'>
+    <div className='min-h-screen flex flex-row gap-10 bg-[#EAF1F3]'>
       <div className='max-[30%]'>
         <Sidebar />
       </div>
@@ -148,32 +148,6 @@ function FinanceList() {
           <AdminID />
         </div>
         {/* Header Section */}
-
-        <div className='flex flex-col w-auto h-full flex-wrap justify-center items-start gap-1 p-2.5 self-stretch bg-[#FBEFD0] mb-[20px]'>
-
-          {/* User Information */}
-          <div className='flex justify-between items-center self-stretch md:items-center mb-4  m-8 flex-wrap'>
-            <div className='flex flex-col w-[50%]'>
-              <h1 className='text-gray-600 truncate text-2xl font-medium'>Samuel</h1>
-              <h1 className='text-[#378BA6] truncate text-base font-medium'>ID: 67890987</h1>
-            </div>
-            <div className='flex items-center bg-white p-2 rounded'>
-              <h1 className='text-teal-600 text-4xl font-medium'>10</h1>
-              <div className='w-px h-7 bg-gray-500 mx-2'></div>
-              <h1 className='text-[#4F4F4F]'>Locked JD’s</h1>
-            </div>
-            <div className='flex items-center bg-white p-2 rounded'>
-              <h1 className='text-teal-600 text-4xl font-medium'>10</h1>
-              <div className='w-px h-7 bg-gray-500 mx-2'></div>
-              <h1 className='text-[#4F4F4F]'>Successful JD’s</h1>
-            </div>
-            <div className='flex items-center bg-white p-2 rounded'>
-              <h1 className='text-teal-600 text-4xl font-medium'>10</h1>
-              <div className='w-px h-7 bg-gray-500 mx-2'></div>
-              <h1 className='text-[#4F4F4F]'>Total Incentives</h1>
-            </div>
-          </div>
-        </div>
 
         <section id='candidateOne-filter'>
           <div className="candidateOne-filter_search">
@@ -226,17 +200,17 @@ function FinanceList() {
         </section>
 
         {/* Table Header */}
-        <div className='h-[52px] self-stretch bg-[rgba(55,139,166,0.30)] flex justify-between items-center p-8 mt-[20px]'>
+        {/* <div className='flex flex-col justify-between'>
+        <div className='h-[52px] justify-between self-stretch bg-[rgba(55,139,166,0.30)] flex  items-center p-8 mt-[20px]'>
           <h1 className='text-black font-jost text-xl'>JD ID</h1>
           <h1 className='text-black font-jost text-xl'>CLIENT DETAILS</h1>
           <h1 className='text-black font-jost text-xl'>JD DETAIL</h1>
-          <h1 className='text-black font-jost text-xl'>CANDIDATES</h1>
           <h1 className='text-black font-jost text-xl'>DATE</h1>
           <h1 className='text-black font-jost text-xl'>AMOUNT</h1>
           <h1 className='text-black font-jost text-xl'>STATUS</h1>
         </div>
 
-        {/* Job List */}
+      
         <div className='flex flex-col gap-5 mt-6'>
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
@@ -245,30 +219,19 @@ function FinanceList() {
               <div key={index} className='flex justify-between items-center rounded-md border bg-white p-4 shadow-md'>
                 <h1 className='text-gray-800'>{jd._id}</h1>
                 <div className='flex items-center'>
-                  <div className='flex w-[40px] h-[40px] justify-center items-center bg-[#EAF1F3] rounded-full'>
-                    <img src={ExportIcon} alt='Export' className='w-16 h-auto' />
-                  </div>
-                  <h1 className='text-gray-800 ml-2 cursor-pointer' onClick={() => goToFinanceSummary(jd)}>
+                  <h1 className='text-gray-800 cursor-pointer' onClick={() => goToFinanceSummary(jd)}>
                     {jd.company_Name}
                   </h1>
                 </div>
                 <div className='flex items-center'>
-                  <div className='flex w-[40px] h-[40px] justify-center items-center bg-[#EAF1F3] rounded-full'>
-                    <img src={Chat} alt='Chat' className='w-16 h-auto' />
-                  </div>
                   <h1 className='text-gray-800 ml-2'>{jd.jobTitle}</h1>
                 </div>
-                <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px]'>
+                <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom '>
                   {jd.job_title}
                 </h1>
-                <div>
-                  <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px]'>
-                    Aditya raj
-                  </h1>
-                </div>
                 <h1>{new Date(jd.createdAt).toLocaleDateString()}</h1>
                 <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px]'>
-                  ${jd.delivery_payout}
+                  {jd.salary}
                 </h1>
                 <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px]'>
                   {jd.jd_status}
@@ -279,6 +242,71 @@ function FinanceList() {
             <h2>No locked job descriptions available.</h2>
           )}
         </div>
+        </div> */}
+        <div className="flex flex-col">
+      {/* Header Section */}
+      <div className="h-[52px] bg-[rgba(55,139,166,0.30)] grid grid-cols-6 items-center px-8 mt-[20px]">
+        <h1 className="text-black font-jost text-xl">JD ID</h1>
+        <h1 className="text-black font-jost text-xl">CLIENT DETAILS</h1>
+        <h1 className="text-black font-jost text-xl mx-auto">JD DETAIL</h1>
+        <h1 className="text-black font-jost text-xl mx-auto">DATE</h1>
+        <h1 className="text-black font-jost text-xl mx-auto">AMOUNT</h1>
+        <h1 className="text-black font-jost text-xl mx-auto">STATUS</h1>
+      </div>
+
+      {/* Job List Section */}
+      <div className="flex flex-col gap-5 mt-6">
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+
+        {currentJobs.length > 0 ? (
+          currentJobs.map((jd, index) => (
+            <div
+              key={index}
+              className="grid grid-cols-6 items-center rounded-md border bg-white p-4 shadow-md"
+            >
+              {/* JD ID */}
+              <h1 className="text-gray-800">{jd._id}</h1>
+
+              {/* Client Details */}
+              <div
+  className="text-gray-800 cursor-pointer mx-auto hover:text-blue-600 transition-colors duration-300"
+  onClick={() => goToFinanceSummary(jd)}
+>
+  {jd.company_Name}
+</div>
+
+
+              {/* JD Detail */}
+              <h1 className="text-gray-800 mx-auto">{jd.job_title}</h1>
+
+              {/* Date */}
+              <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom mx-auto">
+              {jd.delivery_deadline.split('T')[0]}
+              </h1>
+
+              {/* Amount */}
+              {/* <h1>{new Date(jd.createdAt).toLocaleDateString()}</h1> */}
+
+              {/* Status */}
+              <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto">
+                {jd.salary}
+              </h1>
+              <div className='bg-[#ECB015] text-center w-[40%] mx-auto'>
+              <h1
+  className={`${
+    jd.jd_status === "Open" ? "bg-[#ECB015] font-bold" : ""
+  } text-black font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto`}
+>
+  {jd.jd_status}
+</h1>
+</div>
+            </div>
+          ))
+        ) : (
+          <h2>No locked job descriptions available.</h2>
+        )}
+      </div>
+    </div>
 
         {/* Pagination */}
         <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />

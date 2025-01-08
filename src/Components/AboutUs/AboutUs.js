@@ -23,7 +23,7 @@ function AboutUs() {
   };
 
   return (
-    <div className='max-h-screen flex flex-row gap-4'>
+    <div className='min-h-screen flex flex-row gap-4 bg-[#EAF1F3]'>
       <div className='max-[30%]'>
         <Sidebar />
       </div>

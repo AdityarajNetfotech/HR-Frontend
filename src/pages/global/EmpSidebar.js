@@ -58,10 +58,10 @@ const EmpSidebar = () => {
       <nav className="flex flex-col flex-grow mt-10">
         <NavItem to="/EmployerDashboard" icon={<FaHome />} label="Dashboard" isOpen={isOpen} />
         <NavItem to="/EmployerJd" icon={<FaComments />} label="New JD" isOpen={isOpen} />
-        <NavItem to="/EmpCandidates" icon={<FaComments />} label="Candidates" isOpen={isOpen} />
-        <NavItem icon={<FaMoneyBill />} label="Chat Support" isOpen={isOpen} />
-        <NavItem icon={<FaCog />} label="Finances" isOpen={isOpen} />
-        <NavItem to="/Profile" icon={<FaInfoCircle />} label="Profile" isOpen={isOpen} />
+        {/* <NavItem to="/EmpCandidates" icon={<FaComments />} label="Candidates" isOpen={isOpen} /> */}
+        <NavItem icon={<FaMoneyBill />} to="/chat-support" label="Chat Support" isOpen={isOpen} />
+        <NavItem icon={<FaCog />} to="/FinanceList" label="Finances" isOpen={isOpen} />
+        {/* <NavItem to="/Profile" icon={<FaInfoCircle />} label="Profile" isOpen={isOpen} /> */}
         <NavItem to="/EmpAbout" icon={<FaInfoCircle />} label="About" isOpen={isOpen} />
         <NavItem
           icon={<FaSignOutAlt />}

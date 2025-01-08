@@ -7,7 +7,7 @@ import AdminID from '../../global/AdminID'
 function EmployerJd() {
 
   return (
-    <div className='max-h-screen flex flex-row gap-4'>
+    <div className='min-h-screen flex flex-row gap-4'>
       <div className='max-[30%]'>
         <EmpSidebar />
       </div>

@@ -28,7 +28,7 @@ const SignupForm = () => {
 
       // Success ke liye status 200 ya 201 check karein
       if (response.status === 200 || response.status === 201) {
-        alert(response.data.message);
+        alert('User registration successful!');
         console.log(response.data.message); // Extra debugging ke liye
       } else {
         alert('Something went wrong! Please try again.');

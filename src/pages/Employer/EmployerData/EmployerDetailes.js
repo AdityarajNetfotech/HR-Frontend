@@ -196,10 +196,11 @@ const EmployerDetailes = () => {
         </div>
       </div>
       <br />
-
-      <button className='w-full flex p-2 px-3 justify-center items-center gap-2 self-stretch rounded-lg bg-gray-400'>
-        <Link to="/AddJDForm" className='text-white text-center font-semibold text-2xl leading-7 font-jost'>Add New Job Description</Link>
-      </button>
+      <div className="w-full flex justify-end mb-4">
+        <button className="w-[20%] flex p-2 px-3 justify-center items-center gap-2 self-stretch rounded-lg bg-gray-400">
+          <Link to="/AddJDForm" className="text-white text-center font-semibold text-xl leading-7 font-jost">Add New JD</Link>
+        </button>
+      </div>
 
       <div className="max-w-8xl bg-white p-4 gap-4 flex items-start ">
         <div className="w-full">

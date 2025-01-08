@@ -12,9 +12,11 @@ import InterviewIcon from '../../../Images/InterviewIcon.png';
 import html2pdf from 'html2pdf.js';
 import PriorityIcon from '../../../Images/PriorityIcon.png';
 import { IoIosArrowForward } from "react-icons/io";
+import { useNavigate } from 'react-router-dom';
 
 function FinanceSummery() {
     const location = useLocation();
+    const navigate= useNavigate();
     const { job } = location.state || {}; // Destructure the job data
     console.log(job);
 
@@ -48,7 +50,12 @@ function FinanceSummery() {
                         <button className="text-gray-500" onClick={handleDownload}> {/* Attach click handler */}
                             <i className="fas fa-download"></i>
                         </button>
-                        <button className="text-gray-500">✕</button>
+                        <button 
+          className="text-gray-500" 
+          onClick={() => navigate('FinanceList')}
+        >
+          ✕
+        </button>
                     </div>
                 </div>
 

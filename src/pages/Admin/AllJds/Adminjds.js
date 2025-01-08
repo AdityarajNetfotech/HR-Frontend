@@ -246,68 +246,78 @@ function Adminjds() {
                 </section>
 
                 {/* Table Header */}
-                <div className='h-[52px] self-stretch bg-[rgba(55,139,166,0.30)] flex justify-between items-center p-8 mt-[20px]'>
-                    <h1 className='text-black font-jost text-xl'>JD ID</h1>
-                    <h1 className='text-black font-jost text-xl'>JD DETAIL</h1>
-                    <h1 className='text-black font-jost text-xl'>CLIENT DETAIL</h1>
-                    <h1 className='text-black font-jost text-xl'>UPLOAD DATE</h1>
-                    <h1 className='text-black font-jost text-xl'>DEADLINE DATE</h1>
-                    <h1 className='text-black font-jost text-xl'>STATUS</h1>
-                    <h1 className='text-black font-jost text-xl'>DETAILS</h1>
-                </div>
+                <div>
+  {/* Header */}
+  <div className="h-[82px] bg-[rgba(55,139,166,0.30)] grid grid-cols-5 items-center p-8 mt-[20px]">
+    <h1 className="text-black font-jost text-xl">JD ID</h1>
+    <h1 className="text-black font-jost text-xl mx-auto">JD DETAIL</h1>
+    {/* <h1 className="text-black font-jost text-xl">CLIENT DETAIL</h1> */}
+    <h1 className="text-black font-jost text-xl mx-auto">UPLOAD DATE</h1>
+    <h1 className="text-black font-jost text-xl mx-auto">DEADLINE DATE</h1>
+    <h1 className="text-black font-jost text-xl mx-auto">STATUS</h1>
+    {/* <h1 className="text-black font-jost text-xl">DETAILS</h1> */}
+  </div>
 
-                {/* Job List */}
-                <div className='flex flex-col gap-5 mt-6'>
-                    {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+  {/* Job List */}
+  <div className="flex flex-col gap-5 mt-6">
+    {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
-                    {paginatedJobs.length > 0 ? (
-                        paginatedJobs.map((jd, index) => (
-                            <div key={index} className='flex justify-between items-center rounded-md border bg-white p-4 shadow-md'>
-                                <h1 className='text-gray-800'>{jd._id}</h1>
-                                <div className='flex items-center'>
-                                    <div className='flex w-[40px] h-[40px] justify-center items-center bg-[#EAF1F3] rounded-full'>
-                                        <img src={ExportIcon} alt='Export' className='w-16 h-auto' />
-                                    </div>
-                                    {/* When clicking company name, navigate to FinanceSummery with the selected JD */}
-                                    <div className="flex flex-col">
-                                        <h1
-                                            className="text-gray-800 ml-2 cursor-pointer font-semibold"
-                                            onClick={() => goToFinanceSummary(jd)}
-                                        >
-                                            {jd.company_Name}
-                                        </h1>
-                                        <h2 className="text-gray-600 ml-2 text-sm">{jd.industry}</h2>
-                                    </div>
-                                </div>
-                                <div className='flex items-center'>
-                                    {/* <div className='flex w-[40px] h-[40px] justify-center items-center bg-[#EAF1F3] rounded-full'>
-                    <img src={Chat} alt='Chat' className='w-16 h-auto' />
-                  </div> */}
-                                    {/* <h1 className='text-gray-800 ml-2'>{jd.jobTitle}</h1> */}
-                                </div>
-                                <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px]'>
-                                    {jd.createdAt.substring(0, 10)}
-                                </h1>
-                                <div>
-                                    <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px]'>
-                                        {jd.delivery_deadline.substring(0, 10)}
-                                    </h1>
-                                </div>
-                                <h1>{new Date(jd.createdAt).toLocaleDateString()}</h1>
-                                <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px]'>
-                                    ${jd.jd_status}
-                                </h1>
+    {paginatedJobs.length > 0 ? (
+      paginatedJobs.map((jd, index) => (
+        <div
+          key={index}
+          className="grid grid-cols-5 items-center rounded-md border bg-white p-4 shadow-md"
+        >
+          <h1 className="text-gray-800">{jd._id}</h1>
 
-                                {/* Status */}
-                                <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px]'>
-                                    {jd.jd_status}
-                                </h1>
-                            </div>
-                        ))
-                    ) : (
-                        <h2>No locked job descriptions available.</h2>
-                    )}
-                </div>
+          {/* JD DETAIL */}
+          <div className="flex items-center">
+            {/* <div className="flex w-[40px] h-[40px] justify-center items-center bg-[#EAF1F3] rounded-full">
+              <img src={ExportIcon} alt="Export" className="w-16 h-auto" />
+            </div> */}
+            <div className="flex flex-col mx-auto">
+              <h1
+                className="text-gray-800 ml-2 cursor-pointer font-semibold"
+                onClick={() => goToFinanceSummary(jd)}
+              >
+                {jd.company_Name}
+              </h1>
+              <h2 className="text-gray-600 ml-2 text-sm">{jd.industry}</h2>
+            </div>
+          </div>
+
+          {/* CLIENT DETAIL */}
+          {/* <div className="flex items-center">
+        
+          </div> */}
+
+          {/* UPLOAD DATE */}
+          <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto">
+            {jd.createdAt.substring(0, 10)}
+          </h1>
+
+          {/* DEADLINE DATE */}
+          <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto">
+            {jd.delivery_deadline.substring(0, 10)}
+          </h1>
+
+          {/* STATUS */}
+          <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto">
+            {jd.jd_status}
+          </h1>
+
+          {/* DETAILS */}
+          {/* <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px]">
+            Details Placeholder
+          </h1> */}
+        </div>
+      ))
+    ) : (
+      <h2>No locked job descriptions available.</h2>
+    )}
+  </div>
+</div>
+
                 <Pagination
                     currentPage={currentPage}
                     totalPages={totalPages}

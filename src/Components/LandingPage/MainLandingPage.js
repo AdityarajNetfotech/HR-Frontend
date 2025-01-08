@@ -27,7 +27,7 @@ const MainLandingPage = () => {
         <div className='flex flex-col md:flex-row lg:flex-row w-full md:w-[90%] lg:w-[90%] mt-8 md:mt-12 lg:mt-16 h-auto md:h-[455px] mb-8 md:mb-12 lg:mb-16 gap-6 md:gap-8 lg:gap-[105px]'>
           <div className='flex flex-col w-full md:w-[50%] lg:w-[45%] my-auto'>
           <h1 className='font-jost text-[32px] md:text-[40px] lg:text-[54px] font-semibold leading-[40px] md:leading-[48px] lg:leading-[64.8px] text-left mb-6 md:mb-8 lg:mb-12'>
-          Unlock ths X-Factor in Talent with <span style={{ color: '#378BA6' }}>Recruit</span><span className="text-[#DD6B20] font-elephant">X</span>
+          Unlock the X-Factor in Talent with <span style={{ color: '#378BA6' }}>Recruit</span><span className="text-[#DD6B20] font-elephant">X</span>
 </h1>
             <h1 className='font-jost text-[16px] md:text-[18px] lg:text-[22px] font-normal leading-[22px] md:leading-[24px] lg:leading-[28.8px] text-left mb-4 md:mb-6 lg:mb-8'>
               Efficient recruitment platform for freelance recruiters and hiring teams. <br />

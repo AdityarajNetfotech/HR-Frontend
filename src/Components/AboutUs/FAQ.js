@@ -36,7 +36,7 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="py-10 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 w-full max-w-[100%] mx-auto bg-white border border-[#378BA6] border-opacity-50 shadow-lg rounded-br-lg rounded-bl-lg">
+    <div className="py-10 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 w-full w-[200%] mx-auto bg-white border border-[#378BA6] border-opacity-50 shadow-lg rounded-br-lg rounded-bl-lg">
       <h2 className="text-[#4F4F4F] text-[20px] sm:text-[24px] font-semibold leading-[24px] sm:leading-[28px] font-jost self-stretch mb-6 sm:mb-8 text-Josh">
         FREQUENTLY ASKED QUESTIONS
       </h2>

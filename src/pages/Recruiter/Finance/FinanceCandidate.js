@@ -43,7 +43,13 @@ const FinanceCandidate = () => {
       <div className='flex flex-col items-start p-4 lg:p-8 gap-4 rounded-lg bg-white w-full lg:w-[1200px] lg:h-[auto]'>
         <div className='flex p-2 lg:p-4 justify-between items-center self-stretch rounded-[8px] bg-[rgba(55,139,166,0.30)]'>
           <p className='text-[#4F4F4F] text-center font-jost text-base lg:text-[20px] font-medium leading-custom'>CANDIDATES</p>
-          <button className='w-[24px] h-[24px] text-lg lg:text-xl'><IoMdClose /></button>
+          <button 
+  className='w-[24px] h-[24px] text-lg lg:text-xl' 
+  onClick={() => navigate('/MyWorkspace')}
+>
+  <IoMdClose />
+</button>
+
         </div>
 
         

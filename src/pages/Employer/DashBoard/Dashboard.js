@@ -24,9 +24,9 @@ function EmpDashboard() {
     }
   };
   return (
-    <div className='max-h-screen flex flex-row gap-0'>
+    <div className='min-h-screen flex flex-row gap-10 bg-[#EAF1F3]'>
       <EmpSidebar className='max-[30%] ' />
-      <div className="w-full px-5  mt-10">
+      <div className="max-w-8xl justify-center mt-10">
         {/* Tabs Section */}
         <div className='flex justify-between' style={{ marginBottom: "50px" }}>
           <h1 className='flex justify-center items-center'><i class="fa-solid fa-angle-left"></i> <strong style={{ fontSize: "25px" }}>&nbsp;&nbsp; Dashboard</strong> </h1>
@@ -56,11 +56,11 @@ function EmpDashboard() {
         <div className="mt-0  rounded-lg">
           {renderTabContent()}
         </div>
-        <div class="flex flex-col items-start gap-[20px] self-stretch  ">
-          <div className="flex items-center justify-between w-[100%] p- bg-white">
+        <div class="flex flex-col items-start gap-[20px] self-stretch  mt-6">
+          <div className="flex items-center justify-between w-[100%] mb-4">
 
             <div className="text-[#4F4F4F] font-jost text-[24px] font-semibold leading-[28px]">
-              New JD's
+              New Candidate's
             </div>
             <button className='flex h-[52px] p-[8px_12px] justify-center items-center gap-[8px] rounded-lg bg-[#A4A4A4]'><h1 className='text-white-custom text-center font-jost text-18px font-semibold leading-28px text-white'>See More</h1></button>
           </div>

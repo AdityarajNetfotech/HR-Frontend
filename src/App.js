@@ -61,14 +61,14 @@ import ChatSupport from './pages/Recruiter/ChatSupport/ChatSupport';
 import EmpAbout from './Components/EmpAboutUs/EmpAbout'
 import AdminSidebar from './pages/global/AdminSidebar';
 import AdminID from './pages/global/AdminID';
-import ProtectedRoute from './Components/User Management/ProtectedRoute';
+// import ProtectedRoute from './Components/User Management/ProtectedRoute';
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/protectedroute' element={<ProtectedRoute />} />
+          {/* <Route path='/protectedroute' element={<ProtectedRoute />} /> */}
 
 
           <Route path='/' element={<MainLandingPage />} />

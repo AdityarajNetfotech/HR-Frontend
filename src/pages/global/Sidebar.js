@@ -62,7 +62,7 @@ const Sidebar = () => {
           onDropdownToggle={() => handleDropdownToggle('JD Lists')}
         >
           <DropdownItem to="/JDList/recent" label="Recent JD" />
-          <DropdownItem to="/JDList/archive" label="Archive JD" />
+          {/* <DropdownItem to="/JDList/archive" label="Archive JD" /> */}
         </DropdownNavItem>
         <DropdownNavItem
           to="/workplace"
@@ -73,12 +73,12 @@ const Sidebar = () => {
           onDropdownToggle={() => handleDropdownToggle('My Workplace')}
         >
           <DropdownItem to="/MyWorkspace" label="Team" />
-          <DropdownItem to="/workplace/tasks" label="Tasks" />
+          {/* <DropdownItem to="/workplace/tasks" label="Tasks" /> */}
         </DropdownNavItem>
         <NavItem to="/CandidatesOne" icon={<FaComments />} label="Candidate Database" isOpen={isOpen} />
         <NavItem to="/chat-support" icon={<FaMoneyBill />} label="Chat Support" isOpen={isOpen} />
         <NavItem to="/FinanceList" icon={<FaCog />} label="Finances" isOpen={isOpen} />
-        <NavItem to="/Profile" icon={<FaInfoCircle />} label="Profile" isOpen={isOpen} />
+        {/* <NavItem to="/Profile" icon={<FaInfoCircle />} label="Profile" isOpen={isOpen} /> */}
         <NavItem to="/about" icon={<FaInfoCircle />} label="About" isOpen={isOpen} />
         <NavItem icon={<FaSignOutAlt />} onClick={handleLogout} label="Logout" isOpen={isOpen} />
       </nav>

@@ -24,7 +24,7 @@ const AddCandidates = () => {
   // const [errorMessage, setErrorMessage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState('Latest');
-  const itemsPerPage = 1;
+  const itemsPerPage = 5;
 
   // Function to get locked job details
   const getJobDetails = async () => {
@@ -203,7 +203,7 @@ const AddCandidates = () => {
 
 
   return (
-    <div className='max-h-screen flex flex-row gap-0'>
+    <div className='min-h-screen flex flex-row gap-4'>
       <div className='max-[30%]'><Sidebar /></div>
       <div className='w-[100%] bg-[#EAF1F4] flex flex-col py-5 gap-33 flex-1 px-4'>
         <div className='flex justify-between' style={{ marginBottom: "50px" }}>
@@ -211,7 +211,7 @@ const AddCandidates = () => {
           <AdminID />
         </div>
         {/* Header Section */}
-        <div className='flex flex-col justify-center items-start gap-1 p-2.5 self-stretch bg-[#FBEFD0] mb-[20px] w-full'>
+        {/* <div className='flex flex-col justify-center items-start gap-1 p-2.5 self-stretch bg-[#FBEFD0] mb-[20px] w-full'>
           <div className='flex justify-between items-center self-stretch w-full'>
             <div className='flex flex-col w-[100%]'>
               <h1 className='overflow-hidden text-gray-600 truncate whitespace-nowrap text-2xl font-medium leading-7'>Samule</h1>
@@ -233,7 +233,7 @@ const AddCandidates = () => {
               <h1 className='text-dark-grey font-jost text-base font-normal leading-custom tracking-custom text-[#4F4F4F]'>Total Incentives</h1>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Filter */}
         <div id='candidateOne-filter'>
@@ -319,75 +319,91 @@ const AddCandidates = () => {
         </div>
 
         {/* Table Header */}
-        <div className='h-[52px] self-stretch rounded-[8px] bg-[rgba(55,139,166,0.30)] flex justify-between items-center p-8 mt-[20px]'>
-          <h1 className='text-black text-center font-jost text-xl font-normal leading-9 w-1/7'>JD ID</h1>
-          <h1 className='text-black text-center font-jost text-xl font-normal leading-9 w-1/7'>CLIENT DETAILS</h1>
-          <h1 className='text-black text-center font-jost text-xl font-normal leading-9 w-1/7'>JD DETAIL</h1>
-          <h1 className='text-black text-center font-jost text-xl font-normal leading-9 w-1/7'>CANDIDATES</h1>
-          <h1 className='text-black text-center font-jost text-xl font-normal leading-9 w-1/7'>DEADLINE</h1>
-          <h1 className='text-black text-center font-jost text-xl font-normal leading-9 w-1/7'>STATUS</h1>
-          <h1 className='text-black text-center font-jost text-xl font-normal leading-9 w-1/7'>DETAIL</h1>
-          <h1 className='text-black text-center font-jost text-xl font-normal leading-9 w-1/7'>DELETE JD</h1>
-        </div>
-
         {/* Map through locked JDs */}
-        <div className='flex flex-col justify-between items-end gap-5 self-stretch'>
-          {/* {errorMessage && <p className='text-red-500'>{errorMessage}</p>} */}
-          {currentItems.length > 0 ? (
-            currentItems.map((jd, index) => (
-              <div key={index} className='flex flex-col justify-between items-end gap-5 self-stretch'>
-                <div className='flex justify-between items-center self-stretch rounded-md border border-[#9B9B9B] bg-white shadow-[6px_6px_20px_0px_rgba(0,0,0,0.12)] p-4 mt-6'>
-                  <h1 className='text-gray-800 text-center font-sans text-base font-normal leading-6 tracking-tight w-1/9'>#{jd._id}</h1>
+        <div className="flex flex-col">
+  {/* Header Section */}
+  <div className="h-[72px] self-stretch rounded-[8px] bg-[rgba(55,139,166,0.30)] grid grid-cols-8 items-center mt-[20px]">
+  {/* <div className="h-[52px] self-stretch rounded-[8px] bg-[rgba(55,139,166,0.30)] flex justify-between items-center p-8 mt-[20px]'"> */}
+    <h1 className="text-black text-center font-jost text-xl font-normal leading-9">JD ID</h1>
+    <h1 className="text-black text-center font-jost text-xl font-normal leading-9">COMPANY NAME</h1>
+    <h1 className="text-black text-center font-jost text-xl font-normal leading-9">JOB TITLE</h1>
+    <h1 className="text-black text-center font-jost text-xl font-normal leading-9">JOB LOCATION</h1>
+    <h1 className="text-black text-center font-jost text-xl font-normal leading-9">DEADLINE</h1>
+    <h1 className="text-black text-center font-jost text-xl font-normal leading-9">STATUS</h1>
+    <h1 className="text-black text-center font-jost text-xl font-normal leading-9">DETAIL</h1>
+    <h1 className="text-black text-center font-jost text-xl font-normal leading-9">DELETE JD</h1>
+  </div>
 
-                  <div className='flex flex-row items-center'>
-                    <div className='flex w-[40px] h-[40px] p-[7.655px_7.832px_8.345px_8.168px] justify-center items-center rounded-[45px] bg-[#EAF1F3]'>
-                      <img src={ExportIcon} alt="Recutify" className='w-16 h-auto' />
-                    </div>
-                    <h1 className='text-gray-800 text-center font-sans text-base font-normal leading-6 tracking-tight max-w-24 w-1/9'>{jd.client_name}</h1>
-                  </div>
+  {/* Map through locked JDs */}
+  <div className="flex flex-col gap-5 mt-6 self-stretch">
+    {/* {errorMessage && <p className="text-red-500">{errorMessage}</p>} */}
+    {currentItems.length > 0 ? (
+      currentItems.map((jd, index) => (
+        <div key={index} className="flex flex-col gap-5 self-stretch">
+          <div className="grid grid-cols-8 items-center rounded-md border border-[#9B9B9B] bg-white shadow-[6px_6px_20px_0px_rgba(0,0,0,0.12)] p-4">
+            {/* JD ID */}
+            <h1 className="text-gray-800 text-center font-sans text-base font-normal leading-6 tracking-tight">
+              {jd._id.slice(0,18)}
+            </h1>
 
-                  <div className='flex flex-row items-center w-1/9 max-w-42'>
-                    <div className='flex w-[40px] h-[40px] justify-center items-center rounded-[45px] bg-[#EAF1F3]'>
-                      <img src={Chat} alt="Recutify" className='w-16 h-auto' />
-                    </div>
-                    <h1 className='text-gray-800 text-center font-sans text-base font-normal leading-6 tracking-tight'>
-                      <span className='overflow-hidden text-[#4F4F4F] truncate whitespace-nowrap font-jost text-base font-semibold leading-6 tracking-tight'>{jd.job_title}</span>
-                      <br />{jd.companyName}
-                    </h1>
-                  </div>
+            {/* Company Name */}
+            <h1 className="text-gray-800 text-center font-sans text-base font-normal leading-6 tracking-tight">
+              {jd.company_Name}
+            </h1>
 
-                  <a href='/FinanceCandidate'>
-                    <div className='flex w-[86px] p-[4px_12px] justify-center items-center gap-[10px] rounded-[12px] border border-[#000] bg-white w-1/9'>
-                      <h1>02/02</h1>
-                      <img src={ExportIcon} alt="Recutify" className='w-12 h-auto' />
-                    </div>
-                  </a>
+            {/* Job Title */}
+            <h1 className="text-gray-800 text-center font-sans text-base font-normal leading-6 tracking-tight truncate">
+              {jd.job_title}
+            </h1>
 
-                  <h1 className='text-[#4F4F4F] text-center font-sans text-base font-normal leading-6 tracking-tight w-1/9'>{jd.delivery_deadline}</h1>
+            {/* Job Location */}
+            <h1 className="text-gray-800 text-center font-sans text-base font-normal leading-6 tracking-tight truncate">
+              {jd.location}
+            </h1>
 
-                  <h1 className='text-[#3AB13A] text-center font-sans text-base font-semibold leading-6 tracking-tight w-1/9'>{jd.jd_status}</h1>
+            {/* Deadline */}
+            <h1 className="text-[#4F4F4F] text-center font-sans text-base font-normal leading-6 tracking-tight">
+              {jd.delivery_deadline.split('T')[0]}
+            </h1>
 
-                  <button onClick={() => toggleAccordion(index)} className='flex w-[108px] p-[4px_12px] justify-between items-center gap-[10px] rounded-[12px] border border-[#1C3941] bg-[#378BA6]'>
-                    <h1 className='text-white font-jost text-base font-semibold leading-5 tracking-tight'>More</h1>
-                    {renderIcon(index)}
-                  </button>
-                  <button className="p-2 h-10 rounded-lg hover:bg-[rgba(55,139,166,0.20)] bg-[rgba(55,139,166,0.30)]"
-                    onClick={() => deleteJD(jd._id)}>
-                    <img src={DeleteIcon} alt="Delete" />
-                  </button>
-                </div>
-                {/* Accordion Content */}
-                {isAccordionOpen === index && (
-                  <div className='self-stretch bg-[#D9E1E3] shadow-[4px_4px_20px_0px_rgba(0,0,0,0.12)] p-4'>
-                    <CandidateProgress jdId={jd._id} />
-                  </div>
-                )}
-              </div>
-            ))
-          ) : (
-            <p className='text-center'>No locked job details available.</p>
+            {/* Status */}
+            <h1 className="text-[#3AB13A] text-center font-sans text-base font-semibold leading-6 tracking-tight">
+              {jd.jd_status}
+            </h1>
+
+            {/* Detail Button */}
+            <button
+              onClick={() => toggleAccordion(index)}
+              className="flex justify-center items-center w-[108px] py-2 px-4 rounded-[12px] border border-[#1C3941] bg-[#378BA6] mx-auto"
+            >
+              <h1 className="text-white font-jost text-base font-semibold leading-5 tracking-tight">
+                More
+              </h1>
+              {renderIcon(index)}
+            </button>
+
+            {/* Delete Button */}
+            <button
+              className="p-2 mx-auto h-10 rounded-lg hover:bg-[rgba(55,139,166,0.20)] bg-[rgba(55,139,166,0.30)]"
+              onClick={() => deleteJD(jd._id)}
+            >
+              <img src={DeleteIcon} alt="Delete" />
+            </button>
+          </div>
+
+          {/* Accordion Content */}
+          {isAccordionOpen === index && (
+            <div className="self-stretch bg-[#D9E1E3] shadow-[4px_4px_20px_0px_rgba(0,0,0,0.12)] p-4">
+              <CandidateProgress jdId={jd._id} />
+            </div>
           )}
         </div>
+      ))
+    ) : (
+      <p className="text-center">No locked job details available.</p>
+    )}
+  </div>
+</div>
 
         {/* Pagination */}
         <div className='flex justify-end items-center mt-6'>

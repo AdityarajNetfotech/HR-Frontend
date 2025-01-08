@@ -29,7 +29,7 @@ const CandidateCard = ({ candidates, jobId }) => {
       const isCandidateAlreadyAdded = existingCandidates.some(candidate => candidate._id === candidates._id);
 
       if (isCandidateAlreadyAdded) {
-        alert('This candidate is already added.');
+        alert('This candidate is added.');
         return; // Exit if candidate is already in the progress
       }
 

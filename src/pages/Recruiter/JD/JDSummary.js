@@ -12,6 +12,7 @@ import InterviewIcon from '../../../Images/InterviewIcon.png';
 import PriorityIcon from '../../../Images/PriorityIcon.png';
 import { IoIosArrowForward } from "react-icons/io";
 import { Link, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const JDSummary = () => {
@@ -20,7 +21,7 @@ const JDSummary = () => {
   
   const job = state ? state.jobData : {};
   console.log("JDSummary", job);
-
+  const navigate = useNavigate();
   return (
     <div className="p-6 bg-gray-100 rounded-lg shadow-lg max-w-4xl mx-auto">
       {/* Header */}
@@ -33,7 +34,12 @@ const JDSummary = () => {
           <button className="text-gray-500">
             <i className="fas fa-download"></i>
           </button>
-          <button className="text-gray-500">✕</button>
+          <button 
+          className="text-gray-500" 
+          onClick={() => navigate('/JDList/recent')}
+        >
+          ✕
+        </button>
         </div>
       </div>
 

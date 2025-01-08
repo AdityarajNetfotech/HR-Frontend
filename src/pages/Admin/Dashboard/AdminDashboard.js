@@ -33,9 +33,9 @@ function AdminDashboard() {
   };
 
   return (
-    <div className="max-h-screen flex flex-row gap-0">
+    <div className="min-h-screen flex flex-row gap-10 bg-[#EAF1F3]">
       <AdminSidebar className="max-[30%]" />
-      <div className="w-full px-5 mt-5">
+      <div className="max-w-8xl justify-center mt-10">
         <div className="flex justify-between" style={{ marginBottom: '50px' }}>
           <h1 className="flex justify-center items-center">
             <i className="fa-solid fa-angle-left"></i>{' '}
@@ -70,7 +70,7 @@ function AdminDashboard() {
           {renderTabContent()}
         </div>
         <div class="flex flex-col items-start gap-[20px] self-stretch  ">
-          <div className="flex items-center justify-between w-[100%] p- bg-white">
+          <div className="flex items-center justify-between w-[100%] ">
             <div className="font-jost text-3xl font-bold leading-[46.24px] text-left">
               Latest Activity
             </div>
@@ -80,15 +80,15 @@ function AdminDashboard() {
         <br />
 
         {/* Content selection buttons */}
-        <div className="flex space-x-1 text-[var(--Teal,#378BA6)] text-center text-[18px] font-normal leading-[36px] ">
+        <div className="flex space-x-1 text-[var(--Teal,#378BA6)]  text-center text-[18px] font-normal leading-[36px] mb-4">
           <button
-            className={` w-[208px] ${activeTab === 'JobsCard' ? 'bg-white text-[var(--Teal,#378BA6)] border border-[var(--Teal,#378BA6)] rounded-t-xl font-semibold' : 'bg-[#EAF1F3] rounded-t-xl'}`}
+            className={` w-[208px] border border-[var(--Teal,#378BA6)] ${activeTab === 'JobsCard' ? 'bg-white text-[var(--Teal,#378BA6)] border border-[var(--Teal,#378BA6)] rounded-xl font-bold' : 'bg-[#EAF1F3] rounded-xl'}`}
             onClick={() => setActiveContent('NewJd')}
           >
             New Jd's
           </button>
           <button
-            className={`px-4 py-2 w-[208px] ${activeTab === 'JobCard' ? 'bg-white text-[var(--Teal,#378BA6)] border border-[var(--Teal,#378BA6)] rounded-t-xl font-bold' : 'bg-[#EAF1F3] rounded-t-xl'}`}
+            className={`px-4 py-2 w-[208px] border border-[var(--Teal,#378BA6)] ${activeTab === 'JobCard' ? 'bg-white text-[var(--Teal,#378BA6)] border border-[var(--Teal,#378BA6)] rounded-xl font-bold' : 'bg-[#EAF1F3] rounded-xl'}`}
             onClick={() => setActiveContent('NewCandidates')}
           >
             New Candidates
