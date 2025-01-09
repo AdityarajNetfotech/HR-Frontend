@@ -23,9 +23,12 @@ function FinanceList() {
 
   // Function to get job details
   const getJobDetails = async () => {
+    const userId = localStorage.getItem("userId")
     try {
-      const response = await axios.get('http://localhost:4000/api/showJDs');
-      console.log(response.data);
+      const response = await axios.get('http://localhost:4000/api/ShowUserLockJD', {
+        params: { userId }
+      });
+      // console.log(response.data.jds);
 
       return response.data.jds;
     } catch (error) {
@@ -244,69 +247,68 @@ function FinanceList() {
         </div>
         </div> */}
         <div className="flex flex-col">
-      {/* Header Section */}
-      <div className="h-[52px] bg-[rgba(55,139,166,0.30)] grid grid-cols-6 items-center px-8 mt-[20px]">
-        <h1 className="text-black font-jost text-xl">JD ID</h1>
-        <h1 className="text-black font-jost text-xl">CLIENT DETAILS</h1>
-        <h1 className="text-black font-jost text-xl mx-auto">JD DETAIL</h1>
-        <h1 className="text-black font-jost text-xl mx-auto">DATE</h1>
-        <h1 className="text-black font-jost text-xl mx-auto">AMOUNT</h1>
-        <h1 className="text-black font-jost text-xl mx-auto">STATUS</h1>
-      </div>
+          {/* Header Section */}
+          <div className="h-[52px] bg-[rgba(55,139,166,0.30)] grid grid-cols-6 items-center px-8 mt-[20px]">
+            <h1 className="text-black font-jost text-xl">JD ID</h1>
+            <h1 className="text-black font-jost text-xl">CLIENT DETAILS</h1>
+            <h1 className="text-black font-jost text-xl mx-auto">JD DETAIL</h1>
+            <h1 className="text-black font-jost text-xl mx-auto">DATE</h1>
+            <h1 className="text-black font-jost text-xl mx-auto">AMOUNT</h1>
+            <h1 className="text-black font-jost text-xl mx-auto">STATUS</h1>
+          </div>
 
-      {/* Job List Section */}
-      <div className="flex flex-col gap-5 mt-6">
-        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+          {/* Job List Section */}
+          <div className="flex flex-col gap-5 mt-6">
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
-        {currentJobs.length > 0 ? (
-          currentJobs.map((jd, index) => (
-            <div
-              key={index}
-              className="grid grid-cols-6 items-center rounded-md border bg-white p-4 shadow-md"
-            >
-              {/* JD ID */}
-              <h1 className="text-gray-800">{jd._id}</h1>
+            {currentJobs.length > 0 ? (
+              currentJobs.map((jd, index) => (
+                <div
+                  key={index}
+                  className="grid grid-cols-6 items-center rounded-md border bg-white p-4 shadow-md"
+                >
+                  {/* JD ID */}
+                  <h1 className="text-gray-800">{jd._id}</h1>
 
-              {/* Client Details */}
-              <div
-  className="text-gray-800 cursor-pointer mx-auto hover:text-blue-600 transition-colors duration-300"
-  onClick={() => goToFinanceSummary(jd)}
->
-  {jd.company_Name}
-</div>
+                  {/* Client Details */}
+                  <div
+                    className="text-gray-800 cursor-pointer mx-auto hover:text-blue-600 transition-colors duration-300"
+                    onClick={() => goToFinanceSummary(jd)}
+                  >
+                    {jd.company_Name}
+                  </div>
 
 
-              {/* JD Detail */}
-              <h1 className="text-gray-800 mx-auto">{jd.job_title}</h1>
+                  {/* JD Detail */}
+                  <h1 className="text-gray-800 mx-auto">{jd.job_title}</h1>
 
-              {/* Date */}
-              <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom mx-auto">
-              {jd.delivery_deadline.split('T')[0]}
-              </h1>
+                  {/* Date */}
+                  <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom mx-auto">
+                    {jd.delivery_deadline.split('T')[0]}
+                  </h1>
 
-              {/* Amount */}
-              {/* <h1>{new Date(jd.createdAt).toLocaleDateString()}</h1> */}
+                  {/* Amount */}
+                  {/* <h1>{new Date(jd.createdAt).toLocaleDateString()}</h1> */}
 
-              {/* Status */}
-              <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto">
-                {jd.salary}
-              </h1>
-              <div className='bg-[#ECB015] text-center w-[40%] mx-auto'>
-              <h1
-  className={`${
-    jd.jd_status === "Open" ? "bg-[#ECB015] font-bold" : ""
-  } text-black font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto`}
->
-  {jd.jd_status}
-</h1>
-</div>
-            </div>
-          ))
-        ) : (
-          <h2>No locked job descriptions available.</h2>
-        )}
-      </div>
-    </div>
+                  {/* Status */}
+                  <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto">
+                    {jd.salary}
+                  </h1>
+                  <div className='bg-[#ECB015] text-center w-[40%] mx-auto'>
+                    <h1
+                      className={`${jd.jd_status === "Open" ? "bg-[#ECB015] font-bold" : ""
+                        } text-black font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto`}
+                    >
+                      {jd.jd_status}
+                    </h1>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <h2>No locked job descriptions available.</h2>
+            )}
+          </div>
+        </div>
 
         {/* Pagination */}
         <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />

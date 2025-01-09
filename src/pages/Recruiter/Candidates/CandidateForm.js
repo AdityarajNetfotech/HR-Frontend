@@ -44,6 +44,16 @@ const CandidateForm = () => {
 
 
   const handleSubmit = async (e) => {
+
+    const userId = localStorage.getItem("userId")
+    
+    if (userId) {
+      formData.userId = userId;
+    } else {
+      alert('User ID not found in localStorage');
+      return;
+    }
+
     e.preventDefault();
     formData.Experience = experiences;
     formData.Education = educations;
@@ -52,7 +62,7 @@ const CandidateForm = () => {
       console.log('Candidate Form= ', formData);
 
       const response = await axios.post('http://localhost:4000/api/candidate/postcandidate', formData);
-      console.log(response);
+      // console.log("here",response.data.candidate);
 
       if (response.status === 201) {
         alert('Candidate Form Submittted Successfully !!!!');
@@ -96,10 +106,10 @@ const CandidateForm = () => {
     setEducations(updatedEducations);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(experiences);
-    
-  },[experiences])
+
+  }, [experiences])
 
   return (
     <div className="p-6 bg-gray-100 rounded-lg shadow-lg max-w-4xl mx-auto">
@@ -401,13 +411,13 @@ const CandidateForm = () => {
                   </select>
                 </div>
                 <div>
-                <label className='w-full flex flex-col justify-center h-[20px] text-[var(--Teal,#378BA6)] font-jost text-[16px] font-bold leading-[130%] tracking-[0.08px]'>Availability for Interview *</label>
+                  <label className='w-full flex flex-col justify-center h-[20px] text-[var(--Teal,#378BA6)] font-jost text-[16px] font-bold leading-[130%] tracking-[0.08px]'>Availability for Interview *</label>
                   <input className="w-full border border-[var(--Teal,#378BA6)] rounded-lg px-4 py-2 focus:outline-none focus:border-[var(--Teal,#378BA6)] text-[var(--Teal,#378BA6)]"
                     type="date"
                     placeholder="Date"
                     value={formData.availabilityDate}
                     onChange={(e) => setFormData({ ...formData, availabilityDate: e.target.value })} />
-                    </div>
+                </div>
               </div>
             </div>
 
