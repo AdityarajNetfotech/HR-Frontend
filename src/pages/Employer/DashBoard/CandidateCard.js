@@ -58,11 +58,11 @@ const CandidateCard = ({ candidates, jobId }) => {
         jdId: jd_id, // Align with backend parameter names
         candidateId,
       });
-  
+
       if (response.data.success) {
         alert('Candidate successfully removed!');
         // Update the candidates list in state
-        setRejectCandidates((prevCandidates) => 
+        setRejectCandidates((prevCandidates) =>
           prevCandidates.filter((candidate) => candidate._id !== candidateId)
         );
       } else {
@@ -73,7 +73,7 @@ const CandidateCard = ({ candidates, jobId }) => {
       alert('An error occurred. Please try again.');
     }
   };
-  
+
 
 
   return (
@@ -126,7 +126,14 @@ const CandidateCard = ({ candidates, jobId }) => {
                 <img src={PDFIcon} alt="Resume" className="mr-2" />
                 {candidates.resume}
               </button>
-              <button className="flex text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px] gap-3 p-3 border border-[#378ba6] rounded-lg bg-white">
+              <button
+                className="flex w-full max-w-[650px] text-[#4F4F4F] font-jost text-[16px] font-normal leading-[20.8px] tracking-[0.08px] gap-3 p-3 border border-[#378ba6] rounded-lg bg-white break-words text-ellipsis overflow-hidden"
+                onDoubleClick={() => {
+                  navigator.clipboard.writeText(candidates.Linkedin)
+                  alert("Link copied!")
+                }
+                }
+              >
                 <img src={PDFIcon} alt="Website Link" className="mr-2" />
                 {candidates.Linkedin}
               </button>

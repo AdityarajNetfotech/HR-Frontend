@@ -9,20 +9,24 @@ import AdminID from '../../global/AdminID';
 const EmployerMaster = () => {
   const [users, setUsers] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
-  const [currentPage, setCurrentPage] = useState(1); 
-  const [searchTerm, setSearchTerm] = useState(''); 
-  const [sortOrder, setSortOrder] = useState('Latest'); 
-  const [jobTitle, setJobTitle] = useState(''); 
-  const [status, setStatus] = useState(''); 
-  const [location, setLocation] = useState(''); 
-  const itemsPerPage = 6; 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortOrder, setSortOrder] = useState('Latest');
+  const [jobTitle, setJobTitle] = useState('');
+  const [status, setStatus] = useState('');
+  const [location, setLocation] = useState('');
+  const itemsPerPage = 6;
 
   const fetchUsers = async () => {
     try {
       const response = await axios.get('http://localhost:4000/api/allUsers');
       const allUsers = response.data.users;
+      console.log('Fetched Users Data:', allUsers);
+
       const recruiterUsers = allUsers.filter(user => user.joinAs === 'client');
+      console.log('Filtered Recruiter Users:', recruiterUsers);
       setUsers(recruiterUsers);
+
     } catch (error) {
       setErrorMessage('Error fetching user data.');
     }
@@ -33,11 +37,25 @@ const EmployerMaster = () => {
   }, []);
 
 
+  const handleDeleteCandidate = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:4000/api/user/delete/${id}`)
+      console.log("Candidate deleted. ", res.data)
+      alert("Candidate deleted successfully!");
+      setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
+
+    } catch (error) {
+      console.error("Error deleting Candidate: ", error);
+      alert("Failed to delete Candidate.");
+    }
+  }
+
+
   const filteredUsers = users
     .filter(user =>
-      user._id.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      user._id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (user.company && user.company.toLowerCase().includes(searchTerm.toLowerCase()))
     )
     .filter(user => (jobTitle ? user.jobTitle === jobTitle : true))
@@ -136,60 +154,63 @@ const EmployerMaster = () => {
             </button>
           </div>
         </section>
-{/* first table */}
+        {/* first table */}
         {/* Header Row using Grid */}
-<div className='grid grid-cols-6 gap-4 h-[82px] bg-[rgba(55,139,166,0.30)] items-center p-4 mt-[20px] rounded-md shadow-md'>
-  <h1 className='text-black font-jost text-xl'>EMPLOYEE ID</h1>
-  <h1 className='text-black font-jost text-xl mx-auto'>NAME</h1>
-  <h1 className='text-black font-jost text-xl mx-auto'>CREATED AT</h1>
-  <h1 className='text-black font-jost text-xl'>MOBILE NUMBER</h1>
-  <h1 className='text-black font-jost text-xl'>PERFORMANCE</h1>
-  <h1 className='text-black font-jost text-xl'>PRESENCE</h1>
-</div>
-
-<div className='flex flex-col gap-4 mt-6'>
-  {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-  {currentUsers.length > 0 ? (
-    currentUsers.map((user, index) => (
-      <div key={index} className='grid grid-cols-6 gap-4 items-center rounded-md border bg-white p-3 shadow-md'>
-       <h1 className='text-gray-800'>#{user._id.slice(0,15)}</h1>
-        <div className='flex items-center'>
-          
-          <div className="flex flex-row gap-2 mx-auto">
-            <h1 className="text-[#4F4F4F] cursor-pointer font-semibold ">
-              {user.firstName}
-            </h1>
-            <h1 className="text-[#4F4F4F] cursor-pointer font-semibold ">
-              {user.lastName}
-            </h1>
-          </div>
+        <div className='grid grid-cols-7 gap-5 h-[82px] bg-[rgba(55,139,166,0.30)] text-center items-center p-4 mt-[20px] rounded-md shadow-md'>
+          <h1 className='text-black font-jost text-xl'>EMPLOYEE ID</h1>
+          <h1 className='text-black font-jost text-xl mx-auto'>NAME</h1>
+          <h1 className='text-black font-jost text-xl mx-auto'>CREATED AT</h1>
+          <h1 className='text-black font-jost text-xl'>MOBILE NUMBER</h1>
+          <h1 className='text-black font-jost text-xl'>PERFORMANCE </h1>
+          <h1 className='text-black font-jost text-xl'>PRESENCE</h1>
+          <h1 className='text-black font-jost text-xl'>DELETE CANDIDATE</h1>
         </div>
-        <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto'>
-          {user.mobileNumber}
-        </h1>
-        <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto'>
-          {user.createdAt.split('T')[0]}
-        </h1>
-        <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto'>
-          {user.jdPosting || '04'}
-        </h1>
-        <div
-  className={`flex flex-row gap-4 px-4 py-2 rounded-md mx-auto${
-    index % 2 === 0
-      ? 'bg-[#DBF0CA] text-[#477C1D]'
-      : 'bg-[#A4A4A480] text-[#4F4F4F]'
-  }`}
->
-  <h1 className='font-jost text-base font-normal leading-custom tracking-[0.08px]'>
-    {index % 2 === 0 ? 'Active' : 'Inactive'}
-  </h1>
-</div>
-      </div>
-    ))
-  ) : (
-    <h2>No users available.</h2>
-  )}
-</div>
+
+        <div className='flex flex-col gap-4 mt-6'>
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+          {currentUsers.length > 0 ? (
+            currentUsers.map((user, index) => (
+              <div key={index} className='grid grid-cols-7 gap-4 items-center rounded-md border bg-white p-3 shadow-md'>
+                <h1 className='text-gray-800'>#{user._id.slice(0, 15)}</h1>
+                <div className='flex items-center'>
+
+                  <div className="flex flex-row gap-2 mx-auto">
+                    <h1 className="text-[#4F4F4F] cursor-pointer font-semibold ">
+                      {user.firstName}
+                    </h1>
+                    <h1 className="text-[#4F4F4F] cursor-pointer font-semibold ">
+                      {user.lastName}
+                    </h1>
+                  </div>
+                </div>
+                <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto'>
+                  {user.mobileNumber}
+                </h1>
+                <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto'>
+                  {user.createdAt.split('T')[0]}
+                </h1>
+                <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto'>
+                  {user.jdPosting || '04'}
+                </h1>
+                <div
+                  className={`flex flex-row gap-4 px-4 py-2 rounded-md mx-auto${index % 2 === 0
+                    ? 'bg-[#DBF0CA] text-[#477C1D]'
+                    : 'bg-[#A4A4A480] text-[#4F4F4F]'
+                    }`}
+                >
+                  <h1 className='font-jost text-base font-normal leading-custom tracking-[0.08px]'>
+                    {index % 2 === 0 ? 'Active' : 'Inactive'}
+                  </h1>
+                </div>
+                <h1 className='text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto'>
+                  <i onClick={() => handleDeleteCandidate(user._id)} className="fa-solid fa-trash" style={{ fontSize: "16px" }}></i>
+                </h1>
+              </div>
+            ))
+          ) : (
+            <h2>No users available.</h2>
+          )}
+        </div>
 
 
         {/* Pagination Component */}

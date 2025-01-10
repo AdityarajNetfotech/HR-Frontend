@@ -11,7 +11,7 @@ function AdminID() {
                 const response = await axios.get('http://localhost:4000/api/memyprofile', {
                     withCredentials: true, // Ensure cookies are sent for token authentication
                 });
-                console.log(response.data);
+                // console.log(response.data);
 
                 const userData = response.data.user;
 

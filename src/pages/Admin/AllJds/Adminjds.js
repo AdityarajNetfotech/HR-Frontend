@@ -21,14 +21,16 @@ function Adminjds() {
     const [errorMessage, setErrorMessage] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const itemsPerPage = 6; 
+    const itemsPerPage = 6;
     const navigate = useNavigate();
 
     // Fetch job details from API
-   const fetchJobDetails = async () => {
+    const fetchJobDetails = async () => {
         try {
             const response = await axios.get('http://localhost:4000/api/showJDs');
             const jobDetails = response.data.jds;
+            console.log(jobDetails);
+
             setAllJobDetails(jobDetails);
 
             const lockedJDs = jobDetails.filter((jd) => jd.locked === true);
@@ -52,6 +54,20 @@ function Adminjds() {
     useEffect(() => {
         fetchJobDetails();
     }, []);
+
+
+    const handleDeleteJD = async (id) => {
+        try {
+            const res = await axios.delete(`http://localhost:4000/api/jd/delete/${id}`)
+            console.log("JD deleted. ", res.data)
+            alert("Job description deleted successfully!");
+
+        } catch (error) {
+            console.error("Error deleting JD: ", error);
+            alert("Failed to delete job description.");
+        }
+    }
+
 
     // Handle search input change
     const handleSearchChange = (event) => {
@@ -247,76 +263,81 @@ function Adminjds() {
 
                 {/* Table Header */}
                 <div>
-  {/* Header */}
-  <div className="h-[82px] bg-[rgba(55,139,166,0.30)] grid grid-cols-5 items-center p-8 mt-[20px]">
-    <h1 className="text-black font-jost text-xl">JD ID</h1>
-    <h1 className="text-black font-jost text-xl mx-auto">JD DETAIL</h1>
-    {/* <h1 className="text-black font-jost text-xl">CLIENT DETAIL</h1> */}
-    <h1 className="text-black font-jost text-xl mx-auto">UPLOAD DATE</h1>
-    <h1 className="text-black font-jost text-xl mx-auto">DEADLINE DATE</h1>
-    <h1 className="text-black font-jost text-xl mx-auto">STATUS</h1>
-    {/* <h1 className="text-black font-jost text-xl">DETAILS</h1> */}
-  </div>
+                    {/* Header */}
+                    <div className="h-[82px] bg-[rgba(55,139,166,0.30)] grid grid-cols-6 items-center p-8 mt-[20px]">
+                        <h1 className="text-black font-jost text-xl">JD ID</h1>
+                        <h1 className="text-black font-jost text-xl mx-auto">JD DETAIL</h1>
+                        {/* <h1 className="text-black font-jost text-xl">CLIENT DETAIL</h1> */}
+                        <h1 className="text-black font-jost text-xl mx-auto">UPLOAD DATE</h1>
+                        <h1 className="text-black font-jost text-xl mx-auto">DEADLINE DATE</h1>
+                        <h1 className="text-black font-jost text-xl mx-auto">STATUS</h1>
+                        <h1 className="text-black font-jost text-xl mx-auto">DELETE JD</h1>
+                        {/* <h1 className="text-black font-jost text-xl">DETAILS</h1> */}
+                    </div>
 
-  {/* Job List */}
-  <div className="flex flex-col gap-5 mt-6">
-    {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+                    {/* Job List */}
+                    <div className="flex flex-col gap-5 mt-6">
+                        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
-    {paginatedJobs.length > 0 ? (
-      paginatedJobs.map((jd, index) => (
-        <div
-          key={index}
-          className="grid grid-cols-5 items-center rounded-md border bg-white p-4 shadow-md"
-        >
-          <h1 className="text-gray-800">{jd._id}</h1>
+                        {paginatedJobs.length > 0 ? (
+                            paginatedJobs.map((jd, index) => (
+                                <div
+                                    key={index}
+                                    className="grid grid-cols-6 items-center rounded-md border bg-white p-4 shadow-md"
+                                >
+                                    <h1 className="text-gray-800">{jd._id}</h1>
 
-          {/* JD DETAIL */}
-          <div className="flex items-center">
-            {/* <div className="flex w-[40px] h-[40px] justify-center items-center bg-[#EAF1F3] rounded-full">
+                                    {/* JD DETAIL */}
+                                    <div className="flex items-center">
+                                        {/* <div className="flex w-[40px] h-[40px] justify-center items-center bg-[#EAF1F3] rounded-full">
               <img src={ExportIcon} alt="Export" className="w-16 h-auto" />
             </div> */}
-            <div className="flex flex-col mx-auto">
-              <h1
-                className="text-gray-800 ml-2 cursor-pointer font-semibold"
-                onClick={() => goToFinanceSummary(jd)}
-              >
-                {jd.company_Name}
-              </h1>
-              <h2 className="text-gray-600 ml-2 text-sm">{jd.industry}</h2>
-            </div>
-          </div>
+                                        <div className="flex flex-col mx-auto">
+                                            <h1
+                                                className="text-gray-800 ml-2 cursor-pointer font-semibold"
+                                                onClick={() => goToFinanceSummary(jd)}
+                                            >
+                                                {jd.company_Name}
+                                            </h1>
+                                            <h2 className="text-gray-600 ml-2 text-sm">{jd.industry}</h2>
+                                        </div>
+                                    </div>
 
-          {/* CLIENT DETAIL */}
-          {/* <div className="flex items-center">
+                                    {/* CLIENT DETAIL */}
+                                    {/* <div className="flex items-center">
         
           </div> */}
 
-          {/* UPLOAD DATE */}
-          <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto">
-            {jd.createdAt.substring(0, 10)}
-          </h1>
+                                    {/* UPLOAD DATE */}
+                                    <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto">
+                                        {jd.createdAt.substring(0, 10)}
+                                    </h1>
 
-          {/* DEADLINE DATE */}
-          <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto">
-            {jd.delivery_deadline.substring(0, 10)}
-          </h1>
+                                    {/* DEADLINE DATE */}
+                                    <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto">
+                                        {jd.delivery_deadline.substring(0, 10)}
+                                    </h1>
 
-          {/* STATUS */}
-          <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto">
-            {jd.jd_status}
-          </h1>
+                                    {/* STATUS */}
+                                    <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto">
+                                        {jd.jd_status}
+                                    </h1>
 
-          {/* DETAILS */}
-          {/* <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px]">
+                                    <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px] mx-auto">
+                                        <i onClick={() => handleDeleteJD(jd._id)} className="fa-solid fa-trash" style={{ fontSize: "16px" }}></i>
+                                    </h1>
+
+                                    {/* DETAILS */}
+                                    {/* <h1 className="text-[#4F4F4F] font-jost text-base font-normal leading-custom tracking-[0.08px]">
             Details Placeholder
           </h1> */}
-        </div>
-      ))
-    ) : (
-      <h2>No locked job descriptions available.</h2>
-    )}
-  </div>
-</div>
+                                </div>
+                            ))
+                        ) : (
+                            <h2>No locked job descriptions available.</h2>
+                        )}
+                    </div>
+                </div>
 
                 <Pagination
                     currentPage={currentPage}

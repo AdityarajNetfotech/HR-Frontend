@@ -11,8 +11,26 @@ import { FaLocationDot } from "react-icons/fa6";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import ExportIcon from '../../../Images/ExportIcon.png';
+import axios from 'axios';
 
 const EmployerCard = ({ job, onClick }) => {
+
+  console.log("JD id", job._id);
+
+  const id = job._id;
+  
+  const handleJDdelete = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:4000/api/jd/delete/${id}`)
+      console.log("JD Deleted: ", res.data);
+      alert("Job description deleted successfully!");
+      
+    } catch (error) {
+      console.error("Error deleting job description:", error);
+      alert("Failed to delete job description.");
+    }
+  }
+
   return (
     <div
       className=" border border-[var(--Teal,#378BA6)] rounded-md cursor-pointer flex justify-between items-start">
@@ -62,9 +80,9 @@ const EmployerCard = ({ job, onClick }) => {
               <div className='text-black text-sm font-semibold font-jost leading-9 flex flex-row gap-2  ml-20 items-center'>Exp:
                 <h1 style={{ border: "1px solid gray", borderRadius: "8px" }} className='text-[#A38740] w-[100px] text-base font-normal font-jost leading-7 text-center'>{job.experience}</h1>
               </div>
-              <div style={{ display: "flex", gap: "10px", justifyContent: "center", alignItems: "center", width: "80px", borderRadius: "4px", padding: "2px" }} className='bg-blue-100'>
-                <img src={ExportIcon} alt="Export Icon" style={{ height: "23px" }} />
-                <i className="fa-solid fa-trash" style={{ fontSize: "16px" }}></i>
+              <div style={{ display: "flex", gap: "10px", justifyContent: "center", alignItems: "center", width: "50px", borderRadius: "4px", padding: "7px 0px" }} className='bg-blue-100'>
+                {/* <img src={ExportIcon} alt="Export Icon" style={{ height: "23px" }} /> */}
+                <i onClick={() => handleJDdelete(id)} className="fa-solid fa-trash" style={{ fontSize: "16px" }}></i>
               </div>
             </div>
           </div>
