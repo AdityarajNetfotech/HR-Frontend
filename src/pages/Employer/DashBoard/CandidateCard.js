@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import CandidateFormEmp from '../Candidates/CandidateFormEmp';
+import { useNavigate } from 'react-router-dom';
 import industryIcon from '../../../Images/IndustryIcon.png';
 import LocationIcon from '../../../Images/LocationIcon.png';
 import SalaryIcon from '../../../Images/SalaryIcon.png';
 import PDFIcon from '../../../Images/PDFIcon.png';
 import ExportIcon from '../../../Images/ExportIcon.png';
+import { Link } from 'react-router-dom';
 
-const CandidateCard = ({ candidates, jobId }) => {
+const CandidateCard = ({ candidates, jobId, companyName, jobTitle, jobLocation }) => {
+  const jd_id = jobId
+  const navigate = useNavigate();
+
+  const handleCandidateForm = () => {
+    navigate('/EmpCandidateForm', { state: { candidate: candidates, jd_id: jd_id, companyName: companyName, jobTitle: jobTitle, jobLocation: jobLocation } });
+  };
+
+
   const [Rejectcandidates, setRejectCandidates] = useState([]);
 
-  const jd_id = jobId
 
   if (!candidates) return <div>No candidate details available</div>;
 
@@ -140,7 +150,7 @@ const CandidateCard = ({ candidates, jobId }) => {
             </div>
           </div>
           <div>
-            <p className='text-[#4F4F4F] bg-white font-jost text-[20px] font-extrabold leading-[36px] flex flex-row border border-[#4F4F4F] rounded-lg gap-2 justify-center items-center p-[10px_20px]'>
+            <p onClick={handleCandidateForm} className='text-[#4F4F4F] cursor-pointer bg-white font-jost text-[20px] font-extrabold leading-[36px] flex flex-row border border-[#4F4F4F] rounded-lg gap-2 justify-center items-center p-[10px_20px]'>
               <img src={ExportIcon} alt="Export Icon" /> View Form
             </p>
           </div>

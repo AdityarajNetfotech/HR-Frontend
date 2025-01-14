@@ -18,7 +18,7 @@ const JobCard = ({ limit = 1 }) => {
     // const userId = localStorage.getItem("userId")
     try {
       const response = await axios.get('http://localhost:4000/api/ShowUserJD', {
-        withCredentials: true 
+        withCredentials: true
       });
 
       // console.log("res here", response.data.jds);
@@ -104,7 +104,7 @@ const JobCard = ({ limit = 1 }) => {
 
           {/* Candidate Cards - Only show if the job is toggled to visible */}
           {visibleCards[job._id] && job.candidates.map((candidate) => (
-            <CandidateCard key={candidate._id} candidates={candidate} jobId={job._id} />
+            <CandidateCard key={candidate._id} candidates={candidate} jobId={job._id} jobTitle={job.job_title} companyName={job.company_Name} jobLocation={job.location}/>
           ))}
 
         </div>

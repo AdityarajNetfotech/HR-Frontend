@@ -61,6 +61,7 @@ import ChatSupport from './pages/Recruiter/ChatSupport/ChatSupport';
 import EmpAbout from './Components/EmpAboutUs/EmpAbout'
 import AdminSidebar from './pages/global/AdminSidebar';
 import AdminID from './pages/global/AdminID';
+import CandidateFormEmp from './pages/Employer/Candidates/CandidateFormEmp';
 // import ProtectedRoute from './Components/User Management/ProtectedRoute';
 
 function App() {
@@ -114,6 +115,8 @@ function App() {
           <Route path='/EmpJDdetail' element={<EmpJDdetail />} />
           <Route path='/AddJDForm' element={<AddNewJDForm />} />
           <Route path='/SelectFromJD' element={<SelectFromJD />} />
+          <Route path='/EmpCandidateForm' element={<CandidateFormEmp />} />
+
 
 
 
